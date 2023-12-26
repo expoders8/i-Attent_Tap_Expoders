@@ -10,9 +10,10 @@ const kErrorColor = Color(0xFFC8352A);
 
 const kBackGroundColor = Color(0XFFF4F6F7);
 const kPrimaryColor = Color(0XFF153165);
-const kIconColor = Color(0XFFA0AFCB);
-const kSelectedIconColor = Color(0XFF132C4A);
-const kTextSecondaryColor = Color(0xFFADBBD6);
+const kIconColor = Color.fromARGB(255, 163, 166, 209);
+const kSelectedIconColor = Color(0xFF4B52C3);
+const kSelectedTextandBgColor = Color(0XFF6AD3F6);
+const kTextSecondaryColor = Color.fromRGBO(173, 187, 214, 1);
 const kCardColor = Color.fromARGB(235, 255, 255, 255);
 const kDottedBorderColor = Color(0Xff707070);
 

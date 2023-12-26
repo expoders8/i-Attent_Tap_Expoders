@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
       theme: Provider.of<ThemeProvider>(context, listen: false).getTheme(),
-      initialRoute: Routes.tabPage,
+      initialRoute: Routes.signInScreen,
       getPages: AppPages.routes,
     );
   }
