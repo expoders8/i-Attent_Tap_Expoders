@@ -35,8 +35,18 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   get: ^4.6.5
+  intl: ^0.18.1
   get_storage: ^2.1.1
   provider: ^6.0.3
+  table_calendar: ^3.0.9
+  dotted_border: ^2.1.0
+  cloud_firestore: ^4.2.0
+  firebase_auth: ^4.15.3
+  emoji_picker_flutter: ^1.5.1
+  speech_to_text: ^6.1.1
+  avatar_glow: ^2.0.2
+  qr_flutter: ^4.1.0
+  flutter_datetime_picker_bdaya: ^3.0.2
 
 dev_dependencies:
   flutter_test:

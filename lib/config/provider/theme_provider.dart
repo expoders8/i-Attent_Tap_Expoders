@@ -5,8 +5,8 @@ import '../constant/color_constant.dart';
 
 class ThemeProvider extends ChangeNotifier {
   static ThemeData? _selectedTheme;
-  static const fontFamilyNormal = kFuturaPTBook;
-  static const fontFamilyMedium = kFuturaPTMedium;
+  static const fontFamilyNormal = kCircularStdNormal;
+  static const fontFamilyMedium = kCircularStdMedium;
 
   static BoxDecoration scaffoldDecoration =
       BoxDecoration(color: primary.colorScheme.background);
@@ -29,6 +29,9 @@ class ThemeProvider extends ChangeNotifier {
         fontSize: 20,
         fontFamily: fontFamilyMedium,
       ),
+    ),
+    cardTheme: CardTheme(
+      color: Colors.white, // Set the default card color to white
     ),
     listTileTheme: const ListTileThemeData(textColor: kPrimaryColor),
     primaryColor: Colors.red,

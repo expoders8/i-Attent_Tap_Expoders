@@ -6,17 +6,23 @@ const kAppBarColor = Color(0xFFF7E1E3);
 const ksecondaryColor = Color(0xFFF1966E);
 const kHintTextStyleColor = Color(0x99000000);
 const kButtonColor = Color(0XFF3E54FF);
+const kTitleColor = Color(0XFF484340);
 const kErrorColor = Color(0xFFC8352A);
 
 const kBackGroundColor = Color(0XFFF4F6F7);
 const kPrimaryColor = Color(0XFF153165);
-const kIconColor = Color.fromARGB(255, 163, 166, 209);
+const kSecondaryPrimaryColor = Color(0xFF666670);
+const kIconColor = Color(0xFFA3A6D1);
 const kSelectedIconColor = Color(0xFF4B52C3);
 const kSelectedTextandBgColor = Color(0XFF6AD3F6);
-const kTextSecondaryColor = Color.fromRGBO(173, 187, 214, 1);
-const kCardColor = Color.fromARGB(235, 255, 255, 255);
-const kDottedBorderColor = Color(0Xff707070);
+const kTextSecondaryColor = Color(0xFF99A5BD);
+const kTextTwoSecondaryColor = Color(0xFFC3D1ED);
+const kCardColor = Color(0XFFFFFFFF);
+const kDividerColor = Color(0XFFBFC5CC);
+const kCardTextColor = Color(0xFF4C626C);
 
+const kDottedBorderColor = Color(0Xff707070);
+const kTitleBorderColor = Color(0xFFC1C1C4);
 const kTransparentColor = Color(0x00000000);
 const kWhiteColor = Color(0XFFFFFFFF);
 const kBlackColor = Color(0XFF000000);

@@ -14,7 +14,7 @@ class SignInFooter extends StatelessWidget {
         Text.rich(
           TextSpan(
             text: "Developed by ",
-            style: TextStyle(color: kPrimaryColor),
+            style: const TextStyle(color: kPrimaryColor),
             children: [
               TextSpan(
                 style: const TextStyle(

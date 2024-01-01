@@ -17,8 +17,6 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  static final page =
-      GetPage(name: '/sign_in_screen', page: () => const SignInScreen());
   final _loginFormKey = GlobalKey<FormState>();
   final controller = Get.put(SignInScreenX());
   TextEditingController emailController = TextEditingController();
@@ -28,6 +26,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: GestureDetector(
         onTap: () {
@@ -38,8 +37,8 @@ class _SignInScreenState extends State<SignInScreen> {
             Image.asset(
               'assets/images/loginbg.png',
               fit: BoxFit.cover,
-              width: Get.width,
-              height: Get.height,
+              width: size.width,
+              height: size.height,
             ),
             SafeArea(
               child: Column(
@@ -129,7 +128,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 height: 25.0,
                               ),
                               SizedBox(
-                                width: Get.width - 55,
+                                width: size.width - 55,
                                 height: 50,
                                 child: CupertinoButton(
                                   borderRadius: BorderRadius.circular(25),

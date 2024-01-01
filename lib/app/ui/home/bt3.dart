@@ -15,7 +15,7 @@ class _Bt3PageState extends State<Bt3Page> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kBackGroundColor,
-        title: Text("Test2"),
+        title: const Text("Message"),
       ),
     );
   }

@@ -3,10 +3,11 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 import '../home/bt3.dart';
-import '../home/bt4.dart';
 import '../home/home.dart';
 import '../profile/profile.dart';
+import '../myAgenda/my_agenda.dart';
 import '../../controller/tab_controller.dart';
+import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 
 class TabPage extends StatefulWidget {
@@ -26,10 +27,16 @@ class _TabPageState extends State<TabPage> {
   int accessLevel = 1;
 
   final TextStyle unselectedLabelStyle = const TextStyle(
-      color: kTextSecondaryColor, fontWeight: FontWeight.w500, fontSize: 12);
+      color: kTextSecondaryColor,
+      fontWeight: FontWeight.w500,
+      fontSize: 12,
+      fontFamily: kCircularStdNormal);
 
   final TextStyle selectedLabelStyle = const TextStyle(
-      color: kWhiteColor, fontWeight: FontWeight.w500, fontSize: 12);
+      color: kWhiteColor,
+      fontWeight: FontWeight.w500,
+      fontSize: 12,
+      fontFamily: kCircularStdNormal);
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +53,8 @@ class _TabPageState extends State<TabPage> {
               index: tabCountController.tabIndex.value,
               children: const [
                 HomePage(),
+                MyAgendaPage(),
                 Bt3Page(),
-                Bt4Page(),
                 ProfilePage(),
               ],
             ),
@@ -80,32 +87,56 @@ class _TabPageState extends State<TabPage> {
             type: BottomNavigationBarType.fixed,
             items: [
               BottomNavigationBarItem(
-                icon: Container(
-                  margin: const EdgeInsets.only(bottom: 7),
-                  child: const Icon(Icons.grid_view_rounded, size: 25.0),
+                icon: Padding(
+                  padding: const EdgeInsets.only(bottom: 6.0),
+                  child: Image.asset(
+                    "assets/icons/homeicon.png",
+                    color: landingPageController.tabIndex.value == 0
+                        ? kSelectedIconColor
+                        : kIconColor,
+                    scale: 1.6,
+                  ),
                 ),
                 label: 'Home',
                 backgroundColor: kBackGroundColor,
               ),
               BottomNavigationBarItem(
-                icon: Container(
-                  margin: const EdgeInsets.only(bottom: 7),
-                  child: const Icon(Icons.search, size: 28.0),
+                icon: Padding(
+                  padding: const EdgeInsets.only(bottom: 6.0),
+                  child: Image.asset(
+                    "assets/icons/discover_icon.png",
+                    color: landingPageController.tabIndex.value == 1
+                        ? kSelectedIconColor
+                        : kIconColor,
+                    scale: 1.7,
+                  ),
                 ),
-                label: 'Test',
+                label: 'My Agenda',
                 backgroundColor: kBackGroundColor,
               ),
               BottomNavigationBarItem(
-                icon: Container(
-                  margin: const EdgeInsets.only(bottom: 7),
-                  child: const Icon(Icons.favorite, size: 25.0),
+                icon: Padding(
+                  padding: const EdgeInsets.only(bottom: 6.0),
+                  child: Image.asset(
+                    "assets/icons/message_icon.png",
+                    color: landingPageController.tabIndex.value == 2
+                        ? kSelectedIconColor
+                        : kIconColor,
+                    scale: 1.6,
+                  ),
                 ),
-                label: 'Test',
+                label: 'Message',
               ),
               BottomNavigationBarItem(
-                icon: Container(
-                  margin: const EdgeInsets.only(bottom: 7),
-                  child: const Icon(Icons.person_sharp, size: 25.0),
+                icon: Padding(
+                  padding: const EdgeInsets.only(bottom: 6.0),
+                  child: Image.asset(
+                    "assets/icons/profile_icon.png",
+                    color: landingPageController.tabIndex.value == 3
+                        ? kSelectedIconColor
+                        : kIconColor,
+                    scale: 1.5,
+                  ),
                 ),
                 label: 'Profile',
                 backgroundColor: kBackGroundColor,
