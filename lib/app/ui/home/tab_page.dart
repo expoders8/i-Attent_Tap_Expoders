@@ -88,7 +88,7 @@ class _TabPageState extends State<TabPage> {
             items: [
               BottomNavigationBarItem(
                 icon: Padding(
-                  padding: const EdgeInsets.only(bottom: 6.0),
+                  padding: const EdgeInsets.only(bottom: 7.0, top: 2),
                   child: Image.asset(
                     "assets/icons/homeicon.png",
                     color: landingPageController.tabIndex.value == 0
@@ -100,23 +100,16 @@ class _TabPageState extends State<TabPage> {
                 label: 'Home',
                 backgroundColor: kBackGroundColor,
               ),
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: Padding(
-                  padding: const EdgeInsets.only(bottom: 6.0),
-                  child: Image.asset(
-                    "assets/icons/discover_icon.png",
-                    color: landingPageController.tabIndex.value == 1
-                        ? kSelectedIconColor
-                        : kIconColor,
-                    scale: 1.7,
-                  ),
-                ),
+                    padding: EdgeInsets.only(bottom: 4.0),
+                    child: Icon(Icons.calendar_month_outlined)),
                 label: 'My Agenda',
                 backgroundColor: kBackGroundColor,
               ),
               BottomNavigationBarItem(
                 icon: Padding(
-                  padding: const EdgeInsets.only(bottom: 6.0),
+                  padding: const EdgeInsets.only(bottom: 8.0, top: 5),
                   child: Image.asset(
                     "assets/icons/message_icon.png",
                     color: landingPageController.tabIndex.value == 2
@@ -129,7 +122,7 @@ class _TabPageState extends State<TabPage> {
               ),
               BottomNavigationBarItem(
                 icon: Padding(
-                  padding: const EdgeInsets.only(bottom: 6.0),
+                  padding: const EdgeInsets.only(bottom: 8.0, top: 3),
                   child: Image.asset(
                     "assets/icons/profile_icon.png",
                     color: landingPageController.tabIndex.value == 3

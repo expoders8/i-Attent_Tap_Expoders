@@ -136,13 +136,13 @@ class _HomePageState extends State<HomePage> {
                                         fontFamily: kWorkSans),
                                   ),
                                   const SizedBox(height: 25),
-                                  Row(
+                                  const Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      const Row(
+                                      Row(
                                         children: [
                                           Icon(
                                             Icons.location_on_outlined,
@@ -154,43 +154,41 @@ class _HomePageState extends State<HomePage> {
                                             style: TextStyle(
                                                 color: kPrimaryColor,
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.bold,
                                                 fontFamily: kCircularStdNormal),
                                           ),
                                         ],
                                       ),
                                       Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 25.0),
+                                        padding: EdgeInsets.only(right: 10.0),
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            const Text(
-                                              "+5 more",
+                                            Text(
+                                              "+2 Sessions",
                                               style: TextStyle(
                                                   color: kPrimaryColor,
-                                                  fontSize: 14,
-                                                  fontFamily: kCircularStdBold),
+                                                  fontSize: 13,
+                                                  fontFamily: kCircularStdBook),
                                             ),
-                                            const SizedBox(width: 10),
-                                            for (int i = 0;
-                                                i < image.length;
-                                                i++)
-                                              Align(
-                                                widthFactor: 0.3,
-                                                child: Image.asset(
-                                                  image[i],
-                                                  errorBuilder: (context, error,
-                                                          stackTrace) =>
-                                                      Image.asset(
-                                                    "assets/images/blank_profile.png",
-                                                    fit: BoxFit.fill,
-                                                  ),
-                                                  scale: 2,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
+                                            // const SizedBox(width: 10),
+                                            // for (int i = 0;
+                                            //     i < image.length;
+                                            //     i++)
+                                            //   Align(
+                                            //     widthFactor: 0.3,
+                                            //     child: Image.asset(
+                                            //       image[i],
+                                            //       errorBuilder: (context, error,
+                                            //               stackTrace) =>
+                                            //           Image.asset(
+                                            //         "assets/images/blank_profile.png",
+                                            //         fit: BoxFit.fill,
+                                            //       ),
+                                            //       scale: 2,
+                                            //       fit: BoxFit.cover,
+                                            //     ),
+                                            //   ),
                                           ],
                                         ),
                                       ),
@@ -359,10 +357,10 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "My Events",
+                          "My Conferences",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: 23, fontFamily: kWorkSans),
+                          style: TextStyle(fontSize: 21, fontFamily: kWorkSans),
                         ),
                       ],
                     ),
