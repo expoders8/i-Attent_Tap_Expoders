@@ -9,6 +9,8 @@ abstract class Routes {
   static const createActivity = _Paths.createActivity;
   static const eventDetailsPage = _Paths.eventDetailsPage;
   static const dateSectionWidget = _Paths.dateSectionWidget;
+  static const notificationPage = _Paths.notificationPage;
+  static const agendaDetailsPage = _Paths.agendaDetailsPage;
 }
 
 abstract class _Paths {
@@ -18,4 +20,6 @@ abstract class _Paths {
   static const createActivity = '/createActivity';
   static const eventDetailsPage = '/eventDetailsPage';
   static const dateSectionWidget = '/dateSectionWidget';
+  static const notificationPage = '/notificationPage';
+  static const agendaDetailsPage = '/agendaDetailsPage';
 }

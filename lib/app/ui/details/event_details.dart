@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
-import '../../routes/app_pages.dart';
 
 class EventDetailsPage extends StatefulWidget {
   const EventDetailsPage({super.key});
@@ -17,7 +15,6 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
   List image = [
     "assets/images/i-test.png",
     "assets/images/i-test1.png",
-    "assets/images/i-test2.png"
   ];
   @override
   Widget build(BuildContext context) {
@@ -27,7 +24,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
         children: [
           Container(
             width: Get.width,
-            height: 220,
+            height: 180,
             decoration: const BoxDecoration(
               color: kSelectedIconColor,
               borderRadius: BorderRadius.only(
@@ -38,14 +35,14 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 0),
-                GestureDetector(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.only(left: 35.0, bottom: 20),
-                    child: Icon(
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0, bottom: 10),
+                  child: IconButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    icon: const Icon(
                       Icons.arrow_back_ios,
                       color: kWhiteColor,
                       size: 17,
@@ -139,30 +136,33 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
           //       ),
           //   ],
           // ),
-          builddetailsWidget(Icons.timer_outlined, "09:30 - 10:00 AM"),
+          builddetailsWidget(Icons.timer_outlined, "09:30 - 10:00 AM", ""),
           builddetailsWidget(
-              Icons.calendar_month_outlined, "Monday, 11 December, 2019"),
-          builddetailsWidget(Icons.location_on_outlined, "Lavaska Center"),
-          // const Padding(
-          //   padding: EdgeInsets.only(left: 47.0),
-          //   child: Text(
-          //     "34 East Road Bakery,near CP,New Delhi 67",
-          //     style: TextStyle(
-          //       color: kSecondaryPrimaryColor,
-          //       fontSize: 15,
-          //       fontFamily: kCircularStdBold,
-          //     ),
-          //   ),
-          // ),
-          // const SizedBox(height: 10),
-          // builddetailsWidget(Icons.description,
-          //     "A Discussion on the new app Hobbify. Be ready with your topics"),
+              Icons.calendar_month_outlined, "Monday, 11 December, 2019", ""),
+          builddetailsWidget(Icons.location_on_outlined, "Lavaska Center", ""),
           const Divider(
             thickness: 0.8,
             color: kDividerColor,
           ),
           Container(
-            padding: const EdgeInsets.fromLTRB(17, 20, 0, 0),
+            padding: const EdgeInsets.fromLTRB(17, 3, 0, 5),
+            child: const Text(
+              "About",
+              style: TextStyle(
+                color: kTitleColor,
+                fontSize: 17,
+                fontFamily: kCircularStdBold,
+              ),
+            ),
+          ),
+          builddetailsWidget(
+              Icons.description, "Lavaska Center", "Description"),
+          const Divider(
+            thickness: 0.8,
+            color: kDividerColor,
+          ),
+          Container(
+            padding: const EdgeInsets.fromLTRB(17, 13, 0, 8),
             child: const Text(
               "Sessions",
               style: TextStyle(
@@ -175,7 +175,6 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
           Expanded(
             child: Container(
               width: Get.width,
-              // height: 200,
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(16.0),
@@ -183,105 +182,144 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                   bottomRight: Radius.circular(16.0),
                 ),
               ),
-              padding: const EdgeInsets.only(bottom: 10.0),
+              padding: const EdgeInsets.only(bottom: 5.0),
               child: ListView.builder(
+                padding: EdgeInsets.only(top: 0),
                 itemCount: 4,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.fromLTRB(8.0, 0.0, 0.0, 8.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(top: 10.0, left: 10),
-                          child: Text("09:30 AM"),
-                        ),
-                        const SizedBox(width: 10),
-                        Card(
-                          elevation: 6,
-                          shadowColor: const Color.fromARGB(50, 0, 0, 0),
-                          child: Container(
-                            height: 110,
-                            width: Get.width - 115,
-                            decoration: const BoxDecoration(
-                                color: kCardColor,
-                                borderRadius: BorderRadius.only(
-                                    bottomRight: Radius.circular(15),
-                                    topLeft: Radius.circular(15),
-                                    topRight: Radius.circular(15))),
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 12.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 10),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
+                    padding: const EdgeInsets.only(
+                        right: 10.0, left: 10.0, top: 5.0, bottom: 5.0),
+                    child: Card(
+                      elevation: 7,
+                      shadowColor: const Color.fromARGB(50, 0, 0, 0),
+                      child: Container(
+                        width: Get.width,
+                        padding: const EdgeInsets.only(right: 10),
+                        decoration: BoxDecoration(
+                            color: kCardColor,
+                            borderRadius: BorderRadius.circular(15)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: 110,
+                                  decoration: const BoxDecoration(
+                                      color: kBackGroundColor,
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(14),
+                                          bottomLeft: Radius.circular(15))),
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10, top: 20),
+                                  child: const Column(
                                     children: [
-                                      const Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "Coffee with Aim Team",
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                              fontSize: 15.0,
-                                              fontFamily: kCircularStdMedium,
-                                              color: kPrimaryColor,
-                                            ),
-                                          ),
-                                          SizedBox(height: 5),
-                                          Text(
-                                            "09:30 - 10:00 AM",
-                                            style: TextStyle(
-                                                color: kTextSecondaryColor,
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.bold,
-                                                fontFamily: kWorkSans),
-                                          ),
-                                        ],
+                                      Text(
+                                        "09:30 AM",
+                                        style: TextStyle(
+                                            color: kTitleColor,
+                                            fontFamily: kCircularStdMedium,
+                                            fontSize: 13.2),
                                       ),
-                                      IconButton(
-                                          onPressed: () {
-                                            addMyAgendaDialog(context);
-                                          },
-                                          icon: const Icon(
-                                            Icons.add,
-                                            color: kPrimaryColor,
-                                          ))
+                                      SizedBox(height: 8),
+                                      Text(
+                                        "09:45 AM",
+                                        style: TextStyle(
+                                            color: kTitleSecondColor,
+                                            fontFamily: kCircularStdMedium,
+                                            fontSize: 13.2),
+                                      ),
                                     ],
                                   ),
-                                  const SizedBox(height: 12),
-                                  const Row(
+                                ),
+                                const SizedBox(width: 10),
+                                const Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: 19.8),
+                                    Text(
+                                      "Coffee with Aim Team",
+                                      style: TextStyle(
+                                          color: kPrimaryColor,
+                                          fontFamily: kCircularStdMedium,
+                                          fontSize: 15),
+                                    ),
+                                    SizedBox(height: 25),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.location_on_outlined,
+                                          color: kPrimaryColor,
+                                          size: 18,
+                                        ),
+                                        SizedBox(width: 2),
+                                        Text(
+                                          "Coral Lounge",
+                                          style: TextStyle(
+                                              color: kPrimaryColor,
+                                              fontSize: 13,
+                                              fontFamily: kCircularStdNormal),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                const SizedBox(height: 5),
+                                IconButton(
+                                  onPressed: () {
+                                    addMyAgendaDialog(context);
+                                  },
+                                  icon: const Icon(
+                                    Icons.add,
+                                    color: kPrimaryColor,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 5.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                        CrossAxisAlignment.center,
                                     children: [
-                                      Icon(
-                                        Icons.location_on_outlined,
-                                        color: kPrimaryColor,
-                                        size: 18,
-                                      ),
-                                      SizedBox(width: 3),
-                                      Text(
-                                        "To Be Announced",
+                                      const Text(
+                                        "+2   ",
                                         style: TextStyle(
                                             color: kPrimaryColor,
-                                            fontSize: 14,
-                                            fontFamily: kCircularStdNormal),
+                                            fontSize: 15,
+                                            fontFamily: kCircularStdMedium),
                                       ),
+                                      for (int i = 0; i < image.length; i++)
+                                        Align(
+                                          widthFactor: 0.3,
+                                          child: Image.asset(
+                                            image[i],
+                                            errorBuilder:
+                                                (context, error, stackTrace) =>
+                                                    Image.asset(
+                                              "assets/images/blank_profile.png",
+                                              fit: BoxFit.fill,
+                                            ),
+                                            scale: 2,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
                                     ],
                                   ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
                     ),
                   );
                 },
@@ -330,9 +368,11 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
     );
   }
 
-  builddetailsWidget(IconData icon, String value) {
+  builddetailsWidget(IconData icon, String value, String text) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+      padding: text == "Description"
+          ? const EdgeInsets.only(left: 15, top: 11, bottom: 18, right: 10)
+          : const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

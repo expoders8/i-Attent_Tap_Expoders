@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
 
+import '../ui/agenda_details/agenda_details.dart';
 import '../ui/auth/sign_in.dart';
 import '../ui/details/event_details.dart';
 import '../ui/home/tab_page.dart';
 import '../ui/myAgenda/create_activity.dart';
+import '../ui/notification/notification.dart';
 import '../ui/profile/qr_code.dart';
 
 part 'app_routes.dart';
@@ -33,6 +35,14 @@ class AppPages {
     GetPage(
       name: _Paths.eventDetailsPage,
       page: () => const EventDetailsPage(),
+    ),
+    GetPage(
+      name: _Paths.notificationPage,
+      page: () => const NotificationPage(),
+    ),
+    GetPage(
+      name: _Paths.agendaDetailsPage,
+      page: () => const AgendaDetailsPage(),
     ),
   ];
 }
