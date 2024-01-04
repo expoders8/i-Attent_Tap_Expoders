@@ -30,7 +30,7 @@ class ThemeProvider extends ChangeNotifier {
         fontFamily: fontFamilyMedium,
       ),
     ),
-    cardTheme: CardTheme(
+    cardTheme: const CardTheme(
       color: Colors.white, // Set the default card color to white
     ),
     listTileTheme: const ListTileThemeData(textColor: kPrimaryColor),

@@ -11,6 +11,7 @@ abstract class Routes {
   static const dateSectionWidget = _Paths.dateSectionWidget;
   static const notificationPage = _Paths.notificationPage;
   static const agendaDetailsPage = _Paths.agendaDetailsPage;
+  static const membersDetailsPage = _Paths.membersDetailsPage;
 }
 
 abstract class _Paths {
@@ -22,4 +23,5 @@ abstract class _Paths {
   static const dateSectionWidget = '/dateSectionWidget';
   static const notificationPage = '/notificationPage';
   static const agendaDetailsPage = '/agendaDetailsPage';
+  static const membersDetailsPage = '/membersDetailsPage';
 }

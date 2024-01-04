@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../home/bt3.dart';
 import '../home/home.dart';
+import '../myAgenda/create_activity.dart';
 import '../profile/profile.dart';
 import '../myAgenda/my_agenda.dart';
 import '../../controller/tab_controller.dart';
@@ -54,6 +55,7 @@ class _TabPageState extends State<TabPage> {
               children: const [
                 HomePage(),
                 MyAgendaPage(),
+                CreateActivity(),
                 Bt3Page(),
                 ProfilePage(),
               ],
@@ -105,6 +107,17 @@ class _TabPageState extends State<TabPage> {
                     padding: EdgeInsets.only(bottom: 4.0),
                     child: Icon(Icons.calendar_month_outlined)),
                 label: 'My Agenda',
+                backgroundColor: kBackGroundColor,
+              ),
+              BottomNavigationBarItem(
+                icon: Container(
+                  margin: const EdgeInsets.only(bottom: 4),
+                  child: Image.asset(
+                    "assets/icons/plus_icon.png",
+                    scale: 2.5,
+                  ),
+                ),
+                label: 'Add',
                 backgroundColor: kBackGroundColor,
               ),
               BottomNavigationBarItem(

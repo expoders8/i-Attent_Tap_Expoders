@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:confrance_expoders/app/routes/app_pages.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
-import '../../../config/constant/color_constant.dart';
 import '../../../config/constant/font_constant.dart';
+import '../../../config/constant/color_constant.dart';
 
 class AgendaDetailsPage extends StatefulWidget {
   const AgendaDetailsPage({super.key});
@@ -42,12 +43,6 @@ class _AgendaDetailsPageState extends State<AgendaDetailsPage> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Icon(
-                //   Icons.event,
-                //   color: kTitleColor,
-                //   size: 22,
-                // ),
-                // const SizedBox(width: 10),
                 SizedBox(
                   width: Get.width - 70,
                   child: const Text(
@@ -100,14 +95,19 @@ class _AgendaDetailsPageState extends State<AgendaDetailsPage> {
           Row(
             children: [
               for (int i = 0; i < image.length; i++)
-                Image.asset(
-                  image[i],
-                  errorBuilder: (context, error, stackTrace) => Image.asset(
-                    "assets/images/blank_profile.png",
-                    fit: BoxFit.fill,
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(Routes.membersDetailsPage);
+                  },
+                  child: Image.asset(
+                    image[i],
+                    errorBuilder: (context, error, stackTrace) => Image.asset(
+                      "assets/images/blank_profile.png",
+                      fit: BoxFit.fill,
+                    ),
+                    scale: 2,
+                    fit: BoxFit.cover,
                   ),
-                  scale: 2,
-                  fit: BoxFit.cover,
                 ),
             ],
           ),

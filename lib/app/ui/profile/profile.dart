@@ -31,10 +31,9 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
       ),
-      body: WillPopScope(
-        onWillPop: () {
-          return Future.value(false);
-        },
+      body: PopScope(
+        canPop: true,
+        onPopInvoked: (didPop) {},
         child: ListView(
           children: [
             Padding(

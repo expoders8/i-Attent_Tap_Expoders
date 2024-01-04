@@ -184,7 +184,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
               ),
               padding: const EdgeInsets.only(bottom: 5.0),
               child: ListView.builder(
-                padding: EdgeInsets.only(top: 0),
+                padding: const EdgeInsets.only(top: 0),
                 itemCount: 4,
                 itemBuilder: (context, index) {
                   return Padding(

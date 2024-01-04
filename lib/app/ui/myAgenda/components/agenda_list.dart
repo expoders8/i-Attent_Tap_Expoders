@@ -61,7 +61,7 @@ class _AgendaListPageState extends State<AgendaListPage> {
                                       topLeft: Radius.circular(14),
                                       bottomLeft: Radius.circular(15))),
                               padding: const EdgeInsets.only(
-                                  left: 10, right: 10, top: 20),
+                                  left: 10, right: 10, top: 15.7),
                               child: const Column(
                                 children: [
                                   Text(
@@ -87,7 +87,7 @@ class _AgendaListPageState extends State<AgendaListPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                SizedBox(height: 19.8),
+                                SizedBox(height: 15.7),
                                 Text(
                                   "Coffee with Aim Team",
                                   style: TextStyle(
@@ -121,6 +121,7 @@ class _AgendaListPageState extends State<AgendaListPage> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             IconButton(
+                              padding: EdgeInsets.only(bottom: 13),
                               onPressed: () {},
                               icon: const Icon(
                                 Icons.minimize_outlined,

@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../../models/event_model.dart';
 import '../../../config/constant/color_constant.dart';
 
 class DateSectionWidget extends StatefulWidget {

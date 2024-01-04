@@ -27,7 +27,7 @@ class _MyAgendaPageState extends State<MyAgendaPage> {
           Container(
             width: Get.width,
             padding:
-                const EdgeInsets.only(top: 40, left: 15, right: 15, bottom: 10),
+                const EdgeInsets.only(top: 50, left: 15, right: 15, bottom: 10),
             color: kSelectedIconColor,
             child: Container(
               height: 50,
