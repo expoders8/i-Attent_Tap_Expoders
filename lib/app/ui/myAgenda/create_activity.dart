@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../widgets/date_time_picker.dart';
 import '../../../config/constant/font_constant.dart';
@@ -38,18 +37,10 @@ class _CreateActivityState extends State<CreateActivity> {
       },
       child: Scaffold(
         appBar: AppBar(
-            title: const Text("Create Activity"),
-            centerTitle: true,
-            leading: IconButton(
-              onPressed: () {
-                Get.back();
-              },
-              icon: const Icon(
-                Icons.arrow_back_ios_new_sharp,
-                color: kPrimaryColor,
-                size: 19,
-              ),
-            )),
+          title: const Text("Create Activity"),
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+        ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Form(

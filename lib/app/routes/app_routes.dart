@@ -12,6 +12,7 @@ abstract class Routes {
   static const notificationPage = _Paths.notificationPage;
   static const agendaDetailsPage = _Paths.agendaDetailsPage;
   static const membersDetailsPage = _Paths.membersDetailsPage;
+  static const registerAttendeesPage = _Paths.registerAttendeesPage;
 }
 
 abstract class _Paths {
@@ -24,4 +25,5 @@ abstract class _Paths {
   static const notificationPage = '/notificationPage';
   static const agendaDetailsPage = '/agendaDetailsPage';
   static const membersDetailsPage = '/membersDetailsPage';
+  static const registerAttendeesPage = '/registerAttendeesPage';
 }

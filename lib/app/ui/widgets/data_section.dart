@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -14,6 +15,8 @@ class DateSectionWidget extends StatefulWidget {
 class _DateSectionWidgetState extends State<DateSectionWidget> {
   CalendarFormat _calendarFormat = CalendarFormat.week;
   DateTime _selectedDay = DateTime.now();
+  DateTime todayDate = DateTime.now();
+  bool focuseToday = false;
 
   @override
   void initState() {
@@ -29,6 +32,17 @@ class _DateSectionWidgetState extends State<DateSectionWidget> {
     if (!isSameDay(_selectedDay, selectedDay)) {
       setState(() {
         _selectedDay = selectedDay;
+      });
+    }
+    String formattedDate = DateFormat('dd/MM/yyyy').format(_selectedDay);
+    String today = DateFormat('dd/MM/yyyy').format(todayDate);
+    if (formattedDate == today) {
+      setState(() {
+        focuseToday = false;
+      });
+    } else {
+      setState(() {
+        focuseToday = true;
       });
     }
 
@@ -51,13 +65,52 @@ class _DateSectionWidgetState extends State<DateSectionWidget> {
         daysOfWeekStyle: const DaysOfWeekStyle(
             weekdayStyle: TextStyle(color: kTitleColor),
             weekendStyle: TextStyle(color: kTextSecondaryColor)),
-        headerStyle: const HeaderStyle(
+        headerStyle: HeaderStyle(
           formatButtonVisible: false,
           titleCentered: true,
           leftChevronVisible: true,
           rightChevronVisible: true,
-          titleTextStyle: TextStyle(color: kTitleColor, fontSize: 15),
-          headerPadding: EdgeInsets.symmetric(horizontal: 1, vertical: 14),
+          titleTextStyle: const TextStyle(color: kTitleColor, fontSize: 15),
+
+          headerPadding: const EdgeInsets.symmetric(horizontal: 1),
+
+          leftChevronIcon: const Row(
+            children: [
+              Icon(
+                Icons.chevron_left,
+              ),
+              SizedBox(
+                height: 48,
+                width: 48,
+              ),
+            ],
+          ), // Custom right icon
+          rightChevronIcon: Row(
+            children: [
+              focuseToday
+                  ? IconButton(
+                      focusColor: kBackGroundColor,
+                      hoverColor: kBackGroundColor,
+                      highlightColor: kBackGroundColor,
+                      onPressed: () {
+                        setState(() {
+                          _selectedDay = DateTime.now();
+                          focuseToday = false;
+                        });
+                      },
+                      icon: const Icon(
+                        Icons.calendar_month,
+                      ),
+                    )
+                  : const SizedBox(
+                      height: 48,
+                      width: 48,
+                    ),
+              const Icon(
+                Icons.chevron_right,
+              ),
+            ],
+          ), // Custom right icon
         ),
         calendarStyle: CalendarStyle(
           outsideDaysVisible: false,
@@ -89,6 +142,15 @@ class _DateSectionWidgetState extends State<DateSectionWidget> {
                 : CalendarFormat.week;
           });
         },
+        onPageChanged: ((focusedDay) {
+          String formattedpageDate = DateFormat('MM').format(focusedDay);
+          String todayPage = DateFormat('MM').format(todayDate);
+          if (formattedpageDate == todayPage) {
+            focuseToday = true;
+          } else {
+            focuseToday = true;
+          }
+        }),
       ),
     );
   }

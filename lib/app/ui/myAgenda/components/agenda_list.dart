@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
-import '../../../../config/constant/color_constant.dart';
-import '../../../../config/constant/font_constant.dart';
 import '../../../routes/app_pages.dart';
+import '../../../../config/constant/font_constant.dart';
+import '../../../../config/constant/color_constant.dart';
 
 class AgendaListPage extends StatefulWidget {
   const AgendaListPage({super.key});
@@ -35,8 +35,8 @@ class _AgendaListPageState extends State<AgendaListPage> {
                 Get.toNamed(Routes.agendaDetailsPage);
               },
               child: Padding(
-                padding: const EdgeInsets.only(
-                    right: 10.0, left: 10.0, top: 5.0, bottom: 5.0),
+                padding:
+                    const EdgeInsets.only(right: 10.0, left: 10.0, top: 5.0),
                 child: Card(
                   elevation: 7,
                   shadowColor: const Color.fromARGB(50, 0, 0, 0),
@@ -54,7 +54,7 @@ class _AgendaListPageState extends State<AgendaListPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              height: 110,
+                              height: 102,
                               decoration: const BoxDecoration(
                                   color: kBackGroundColor,
                                   borderRadius: BorderRadius.only(
@@ -95,7 +95,7 @@ class _AgendaListPageState extends State<AgendaListPage> {
                                       fontFamily: kCircularStdMedium,
                                       fontSize: 15),
                                 ),
-                                SizedBox(height: 25),
+                                SizedBox(height: 27),
                                 Row(
                                   children: [
                                     Icon(
@@ -120,27 +120,32 @@ class _AgendaListPageState extends State<AgendaListPage> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            IconButton(
-                              padding: EdgeInsets.only(bottom: 13),
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.minimize_outlined,
-                                color: kPrimaryColor,
+                            const SizedBox(height: 8),
+                            GestureDetector(
+                              onTap: () {},
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                width: 40,
+                                height: 40,
+                                child: Image.asset(
+                                  'assets/icons/calendar_minus.png',
+                                  color: const Color(0xFF415880),
+                                ),
                               ),
                             ),
-                            const SizedBox(height: 5),
                             Padding(
-                              padding: const EdgeInsets.only(right: 5.0),
+                              padding: const EdgeInsets.only(right: 1.0),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  const Text(
-                                    "+2   ",
-                                    style: TextStyle(
-                                        color: kPrimaryColor,
-                                        fontSize: 15,
-                                        fontFamily: kCircularStdMedium),
+                                  const Padding(
+                                    padding: EdgeInsets.only(right: 8.0),
+                                    child: Text(
+                                      "+2 ",
+                                      style: TextStyle(
+                                          color: kPrimaryColor,
+                                          fontSize: 13,
+                                          fontFamily: kCircularStdBook),
+                                    ),
                                   ),
                                   for (int i = 0; i < image.length; i++)
                                     Align(

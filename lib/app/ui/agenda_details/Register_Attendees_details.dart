@@ -1,21 +1,22 @@
-import 'package:confrance_expoders/app/ui/home/tab_page.dart';
-import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+// ignore_for_file: file_names
+
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:dotted_border/dotted_border.dart';
 
-import '../../../config/constant/color_constant.dart';
-import '../../../config/constant/font_constant.dart';
 import '../../controller/tab_controller.dart';
+import '../../../config/constant/font_constant.dart';
+import '../../../config/constant/color_constant.dart';
 
-class MembersDetailsPage extends StatefulWidget {
-  const MembersDetailsPage({super.key});
+class RegisterAttendeesPage extends StatefulWidget {
+  const RegisterAttendeesPage({super.key});
 
   @override
-  State<MembersDetailsPage> createState() => _MembersDetailsPageState();
+  State<RegisterAttendeesPage> createState() => _MembersDetailsPageState();
 }
 
-class _MembersDetailsPageState extends State<MembersDetailsPage> {
+class _MembersDetailsPageState extends State<RegisterAttendeesPage> {
   final controller = Get.put(TabCountController());
   @override
   Widget build(BuildContext context) {
@@ -164,7 +165,7 @@ class _MembersDetailsPageState extends State<MembersDetailsPage> {
                     onPressed: () {
                       Get.back();
                       Get.back();
-                      controller.changeTabIndex(2);
+                      controller.changeTabIndex(3);
                     }),
               ),
             )

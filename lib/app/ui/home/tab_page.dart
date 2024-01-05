@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 import '../home/bt3.dart';
 import '../home/home.dart';
-import '../myAgenda/create_activity.dart';
 import '../profile/profile.dart';
 import '../myAgenda/my_agenda.dart';
+import '../myAgenda/create_activity.dart';
 import '../../controller/tab_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
@@ -30,13 +30,13 @@ class _TabPageState extends State<TabPage> {
   final TextStyle unselectedLabelStyle = const TextStyle(
       color: kTextSecondaryColor,
       fontWeight: FontWeight.w500,
-      fontSize: 12,
+      fontSize: 11,
       fontFamily: kCircularStdNormal);
 
   final TextStyle selectedLabelStyle = const TextStyle(
       color: kWhiteColor,
       fontWeight: FontWeight.w500,
-      fontSize: 12,
+      fontSize: 11,
       fontFamily: kCircularStdNormal);
 
   @override
@@ -96,7 +96,7 @@ class _TabPageState extends State<TabPage> {
                     color: landingPageController.tabIndex.value == 0
                         ? kSelectedIconColor
                         : kIconColor,
-                    scale: 1.6,
+                    scale: 1.7,
                   ),
                 ),
                 label: 'Home',
@@ -105,19 +105,22 @@ class _TabPageState extends State<TabPage> {
               const BottomNavigationBarItem(
                 icon: Padding(
                     padding: EdgeInsets.only(bottom: 4.0),
-                    child: Icon(Icons.calendar_month_outlined)),
+                    child: Icon(
+                      Icons.calendar_month_outlined,
+                      size: 22,
+                    )),
                 label: 'My Agenda',
                 backgroundColor: kBackGroundColor,
               ),
               BottomNavigationBarItem(
                 icon: Container(
-                  margin: const EdgeInsets.only(bottom: 4),
+                  margin: const EdgeInsets.only(top: 5.5),
                   child: Image.asset(
                     "assets/icons/plus_icon.png",
-                    scale: 2.5,
+                    scale: 2.4,
                   ),
                 ),
-                label: 'Add',
+                label: '',
                 backgroundColor: kBackGroundColor,
               ),
               BottomNavigationBarItem(
@@ -125,10 +128,10 @@ class _TabPageState extends State<TabPage> {
                   padding: const EdgeInsets.only(bottom: 8.0, top: 5),
                   child: Image.asset(
                     "assets/icons/message_icon.png",
-                    color: landingPageController.tabIndex.value == 2
+                    color: landingPageController.tabIndex.value == 3
                         ? kSelectedIconColor
                         : kIconColor,
-                    scale: 1.6,
+                    scale: 1.7,
                   ),
                 ),
                 label: 'Message',
