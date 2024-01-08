@@ -1,3 +1,4 @@
+import 'package:confrance_expoders/app/ui/home/tab_page.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -100,7 +101,11 @@ class _HomePageState extends State<HomePage> {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                Get.toNamed(Routes.eventDetailsPage);
+                Get.offAll(
+                  () => const TabPage(
+                    screenDef: "Details",
+                  ),
+                );
               },
               child: Column(
                 children: [

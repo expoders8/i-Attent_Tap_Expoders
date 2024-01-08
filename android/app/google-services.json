@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "456243249877",
+    "project_id": "i-attend-tap",
+    "storage_bucket": "i-attend-tap.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:456243249877:android:cbc5fb7015c0f88463185c",
+        "android_client_info": {
+          "package_name": "com.tnetic.tap"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-QVHxOK0-tLHcayOpXSmggWKVBBYex10"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

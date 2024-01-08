@@ -2,8 +2,11 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
+import '../../services/fcm_notification_service.dart';
+import '../details/event_details.dart';
 import '../home/bt3.dart';
 import '../home/home.dart';
+import '../message/message_page.dart';
 import '../profile/profile.dart';
 import '../myAgenda/my_agenda.dart';
 import '../myAgenda/create_activity.dart';
@@ -12,20 +15,32 @@ import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 
 class TabPage extends StatefulWidget {
-  final String? tabIndexSubscription;
+  final String? screenDef;
   final int? selectedTabIndex;
-  const TabPage(
-      {super.key, this.tabIndexSubscription, this.selectedTabIndex = 0});
+  const TabPage({super.key, this.screenDef, this.selectedTabIndex = 0});
 
   @override
   State<TabPage> createState() => _TabPageState();
 }
 
 class _TabPageState extends State<TabPage> {
-  // FCMNotificationServices fCMNotificationServices = FCMNotificationServices();
+  FCMNotificationServices fCMNotificationServices = FCMNotificationServices();
   final controller = Get.put(TabCountController());
   String authToken = "";
   int accessLevel = 1;
+  @override
+  void initState() {
+    controller.changeTabIndex(widget.selectedTabIndex!.toInt());
+    fCMNotificationServices.requestNotificationPermission();
+    // notificationServices.isTokenRefresh();
+    fCMNotificationServices.firebaseInit();
+    fCMNotificationServices.getDeviceToken().then(
+          (value) => print(
+            value,
+          ),
+        );
+    super.initState();
+  }
 
   final TextStyle unselectedLabelStyle = const TextStyle(
       color: kTextSecondaryColor,
@@ -52,12 +67,14 @@ class _TabPageState extends State<TabPage> {
           body: Obx(
             () => IndexedStack(
               index: tabCountController.tabIndex.value,
-              children: const [
-                HomePage(),
-                MyAgendaPage(),
-                CreateActivity(),
-                Bt3Page(),
-                ProfilePage(),
+              children: [
+                widget.screenDef == "Details"
+                    ? const EventDetailsPage()
+                    : const HomePage(),
+                const MyAgendaPage(),
+                const CreateActivity(),
+                const MessagePage(),
+                const ProfilePage(),
               ],
             ),
           ),
@@ -79,7 +96,17 @@ class _TabPageState extends State<TabPage> {
             elevation: 1,
             showUnselectedLabels: true,
             showSelectedLabels: true,
-            onTap: landingPageController.changeTabIndex,
+            onTap: ((value) {
+              landingPageController.changeTabIndex(value);
+              if (widget.screenDef == "Details") {
+                Get.offAll(
+                  () => TabPage(
+                    screenDef: "Home",
+                    selectedTabIndex: value,
+                  ),
+                );
+              }
+            }),
             currentIndex: landingPageController.tabIndex.value,
             backgroundColor: kBackGroundColor,
             unselectedItemColor: kIconColor,
@@ -141,7 +168,7 @@ class _TabPageState extends State<TabPage> {
                   padding: const EdgeInsets.only(bottom: 8.0, top: 3),
                   child: Image.asset(
                     "assets/icons/profile_icon.png",
-                    color: landingPageController.tabIndex.value == 3
+                    color: landingPageController.tabIndex.value == 4
                         ? kSelectedIconColor
                         : kIconColor,
                     scale: 1.5,

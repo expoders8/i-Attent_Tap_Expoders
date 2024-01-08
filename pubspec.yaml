@@ -42,11 +42,17 @@ dependencies:
   dotted_border: ^2.1.0
   cloud_firestore: ^4.2.0
   firebase_auth: ^4.15.3
+  firebase_core: ^2.24.2
+  firebase_messaging: ^14.7.10
   emoji_picker_flutter: ^1.5.1
   speech_to_text: ^6.1.1
   avatar_glow: ^2.0.2
   qr_flutter: ^4.1.0
   flutter_datetime_picker_bdaya: ^3.0.2
+  http: ^1.1.2
+  flutter_overlay_loader: ^2.0.0
+  lottie: ^2.7.0
+  flutter_local_notifications: ^16.3.0
 
 dev_dependencies:
   flutter_test:

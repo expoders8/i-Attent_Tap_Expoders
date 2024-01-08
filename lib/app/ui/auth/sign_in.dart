@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../../config/provider/loader_provider.dart';
 import '../auth/sing_in_footer.dart';
 import '../../routes/app_pages.dart';
 import '../widgets/custom_textfield.dart';
@@ -18,10 +21,10 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final _loginFormKey = GlobalKey<FormState>();
-  final controller = Get.put(SignInScreenX());
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final signInController = Get.put(SignInScreenX());
+  TextEditingController organizationController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   bool isFormSubmitted = false;
 
   @override
@@ -82,7 +85,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               CustomTextFormField(
                                 hintText: 'Enter Your Organization ID',
                                 maxLines: 1,
-                                ctrl: emailController,
+                                ctrl: organizationController,
                                 name: "organizationid",
                                 prefixIcon: const Icon(
                                   Icons.group,
@@ -179,7 +182,14 @@ class _SignInScreenState extends State<SignInScreen> {
     FocusScope.of(context).requestFocus(FocusNode());
     Future.delayed(const Duration(milliseconds: 100), () async {
       if (_loginFormKey.currentState!.validate()) {
-        Get.toNamed(Routes.tabPage);
+        signInController.organizationId(userNameController.text);
+        signInController.username(organizationController.text);
+        signInController.password(passwordController.text);
+        // LoaderX.show(context, 60.0, 60.0);
+        signInController.login();
+        userNameController.clear();
+        organizationController.clear();
+        passwordController.clear();
       }
     });
   }

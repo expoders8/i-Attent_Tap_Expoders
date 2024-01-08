@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:avatar_glow/avatar_glow.dart';
@@ -152,13 +153,6 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           actions: [
             IconButton(
-              icon: const Image(
-                image: AssetImage("assets/icons/call.png"),
-                width: 18,
-              ),
-              onPressed: callTypeBottomSheet,
-            ),
-            IconButton(
               icon: const Icon(
                 Icons.more_vert,
                 color: kTextSecondaryColor,
@@ -187,109 +181,110 @@ class _ChatScreenState extends State<ChatScreen> {
         body: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Expanded(
-              child: StreamBuilder<List<Message>>(
-                stream: DBServices().getMessage(widget.user!.uid!),
-                builder: (context, s1) {
-                  if (s1.hasData) {
-                    return StreamBuilder<List<Message>>(
-                      stream: DBServices().getMessage(widget.user!.uid!, false),
-                      builder: (context, s2) {
-                        if (s2.hasData) {
-                          var messages = [...s1.data!, ...s2.data!];
-                          messages.sort(
-                              (i, j) => i.createAt!.compareTo(j.createAt!));
-                          messages = messages.reversed.toList();
-                          return messages.isEmpty
-                              ? const Center(
-                                  child: Text("No Messages"),
-                                )
-                              : ListView.builder(
-                                  controller: _controller,
-                                  reverse: true,
-                                  itemCount: messages.length,
-                                  itemBuilder: (context, index) {
-                                    final image = widget.user!.image;
-                                    final msg = messages[index];
-                                    final date = DateFormat('dd-MM-yyyy')
-                                        .format(DateTime.parse(messages[index]
-                                            .createAt!
-                                            .toDate()
-                                            .toString()));
-                                    final nextDate = messages.length - 1 >=
-                                            index + 1
-                                        ? DateFormat('dd-MM-yyyy').format(
-                                            DateTime.parse(messages[index + 1]
-                                                .createAt!
-                                                .toDate()
-                                                .toString()))
-                                        : '';
+            Expanded(child: ListTile()),
+            // Expanded(
+            //   child: StreamBuilder<List<Message>>(
+            //     stream: DBServices().getMessage(widget.user!.uid!),
+            //     builder: (context, s1) {
+            //       if (s1.hasData) {
+            //         return StreamBuilder<List<Message>>(
+            //           stream: DBServices().getMessage(widget.user!.uid!, false),
+            //           builder: (context, s2) {
+            //             if (s2.hasData) {
+            //               var messages = [...s1.data!, ...s2.data!];
+            //               messages.sort(
+            //                   (i, j) => i.createAt!.compareTo(j.createAt!));
+            //               messages = messages.reversed.toList();
+            //               return messages.isEmpty
+            //                   ? const Center(
+            //                       child: Text("No Messages"),
+            //                     )
+            //                   : ListView.builder(
+            //                       controller: _controller,
+            //                       reverse: true,
+            //                       itemCount: messages.length,
+            //                       itemBuilder: (context, index) {
+            //                         final image = widget.user!.image;
+            //                         final msg = messages[index];
+            //                         final date = DateFormat('dd-MM-yyyy')
+            //                             .format(DateTime.parse(messages[index]
+            //                                 .createAt!
+            //                                 .toDate()
+            //                                 .toString()));
+            //                         final nextDate = messages.length - 1 >=
+            //                                 index + 1
+            //                             ? DateFormat('dd-MM-yyyy').format(
+            //                                 DateTime.parse(messages[index + 1]
+            //                                     .createAt!
+            //                                     .toDate()
+            //                                     .toString()))
+            //                             : '';
 
-                                    isSame = date == nextDate ? true : false;
-                                    // if (index != 0) {
-                                    //   //isSame = lastDate == date ? true : false;
-                                    //   isSame = date == nextDate ? true : false;
-                                    // }
-                                    lastDate = date;
+            //                         isSame = date == nextDate ? true : false;
+            //                         // if (index != 0) {
+            //                         //   //isSame = lastDate == date ? true : false;
+            //                         //   isSame = date == nextDate ? true : false;
+            //                         // }
+            //                         lastDate = date;
 
-                                    return Container(
-                                      margin: const EdgeInsets.only(bottom: 10),
-                                      child: Column(
-                                        children: [
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          !isSame
-                                              ? Container(
-                                                  padding:
-                                                      const EdgeInsets.all(3),
-                                                  decoration: BoxDecoration(
-                                                      color: kDividerColor,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15)),
-                                                  child: Text(
-                                                    date,
-                                                    style: const TextStyle(
-                                                        color: kBlack54Color,
-                                                        fontWeight:
-                                                            FontWeight.w200),
-                                                  ),
-                                                )
-                                              : Container(),
-                                          !isSame
-                                              ? const SizedBox(
-                                                  height: 5,
-                                                )
-                                              : Container(),
-                                          MessageComponent(
-                                            msg: msg,
-                                            image: image,
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                );
-                        } else {
-                          return const Center(
-                            child: CircularProgressIndicator(
-                              color: kPrimaryColor,
-                            ),
-                          );
-                        }
-                      },
-                    );
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        color: kPrimaryColor,
-                      ),
-                    );
-                  }
-                },
-              ),
-            ),
+            //                         return Container(
+            //                           margin: const EdgeInsets.only(bottom: 10),
+            //                           child: Column(
+            //                             children: [
+            //                               const SizedBox(
+            //                                 height: 5,
+            //                               ),
+            //                               !isSame
+            //                                   ? Container(
+            //                                       padding:
+            //                                           const EdgeInsets.all(3),
+            //                                       decoration: BoxDecoration(
+            //                                           color: kDividerColor,
+            //                                           borderRadius:
+            //                                               BorderRadius.circular(
+            //                                                   15)),
+            //                                       child: Text(
+            //                                         date,
+            //                                         style: const TextStyle(
+            //                                             color: kBlack54Color,
+            //                                             fontWeight:
+            //                                                 FontWeight.w200),
+            //                                       ),
+            //                                     )
+            //                                   : Container(),
+            //                               !isSame
+            //                                   ? const SizedBox(
+            //                                       height: 5,
+            //                                     )
+            //                                   : Container(),
+            //                               MessageComponent(
+            //                                 msg: msg,
+            //                                 image: image,
+            //                               ),
+            //                             ],
+            //                           ),
+            //                         );
+            //                       },
+            //                     );
+            //             } else {
+            //               return const Center(
+            //                 child: CircularProgressIndicator(
+            //                   color: kPrimaryColor,
+            //                 ),
+            //               );
+            //             }
+            //           },
+            //         );
+            //       } else {
+            //         return const Center(
+            //           child: CircularProgressIndicator(
+            //             color: kPrimaryColor,
+            //           ),
+            //         );
+            //       }
+            //     },
+            //   ),
+            // ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -302,7 +297,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
                 Container(
-                  width: size.width - 20,
+                  width: Get.width,
+                  height: 50,
                   margin: const EdgeInsets.only(left: 2, right: 2, bottom: 8),
                   child: TextFormField(
                     controller: msgController,
@@ -332,50 +328,45 @@ class _ChatScreenState extends State<ChatScreen> {
                           );
                         },
                       ),
-                      suffixIcon: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
+                      suffixIcon:
+                          // IconButton(
+                          //   icon: const Image(
+                          //     image: AssetImage("assets/icons/emoji.png"),
+                          //     width: 22,
+                          //   ),
+                          //   onPressed: () {
+                          //     focusNode.unfocus();
+                          //     focusNode.canRequestFocus = false;
+                          //     setState(() {
+                          //       show = !show;
+                          //     });
+                          //   },
+                          // ),
                           IconButton(
-                            icon: const Image(
-                              image: AssetImage("assets/icons/emoji.png"),
-                              width: 22,
-                            ),
-                            onPressed: () {
-                              focusNode.unfocus();
-                              focusNode.canRequestFocus = false;
-                              setState(() {
-                                show = !show;
-                              });
-                            },
-                          ),
-                          IconButton(
-                            icon: sendButton
-                                ? const Icon(
-                                    Icons.send,
-                                    color: kPrimaryColor,
-                                  )
-                                : AvatarGlow(
-                                    animate: islisteing,
-                                    repeat: true,
-                                    endRadius: 50,
-                                    glowColor: kTextSecondaryColor,
-                                    duration:
-                                        const Duration(milliseconds: 1000),
-                                    child: const Image(
-                                      image: AssetImage(
-                                          "assets/icons/microphone.png"),
-                                      width: 15,
-                                    ),
-                                  ),
-                            onPressed: () async {
-                              if (sendButton) {
-                                sendMessageOnClick();
-                              } else {
-                                listen();
-                              }
-                            },
-                          ),
-                        ],
+                        icon: sendButton
+                            ? const Icon(
+                                Icons.send,
+                                color: kPrimaryColor,
+                              )
+                            : AvatarGlow(
+                                animate: islisteing,
+                                repeat: true,
+                                endRadius: 50,
+                                glowColor: kTextSecondaryColor,
+                                duration: const Duration(milliseconds: 1000),
+                                child: const Image(
+                                  image:
+                                      AssetImage("assets/icons/microphone.png"),
+                                  width: 15,
+                                ),
+                              ),
+                        onPressed: () async {
+                          // if (sendButton) {
+                          //   sendMessageOnClick();
+                          // } else {
+                          //   listen();
+                          // }
+                        },
                       ),
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none,
@@ -567,7 +558,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                       onTap: () async {
                         Navigator.of(context).pop();
-                        await DBServices().deleteMessages(widget.user!.uid!);
+                        // await DBServices().deleteMessages(widget.user!.uid!);
                       },
                     )
                   ],

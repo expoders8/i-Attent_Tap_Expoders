@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
+import '../home/tab_page.dart';
 import '../widgets/data_section.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
@@ -28,7 +29,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
             children: [
               Container(
                 width: Get.width,
-                height: 190,
+                height: 140,
                 foregroundDecoration: const BoxDecoration(
                   color: kWhiteColor,
                   gradient: LinearGradient(
@@ -54,7 +55,11 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                   padding: const EdgeInsets.only(left: 8.0, bottom: 10),
                   child: IconButton(
                     onPressed: () {
-                      Get.back();
+                      Get.offAll(
+                        () => const TabPage(
+                          screenDef: "Home",
+                        ),
+                      );
                     },
                     icon: const Icon(
                       Icons.arrow_back_ios,
@@ -289,6 +294,9 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
           ),
         ],
       ),
+      // bottomNavigationBar: const TabPage(
+      //   screenDef: "Details",
+      // ),
     );
   }
 
@@ -363,7 +371,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
     return SliverAppBar(
       automaticallyImplyLeading: false,
       backgroundColor: kBackGroundColor,
-      expandedHeight: Platform.isAndroid ? 210 : 145,
+      expandedHeight: Platform.isAndroid ? 172 : 145,
       floating: false,
       flexibleSpace: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
@@ -383,19 +391,19 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                   thickness: 0.8,
                   color: kDividerColor,
                 ),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(17, 3, 0, 5),
-                  child: const Text(
-                    "About",
-                    style: TextStyle(
-                      color: kTitleColor,
-                      fontSize: 17,
-                      fontFamily: kCircularStdBold,
-                    ),
-                  ),
-                ),
+                // Container(
+                //   padding: const EdgeInsets.fromLTRB(17, 3, 0, 5),
+                //   child: const Text(
+                //     "About",
+                //     style: TextStyle(
+                //       color: kTitleColor,
+                //       fontSize: 17,
+                //       fontFamily: kCircularStdBold,
+                //     ),
+                //   ),
+                // ),
                 builddetailsWidget(
-                    Icons.description, "Lavaska Center", "Description"),
+                    Icons.description, "Lorem ipsum", "Description"),
               ],
             ),
           ),
