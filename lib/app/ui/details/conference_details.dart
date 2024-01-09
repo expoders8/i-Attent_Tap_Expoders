@@ -323,7 +323,7 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
         elevation: 5,
         titleTextStyle: const TextStyle(fontSize: 19, color: kRedColor),
         content: const Text("Are you sure want to Add in My Agenda?"),
-        contentPadding: const EdgeInsets.only(left: 25, top: 10),
+        contentPadding: const EdgeInsets.only(left: 25, top: 10, right: 20),
         actions: <Widget>[
           TextButton(
             onPressed: () async {
@@ -382,7 +382,7 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
     return SliverAppBar(
       automaticallyImplyLeading: false,
       backgroundColor: kBackGroundColor,
-      expandedHeight: Platform.isAndroid ? 172 : 145,
+      expandedHeight: Platform.isAndroid ? 172 : 153,
       floating: false,
       flexibleSpace: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
@@ -422,16 +422,4 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
       }),
     );
   }
-
-  // SliverAppBar createSilverAppBar2(context) {
-  //   return const SliverAppBar(
-  //     titleSpacing: 0,
-  //     scrolledUnderElevation: 3,
-  //     backgroundColor: kBackGroundColor,
-  //     automaticallyImplyLeading: false,
-  //     toolbarHeight: 100,
-  //     pinned: true,
-  //     title: SizedBox(height: 105, child: Text("tetet")),
-  //   );
-  // }
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +58,7 @@ class _DateSectionWidgetState extends State<DateSectionWidget> {
       width: Get.width,
       child: TableCalendar(
         firstDay: DateTime.utc(2010, 10, 16),
+        rowHeight: 60,
         lastDay: DateTime.utc(2030, 3, 14),
         focusedDay: _selectedDay,
         selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
@@ -117,12 +120,12 @@ class _DateSectionWidgetState extends State<DateSectionWidget> {
           defaultTextStyle: const TextStyle(color: kTitleColor),
           defaultDecoration: BoxDecoration(
             color: kWhiteColor,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(Platform.isIOS ? 20 : 30),
           ),
           selectedDecoration: BoxDecoration(
             color: kSelectedIconColor,
             shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(Platform.isIOS ? 20 : 30),
           ),
           holidayTextStyle: const TextStyle(color: kTextSecondaryColor),
           selectedTextStyle: const TextStyle(color: kWhiteColor),

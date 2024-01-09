@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../../services/fcm_notification_service.dart';
 import '../details/conference_details.dart';
-import '../details/event_details.dart';
 import '../home/home.dart';
 import '../message/message_page.dart';
 import '../profile/profile.dart';
@@ -85,8 +84,9 @@ class _TabPageState extends State<TabPage> {
 
   buildBottomNavigationMenu(context, landingPageController) {
     return Obx(
-      () => SizedBox(
-        height: Platform.isIOS ? 97 : 68,
+      () => Container(
+        margin: EdgeInsets.only(top: Platform.isIOS ? 8 : 0),
+        height: Platform.isIOS ? 100 : 68,
         child: Theme(
           data: ThemeData(
             splashColor: kTransparentColor,
@@ -131,7 +131,7 @@ class _TabPageState extends State<TabPage> {
               ),
               const BottomNavigationBarItem(
                 icon: Padding(
-                    padding: EdgeInsets.only(bottom: 4.0),
+                    padding: EdgeInsets.only(bottom: 5.0),
                     child: Icon(
                       Icons.calendar_month_outlined,
                       size: 22,
