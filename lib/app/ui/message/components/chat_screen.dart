@@ -124,7 +124,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
@@ -181,7 +180,55 @@ class _ChatScreenState extends State<ChatScreen> {
         body: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Expanded(child: ListTile()),
+            Flexible(
+                child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 3, horizontal: 11),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      SizedBox(height: Get.height - 250),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 10),
+                        decoration: const BoxDecoration(
+                          color: kButtonColor,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(12),
+                            topRight: Radius.circular(12),
+                            bottomLeft: Radius.circular(12),
+                            bottomRight: Radius.circular(0),
+                          ),
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 30, maxWidth: Get.width / 1.4),
+                        child: const Text(
+                          "Hii",
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                              color: kWhiteColor,
+                              fontSize: 16,
+                              fontFamily: kCircularStdNormal,
+                              fontWeight: FontWeight.w300),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 2,
+                      ),
+                      const Text(
+                        "8:00",
+                        style:
+                            TextStyle(color: kTextSecondaryColor, fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            )),
             // Expanded(
             //   child: StreamBuilder<List<Message>>(
             //     stream: DBServices().getMessage(widget.user!.uid!),
@@ -309,6 +356,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     minLines: 1,
                     cursorColor: kPrimaryColor,
                     onChanged: (value) {
+                      setState(() {
+                        islisteing = false;
+                      });
                       isAllSpaces(value);
                     },
                     decoration: InputDecoration(
@@ -328,45 +378,52 @@ class _ChatScreenState extends State<ChatScreen> {
                           );
                         },
                       ),
-                      suffixIcon:
-                          // IconButton(
-                          //   icon: const Image(
-                          //     image: AssetImage("assets/icons/emoji.png"),
-                          //     width: 22,
-                          //   ),
-                          //   onPressed: () {
-                          //     focusNode.unfocus();
-                          //     focusNode.canRequestFocus = false;
-                          //     setState(() {
-                          //       show = !show;
-                          //     });
-                          //   },
-                          // ),
+                      suffixIcon: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
                           IconButton(
-                        icon: sendButton
-                            ? const Icon(
-                                Icons.send,
-                                color: kPrimaryColor,
-                              )
-                            : AvatarGlow(
-                                animate: islisteing,
-                                repeat: true,
-                                endRadius: 50,
-                                glowColor: kTextSecondaryColor,
-                                duration: const Duration(milliseconds: 1000),
-                                child: const Image(
-                                  image:
-                                      AssetImage("assets/icons/microphone.png"),
-                                  width: 15,
-                                ),
-                              ),
-                        onPressed: () async {
-                          // if (sendButton) {
-                          //   sendMessageOnClick();
-                          // } else {
-                          //   listen();
-                          // }
-                        },
+                            icon: const Image(
+                              image: AssetImage("assets/icons/emoji.png"),
+                              width: 22,
+                            ),
+                            onPressed: () {
+                              focusNode.unfocus();
+                              focusNode.canRequestFocus = false;
+                              setState(() {
+                                show = !show;
+                              });
+                            },
+                          ),
+                          IconButton(
+                            icon: sendButton
+                                ? const Icon(
+                                    Icons.send,
+                                    color: kPrimaryColor,
+                                  )
+                                : SizedBox(
+                                    width: 30,
+                                    height: 30,
+                                    child: AvatarGlow(
+                                        animate: islisteing,
+                                        repeat: true,
+                                        endRadius: 50,
+                                        glowColor: kTextSecondaryColor,
+                                        duration:
+                                            const Duration(milliseconds: 1000),
+                                        child: Image.asset(
+                                          "assets/icons/microphone.png",
+                                          scale: 2.3,
+                                        )),
+                                  ),
+                            onPressed: () async {
+                              // if (sendButton) {
+                              //   sendMessageOnClick();
+                              // } else {
+                              //   listen();
+                              // }
+                            },
+                          ),
+                        ],
                       ),
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none,
@@ -558,7 +615,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                       onTap: () async {
                         Navigator.of(context).pop();
-                        // await DBServices().deleteMessages(widget.user!.uid!);
+                        await DBServices().deleteMessages(widget.user!.uid!);
                       },
                     )
                   ],

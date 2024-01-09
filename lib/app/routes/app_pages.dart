@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 
-import '../ui/agenda_details/agenda_details.dart';
 import '../ui/agenda_details/Register_Attendees_details.dart';
 import '../ui/auth/sign_in.dart';
 import '../ui/details/event_details.dart';
@@ -40,10 +39,6 @@ class AppPages {
     GetPage(
       name: _Paths.notificationPage,
       page: () => const NotificationPage(),
-    ),
-    GetPage(
-      name: _Paths.agendaDetailsPage,
-      page: () => const AgendaDetailsPage(),
     ),
     GetPage(
       name: _Paths.registerAttendeesPage,

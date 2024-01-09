@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/fcm_notification_service.dart';
+import '../details/conference_details.dart';
 import '../details/event_details.dart';
-import '../home/bt3.dart';
 import '../home/home.dart';
 import '../message/message_page.dart';
 import '../profile/profile.dart';
@@ -69,7 +69,7 @@ class _TabPageState extends State<TabPage> {
               index: tabCountController.tabIndex.value,
               children: [
                 widget.screenDef == "Details"
-                    ? const EventDetailsPage()
+                    ? const ConferenceDetailsPage()
                     : const HomePage(),
                 const MyAgendaPage(),
                 const CreateActivity(),

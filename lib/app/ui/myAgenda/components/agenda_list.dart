@@ -32,7 +32,7 @@ class _AgendaListPageState extends State<AgendaListPage> {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                Get.toNamed(Routes.agendaDetailsPage);
+                Get.toNamed(Routes.eventDetailsPage);
               },
               child: Padding(
                 padding:

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../widgets/date_time_picker.dart';
 import '../../../config/constant/font_constant.dart';
@@ -263,26 +264,6 @@ class _CreateActivityState extends State<CreateActivity> {
                             },
                             oldSelectedTime: oldTime,
                           ),
-                          //   callbackConvertedTime: (val) {
-                          //     if (mounted) {
-                          //       setState(() => convertedTime = val);
-                          //     }
-                          //   },
-                          //   oldSelectedTime: oldTime,
-                          // ),
-                          // timeError == true
-                          //     ? const Padding(
-                          //         padding: EdgeInsets.only(left: 10, top: 6),
-                          //         child: Text(
-                          //           "Time is required",
-                          //           style: TextStyle(
-                          //             color: kErrorColor,
-                          //             fontSize: 11,
-                          //             fontFamily: kCircularStdBook,
-                          //           ),
-                          //         ),
-                          //       )
-                          //     : Container(),
                         ],
                       ),
                     ],
@@ -304,7 +285,9 @@ class _CreateActivityState extends State<CreateActivity> {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        addMyAgendaDialog(context);
+                      },
                       child: const Text(
                         "Create an Activity",
                         style: TextStyle(
@@ -324,22 +307,85 @@ class _CreateActivityState extends State<CreateActivity> {
     );
   }
 
-  showSnackbar(msg) {
-    ScaffoldMessenger.of(context)
-      ..removeCurrentSnackBar()
-      ..showSnackBar(SnackBar(
-        content: Text(
-          msg,
-          textAlign: TextAlign.center,
+  addMyAgendaDialog(context) async {
+    return showModalBottomSheet<dynamic>(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(40.0),
+          topRight: Radius.circular(40.0),
         ),
-        backgroundColor: kPrimaryColor,
-        behavior: SnackBarBehavior.floating,
-        width: 200,
-      ));
+      ),
+      isScrollControlled: true,
+      backgroundColor: kWhiteColor,
+      context: context,
+      builder: (context) {
+        return Wrap(
+          children: [
+            const Center(
+              child: ImageIcon(
+                AssetImage("assets/icons/line.png"),
+                size: 30,
+                color: Color(0XffBFC5CC),
+              ),
+            ),
+            Theme(
+                data: ThemeData(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 12.0),
+                      child: Text(
+                        "Session addes to My agenda. Do you also want to add reminder to phone",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: kTitleColor,
+                            fontFamily: kCircularStdBold,
+                            fontSize: 15),
+                      ),
+                    ),
+                    const Divider(
+                      thickness: 0.8,
+                      color: kDividerColor,
+                    ),
+                    buildRemindersTime("Remind me 10 min before"),
+                    buildRemindersTime("Remind me 20 min before"),
+                    buildRemindersTime("Remind me 30 min before"),
+                    buildRemindersTime("No reminder"),
+                  ],
+                )),
+          ],
+        );
+      },
+    );
   }
 
-  showDetailPageAfterUpdate(context) {
-    Navigator.of(context).pop(1);
+  buildRemindersTime(String time) {
+    return GestureDetector(
+      onTap: () {
+        Get.back();
+      },
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Text(
+              time,
+              style: const TextStyle(
+                  color: kPrimaryColor, fontFamily: kCircularStdNormal),
+            ),
+          ),
+          const Divider(
+            thickness: 0.8,
+            color: kDividerColor,
+          ),
+        ],
+      ),
+    );
   }
 
   Widget buildTextWidget(String text) {

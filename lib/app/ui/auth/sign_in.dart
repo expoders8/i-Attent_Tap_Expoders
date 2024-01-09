@@ -145,20 +145,6 @@ class _SignInScreenState extends State<SignInScreen> {
                                 ),
                               ),
                               const SizedBox(height: 30),
-                              TextButton(
-                                style: TextButton.styleFrom(
-                                  textStyle: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                onPressed: () => {},
-                                child: const Text(
-                                  'Configure App',
-                                  style: TextStyle(color: kPrimaryColor),
-                                ),
-                              ),
-                              const SizedBox(height: 50),
                               const SignInFooter()
                             ],
                           ),

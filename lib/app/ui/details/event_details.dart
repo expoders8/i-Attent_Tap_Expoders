@@ -1,9 +1,10 @@
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
-import '../home/tab_page.dart';
-import '../widgets/data_section.dart';
+import '../../routes/app_pages.dart';
+import '../../controller/tab_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 
@@ -19,318 +20,427 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
     "assets/images/i-test.png",
     "assets/images/i-test1.png",
   ];
+  final controller = Get.put(TabCountController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(toolbarHeight: 0),
-      body: Column(
-        children: [
-          Stack(
-            children: [
-              Container(
-                width: Get.width,
-                height: 140,
-                foregroundDecoration: const BoxDecoration(
-                  color: kWhiteColor,
-                  gradient: LinearGradient(
-                    colors: [
-                      Color(0xFF121330),
-                      Colors.transparent,
-                      Colors.transparent,
-                      Color(0xFF121330)
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    stops: [0, 0, 0, 1],
-                  ),
-                ),
-                child: Image.asset(
-                  "assets/images/images.jpg",
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Positioned(
-                top: 10,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0, bottom: 10),
-                  child: IconButton(
-                    onPressed: () {
-                      Get.offAll(
-                        () => const TabPage(
-                          screenDef: "Home",
-                        ),
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back_ios,
-                      color: kWhiteColor,
-                      size: 17,
-                    ),
-                  ),
-                ),
-              ),
-              const Positioned(
-                bottom: 10,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 15.0, bottom: 10),
-                  child: SizedBox(
-                    width: 250,
-                    child: Text(
-                      "Coffee with Aim Team",
-                      style: TextStyle(
-                          color: kBackGroundColor,
-                          fontFamily: kCircularStdNormal,
-                          fontSize: 19),
-                    ),
-                  ),
-                ),
-              )
-            ],
+      appBar: AppBar(
+        backgroundColor: kBackGroundColor,
+        leadingWidth: 48,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_outlined,
+            color: kPrimaryColor,
           ),
-          const SizedBox(height: 15),
-          Expanded(
-            child: NestedScrollView(
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxScrolled) {
-                return <Widget>[
-                  createSilverAppBar1(),
-                ];
-              },
-              body: Column(
+          onPressed: () {
+            Get.back();
+          },
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const DateSectionWidget(),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(17, 13, 0, 8),
+                  SizedBox(
+                    width: Get.width - 70,
                     child: const Text(
-                      "Sessions",
+                      "Coffee with Aim Team",
                       style: TextStyle(
-                        color: kTitleColor,
-                        fontSize: 17,
-                        fontFamily: kCircularStdBold,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      width: Get.width,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(16.0),
-                          topRight: Radius.circular(16.0),
-                          bottomRight: Radius.circular(16.0),
-                        ),
-                      ),
-                      padding: const EdgeInsets.only(bottom: 5.0),
-                      child: ListView.builder(
-                        padding: const EdgeInsets.only(top: 0),
-                        itemCount: 4,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                                right: 10.0, left: 10.0, top: 5.0, bottom: 5.0),
-                            child: Card(
-                              elevation: 7,
-                              shadowColor: const Color.fromARGB(50, 0, 0, 0),
-                              child: Container(
-                                width: Get.width,
-                                padding: const EdgeInsets.only(right: 10),
-                                decoration: BoxDecoration(
-                                    color: kCardColor,
-                                    borderRadius: BorderRadius.circular(15)),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          height: 110,
-                                          decoration: const BoxDecoration(
-                                              color: kBackGroundColor,
-                                              borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(14),
-                                                  bottomLeft:
-                                                      Radius.circular(15))),
-                                          padding: const EdgeInsets.only(
-                                              left: 10, right: 10, top: 20),
-                                          child: const Column(
-                                            children: [
-                                              Text(
-                                                "09:30 AM",
-                                                style: TextStyle(
-                                                    color: kTitleColor,
-                                                    fontFamily:
-                                                        kCircularStdMedium,
-                                                    fontSize: 13.2),
-                                              ),
-                                              SizedBox(height: 8),
-                                              Text(
-                                                "09:45 AM",
-                                                style: TextStyle(
-                                                    color: kTitleSecondColor,
-                                                    fontFamily:
-                                                        kCircularStdMedium,
-                                                    fontSize: 13.2),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        const SizedBox(width: 10),
-                                        const Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            SizedBox(height: 19.8),
-                                            Text(
-                                              "Coffee with Aim Team",
-                                              style: TextStyle(
-                                                  color: kPrimaryColor,
-                                                  fontFamily:
-                                                      kCircularStdMedium,
-                                                  fontSize: 15),
-                                            ),
-                                            SizedBox(height: 25),
-                                            Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.location_on_outlined,
-                                                  color: kPrimaryColor,
-                                                  size: 18,
-                                                ),
-                                                SizedBox(width: 2),
-                                                Text(
-                                                  "Coral Lounge",
-                                                  style: TextStyle(
-                                                      color: kPrimaryColor,
-                                                      fontSize: 13,
-                                                      fontFamily:
-                                                          kCircularStdNormal),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        const SizedBox(height: 10),
-                                        GestureDetector(
-                                          onTap: () {
-                                            addMyAgendaDialog(context);
-                                          },
-                                          child: Container(
-                                            padding: const EdgeInsets.all(8),
-                                            width: 40,
-                                            height: 40,
-                                            child: Image.asset(
-                                              'assets/icons/calender_plus.png',
-                                              color: const Color(0xFF415880),
-                                              scale: 6,
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(height: 4),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 5.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              const Text(
-                                                "+2   ",
-                                                style: TextStyle(
-                                                    color: kPrimaryColor,
-                                                    fontSize: 15,
-                                                    fontFamily:
-                                                        kCircularStdMedium),
-                                              ),
-                                              for (int i = 0;
-                                                  i < image.length;
-                                                  i++)
-                                                Align(
-                                                  widthFactor: 0.3,
-                                                  child: Image.asset(
-                                                    image[i],
-                                                    errorBuilder: (context,
-                                                            error,
-                                                            stackTrace) =>
-                                                        Image.asset(
-                                                      "assets/images/blank_profile.png",
-                                                      fit: BoxFit.fill,
-                                                    ),
-                                                    scale: 2,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        },
+                        color: kPrimaryColor,
+                        fontSize: 18,
+                        fontFamily: kCircularStdMedium,
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-          ),
-        ],
+            builddetailsWidget(
+                Icons.timer_outlined, "Dec 17,2023 - Jan 7,2024", ""),
+            const SizedBox(height: 4),
+            Padding(
+              padding: const EdgeInsets.only(left: 13, right: 13),
+              child: Card(
+                elevation: 6,
+                shadowColor: const Color.fromARGB(50, 0, 0, 0),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 15.0),
+                  decoration: BoxDecoration(
+                    color: kCardColor,
+                    borderRadius: BorderRadius.circular(14.0),
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(
+                            width: 100,
+                            child: Column(
+                              children: [
+                                Icon(Icons.location_on_outlined,
+                                    size: 30, color: Color(0xFF184990)),
+                                SizedBox(height: 10),
+                                Text(
+                                  "Lavaska Center",
+                                  style: TextStyle(
+                                    color: kSecondaryPrimaryColor,
+                                    fontSize: 12,
+                                    fontFamily: kCircularStdMedium,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 100,
+                            child: Column(
+                              children: [
+                                Icon(
+                                  Icons.meeting_room_outlined,
+                                  size: 30,
+                                  color: Color(0xFF184990),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  "3 Rooms",
+                                  style: TextStyle(
+                                    color: kSecondaryPrimaryColor,
+                                    fontSize: 12,
+                                    fontFamily: kCircularStdMedium,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 100,
+                            child: Column(
+                              children: [
+                                Image.asset(
+                                  "assets/icons/upload.png",
+                                  scale: 1.2,
+                                  color: Color(0xFF184990),
+                                ),
+                                const SizedBox(height: 13),
+                                const Text(
+                                  "Attachments",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: kSecondaryPrimaryColor,
+                                    fontSize: 12,
+                                    fontFamily: kCircularStdMedium,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(17, 7, 0, 7),
+              child: const Text(
+                "Speaker",
+                style: TextStyle(
+                  color: kTitleColor,
+                  fontSize: 17,
+                  fontFamily: kCircularStdBold,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 13, right: 13),
+              child: Card(
+                elevation: 6,
+                shadowColor: const Color.fromARGB(50, 0, 0, 0),
+                child: Container(
+                  padding: const EdgeInsets.all(10.0),
+                  width: Get.width,
+                  decoration: BoxDecoration(
+                    color: kCardColor,
+                    borderRadius: BorderRadius.circular(14.0),
+                  ),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        height: 50,
+                        width: 50,
+                        child: ClipOval(
+                            child: Material(
+                          color: kTransparentColor,
+                          child: Image.asset(
+                            "assets/images/blank_profile.png",
+                            scale: 1,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                Image.asset(
+                              "assets/images/blank_profile.png",
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        )),
+                      ),
+                      const SizedBox(width: 10),
+                      const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Darshan Patel",
+                              style: TextStyle(
+                                  color: kPrimaryColor,
+                                  fontFamily: kCircularStdMedium,
+                                  fontSize: 17)),
+                          Text("dashu.tec@gmail.com",
+                              style: TextStyle(
+                                  color: kTitleColor,
+                                  fontFamily: kCircularStdMedium)),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const Divider(
+              thickness: 0.8,
+              color: kDividerColor,
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(17, 7, 0, 7),
+              child: const Text(
+                "About this event",
+                style: TextStyle(
+                  color: kTitleColor,
+                  fontSize: 17,
+                  fontFamily: kCircularStdBold,
+                ),
+              ),
+            ),
+            builddetailsWidget(
+                Icons.description_outlined, "Lavaska Center", "Description"),
+            const Divider(
+              thickness: 0.8,
+              color: kDividerColor,
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(17, 5, 0, 8),
+              child: const Text(
+                "Registered Attendees",
+                style: TextStyle(
+                  color: kTitleColor,
+                  fontSize: 17,
+                  fontFamily: kCircularStdBold,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: Get.height / 3.7,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 13, right: 13),
+                child: ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: 2,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Get.toNamed(Routes.registerAttendeesPage);
+                      },
+                      child: Card(
+                        elevation: 7,
+                        shadowColor: const Color.fromARGB(50, 0, 0, 0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: kCardColor,
+                              borderRadius: BorderRadius.circular(15)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          color: const Color(0xFFE5E7E8),
+                                          borderRadius:
+                                              BorderRadius.circular(25)),
+                                      height: 35,
+                                      width: 35,
+                                      child: const Center(
+                                        child: Text(
+                                          "JB",
+                                          style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 109, 110, 110),
+                                              fontSize: 14,
+                                              fontFamily: kCircularStdNormal),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    const Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Jone Brames",
+                                          style: TextStyle(
+                                              color: kPrimaryColor,
+                                              fontSize: 15,
+                                              fontFamily: kCircularStdNormal),
+                                        ),
+                                        SizedBox(height: 3),
+                                        Text(
+                                          "jonebrames@gmail.com",
+                                          style: TextStyle(
+                                              color: kGreyColor,
+                                              fontSize: 12,
+                                              fontFamily: kCircularStdNormal),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                    padding: const EdgeInsets.only(right: 3.0),
+                                    child: IconButton(
+                                      onPressed: () {
+                                        Get.back();
+                                        controller.changeTabIndex(3);
+                                      },
+                                      icon: const Icon(
+                                        Icons.message_outlined,
+                                        color: kPrimaryColor,
+                                        size: 22,
+                                      ),
+                                    ))
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+              child: SizedBox(
+                width: Get.width,
+                height: 40,
+                child: CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    color: kSelectedIconColor,
+                    child: const Text(
+                      "Add to My Agenda", // Remove from My Agenda
+                      style: TextStyle(
+                          letterSpacing: 0.8,
+                          color: kWhiteColor,
+                          fontFamily: kCircularStdNormal,
+                          fontSize: 15),
+                    ),
+                    onPressed: () {
+                      // Get.back();
+                      // controller.changeTabIndex(2);
+                      addMyAgendaDialog(context);
+                    }),
+              ),
+            )
+          ],
+        ),
       ),
-      // bottomNavigationBar: const TabPage(
-      //   screenDef: "Details",
-      // ),
     );
   }
 
   addMyAgendaDialog(context) async {
-    return await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
+    return showModalBottomSheet<dynamic>(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(40.0),
+          topRight: Radius.circular(40.0),
         ),
-        backgroundColor: kCardColor,
-        title: const Text("Alert !"),
-        elevation: 5,
-        titleTextStyle: const TextStyle(fontSize: 19, color: kRedColor),
-        content: const Text("Are you sure want to Add in My Agenda?"),
-        contentPadding: const EdgeInsets.only(left: 25, top: 10),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () async {
-              Get.back();
-            },
-            child: const Text(
-              'Yes',
-              style: TextStyle(fontSize: 16, color: kPrimaryColor),
+      ),
+      isScrollControlled: true,
+      backgroundColor: kWhiteColor,
+      context: context,
+      builder: (context) {
+        return Wrap(
+          children: [
+            const Center(
+              child: ImageIcon(
+                AssetImage("assets/icons/line.png"),
+                size: 30,
+                color: Color(0XffBFC5CC),
+              ),
+            ),
+            Theme(
+                data: ThemeData(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 12.0),
+                      child: Text(
+                        "Session addes to My agenda. Do you also want to add reminder to phone",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: kTitleColor,
+                            fontFamily: kCircularStdBold,
+                            fontSize: 15),
+                      ),
+                    ),
+                    const Divider(
+                      thickness: 0.8,
+                      color: kDividerColor,
+                    ),
+                    buildRemindersTime("Remind me 10 min before"),
+                    buildRemindersTime("Remind me 20 min before"),
+                    buildRemindersTime("Remind me 30 min before"),
+                    buildRemindersTime("No reminder"),
+                  ],
+                )),
+          ],
+        );
+      },
+    );
+  }
+
+  buildRemindersTime(String time) {
+    return GestureDetector(
+      onTap: () {
+        Get.back();
+      },
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Text(
+              time,
+              style: const TextStyle(
+                  color: kPrimaryColor, fontFamily: kCircularStdNormal),
             ),
           ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text(
-              'No',
-              style: TextStyle(fontSize: 16, color: kPrimaryColor),
-            ),
+          const Divider(
+            thickness: 0.8,
+            color: kDividerColor,
           ),
         ],
       ),
@@ -340,7 +450,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
   builddetailsWidget(IconData icon, String value, String text) {
     return Padding(
       padding: text == "Description"
-          ? const EdgeInsets.only(left: 15, top: 11, bottom: 18, right: 10)
+          ? const EdgeInsets.only(left: 15, top: 11, bottom: 10, right: 10)
           : const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
