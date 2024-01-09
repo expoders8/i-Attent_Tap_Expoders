@@ -20,6 +20,7 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
     "assets/images/i-test.png",
     "assets/images/i-test1.png",
   ];
+  String selectedDate = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,7 +101,13 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
               body: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const DateSectionWidget(),
+                  DateSectionWidget(
+                    callbackDate: (val) {
+                      setState(() {
+                        selectedDate = val;
+                      });
+                    },
+                  ),
                   Container(
                     padding: const EdgeInsets.fromLTRB(17, 13, 0, 8),
                     child: const Text(

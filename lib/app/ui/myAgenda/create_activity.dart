@@ -14,9 +14,18 @@ class CreateActivity extends StatefulWidget {
 
 class _CreateActivityState extends State<CreateActivity> {
   final _formKey = GlobalKey<FormState>();
-  bool isTouched = false, isFormSubmitted = false;
+  bool isTouched = false,
+      isFormSubmitted = false,
+      descriptionError = false,
+      titleError = false,
+      startDateError = false,
+      endDateError = false,
+      startTimeError = false,
+      endTimeError = false;
   String pickedDate = "",
       pickedStartTime = "",
+      pickedStartDate = "",
+      pickedEndDate = "",
       pickedEndTime = "",
       oldDate = "",
       newDate = "",
@@ -74,15 +83,27 @@ class _CreateActivityState extends State<CreateActivity> {
                                   TextFormField(
                                     controller: titleController,
                                     textInputAction: TextInputAction.next,
-                                    onChanged: ((value) {}),
-                                    decoration: const InputDecoration(
+                                    onChanged: ((value) {
+                                      setState(() {
+                                        if (titleController.text != "") {
+                                          titleError = false;
+                                        } else {
+                                          titleError = true;
+                                        }
+                                      });
+                                    }),
+                                    decoration: InputDecoration(
                                       enabledBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: kIconColor),
+                                        borderSide: BorderSide(
+                                            color: titleError == true
+                                                ? kErrorColor
+                                                : kIconColor),
                                       ),
                                       focusedBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: kIconColor),
+                                        borderSide: BorderSide(
+                                            color: titleError == true
+                                                ? kErrorColor
+                                                : kIconColor),
                                       ),
                                       contentPadding: EdgeInsets.only(top: 5),
                                       hintText: 'Title',
@@ -94,6 +115,19 @@ class _CreateActivityState extends State<CreateActivity> {
                                       ),
                                     ),
                                   ),
+                                  titleError == true
+                                      ? const Padding(
+                                          padding:
+                                              EdgeInsets.only(left: 5, top: 5),
+                                          child: Text(
+                                            "Title is required",
+                                            style: TextStyle(
+                                                color: kErrorColor,
+                                                fontSize: 11,
+                                                fontFamily: kCircularStdBook),
+                                          ),
+                                        )
+                                      : Container()
                                 ],
                               ),
                             ),
@@ -116,15 +150,27 @@ class _CreateActivityState extends State<CreateActivity> {
                                     maxLines: 5,
                                     minLines: 1,
                                     controller: descriptionController,
-                                    onChanged: ((value) {}),
-                                    decoration: const InputDecoration(
+                                    onChanged: ((value) {
+                                      setState(() {
+                                        if (descriptionController.text != "") {
+                                          descriptionError = false;
+                                        } else {
+                                          descriptionError = true;
+                                        }
+                                      });
+                                    }),
+                                    decoration: InputDecoration(
                                       enabledBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: kIconColor),
+                                        borderSide: BorderSide(
+                                            color: descriptionError == true
+                                                ? kErrorColor
+                                                : kIconColor),
                                       ),
                                       focusedBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: kIconColor),
+                                        borderSide: BorderSide(
+                                            color: descriptionError == true
+                                                ? kErrorColor
+                                                : kIconColor),
                                       ),
                                       contentPadding: EdgeInsets.only(top: 5),
                                       hintText: 'Description',
@@ -136,6 +182,19 @@ class _CreateActivityState extends State<CreateActivity> {
                                       ),
                                     ),
                                   ),
+                                  descriptionError == true
+                                      ? const Padding(
+                                          padding:
+                                              EdgeInsets.only(left: 5, top: 5),
+                                          child: Text(
+                                            "Description is required",
+                                            style: TextStyle(
+                                                color: kErrorColor,
+                                                fontSize: 11,
+                                                fontFamily: kCircularStdBook),
+                                          ),
+                                        )
+                                      : Container()
                                 ],
                               ),
                             ),
@@ -160,16 +219,31 @@ class _CreateActivityState extends State<CreateActivity> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           DatePickerWidget(
+                            dateError: startDateError,
                             callbackDate: (val) {
                               if (mounted) {
                                 setState(() {
-                                  pickedStartTime = val;
+                                  pickedStartDate = val;
                                   newStartTime = val;
+                                  startDateError = false;
                                 });
                               }
                             },
                             oldSelectedDate: oldDate,
                           ),
+                          startDateError == true
+                              ? const Padding(
+                                  padding: EdgeInsets.only(left: 10, top: 6),
+                                  child: Text(
+                                    "Date is required",
+                                    style: TextStyle(
+                                      color: kErrorColor,
+                                      fontSize: 11,
+                                      fontFamily: kCircularStdBook,
+                                    ),
+                                  ),
+                                )
+                              : Container(),
                         ],
                       ),
                       const SizedBox(
@@ -179,12 +253,13 @@ class _CreateActivityState extends State<CreateActivity> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TimePickerWidget(
-                            timeError: false,
+                            timeError: startTimeError,
                             callbackTime: (val) {
                               if (mounted) {
                                 setState(() {
                                   pickedStartTime = val;
                                   newStartTime = val;
+                                  startTimeError = false;
                                 });
                               }
                             },
@@ -202,19 +277,19 @@ class _CreateActivityState extends State<CreateActivity> {
                           //   },
                           //   oldSelectedTime: oldTime,
                           // ),
-                          // timeError == true
-                          //     ? const Padding(
-                          //         padding: EdgeInsets.only(left: 10, top: 6),
-                          //         child: Text(
-                          //           "Time is required",
-                          //           style: TextStyle(
-                          //             color: kErrorColor,
-                          //             fontSize: 11,
-                          //             fontFamily: kCircularStdBook,
-                          //           ),
-                          //         ),
-                          //       )
-                          //     : Container(),
+                          startTimeError == true
+                              ? const Padding(
+                                  padding: EdgeInsets.only(left: 10, top: 6),
+                                  child: Text(
+                                    "Time is required",
+                                    style: TextStyle(
+                                      color: kErrorColor,
+                                      fontSize: 11,
+                                      fontFamily: kCircularStdBook,
+                                    ),
+                                  ),
+                                )
+                              : Container(),
                         ],
                       ),
                     ],
@@ -229,16 +304,31 @@ class _CreateActivityState extends State<CreateActivity> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           DatePickerWidget(
+                            dateError: endDateError,
                             callbackDate: (val) {
                               if (mounted) {
                                 setState(() {
-                                  pickedEndTime = val;
+                                  pickedEndDate = val;
                                   newEndTime = val;
+                                  endDateError = false;
                                 });
                               }
                             },
                             oldSelectedDate: oldDate,
                           ),
+                          endDateError == true
+                              ? const Padding(
+                                  padding: EdgeInsets.only(left: 10, top: 6),
+                                  child: Text(
+                                    "Date is required",
+                                    style: TextStyle(
+                                      color: kErrorColor,
+                                      fontSize: 11,
+                                      fontFamily: kCircularStdBook,
+                                    ),
+                                  ),
+                                )
+                              : Container(),
                         ],
                       ),
                       const SizedBox(
@@ -248,12 +338,13 @@ class _CreateActivityState extends State<CreateActivity> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TimePickerWidget(
-                            timeError: false,
+                            timeError: endTimeError,
                             callbackTime: (val) {
                               if (mounted) {
                                 setState(() {
                                   pickedEndTime = val;
                                   newEndTime = val;
+                                  endTimeError = false;
                                 });
                               }
                             },
@@ -264,6 +355,19 @@ class _CreateActivityState extends State<CreateActivity> {
                             },
                             oldSelectedTime: oldTime,
                           ),
+                          endTimeError == true
+                              ? const Padding(
+                                  padding: EdgeInsets.only(left: 10, top: 6),
+                                  child: Text(
+                                    "Time is required",
+                                    style: TextStyle(
+                                      color: kErrorColor,
+                                      fontSize: 11,
+                                      fontFamily: kCircularStdBook,
+                                    ),
+                                  ),
+                                )
+                              : Container(),
                         ],
                       ),
                     ],
@@ -286,7 +390,74 @@ class _CreateActivityState extends State<CreateActivity> {
                         ),
                       ),
                       onPressed: () {
-                        addMyAgendaDialog(context);
+                        setState(() {
+                          isFormSubmitted = true;
+                        });
+                        Future.delayed(const Duration(milliseconds: 100),
+                            () async {
+                          if (_formKey.currentState!.validate() &&
+                              pickedStartTime != "" &&
+                              pickedEndTime != "" &&
+                              pickedStartDate != "" &&
+                              pickedEndDate != "") {
+                            addMyAgendaDialog(context);
+                          } else {
+                            if (pickedStartTime == "") {
+                              setState(() {
+                                startTimeError = true;
+                              });
+                            } else {
+                              setState(() {
+                                startTimeError = false;
+                              });
+                            }
+                            if (pickedEndTime == "") {
+                              setState(() {
+                                endTimeError = true;
+                              });
+                            } else {
+                              setState(() {
+                                endTimeError = false;
+                              });
+                            }
+                            if (pickedStartDate == "") {
+                              setState(() {
+                                startDateError = true;
+                              });
+                            } else {
+                              setState(() {
+                                startDateError = false;
+                              });
+                            }
+                            if (pickedEndDate == "") {
+                              setState(() {
+                                endDateError = true;
+                              });
+                            } else {
+                              setState(() {
+                                endDateError = false;
+                              });
+                            }
+                            if (titleController.text == "") {
+                              setState(() {
+                                titleError = true;
+                              });
+                            } else {
+                              setState(() {
+                                titleError = false;
+                              });
+                            }
+                            if (descriptionController.text == "") {
+                              setState(() {
+                                descriptionError = true;
+                              });
+                            } else {
+                              setState(() {
+                                descriptionError = false;
+                              });
+                            }
+                          }
+                        });
                       },
                       child: const Text(
                         "Create an Activity",
@@ -412,7 +583,7 @@ class _CreateActivityState extends State<CreateActivity> {
             validator: (value) {
               if (isTouched || isFormSubmitted) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
+                  return 'Location is required';
                 }
               }
               return null;

@@ -16,6 +16,7 @@ class MyAgendaPage extends StatefulWidget {
 class _MyAgendaPageState extends State<MyAgendaPage> {
   String formattedDate = DateFormat('MM/dd/yyyy').format(DateTime.now());
   int tabSelection = 0;
+  String selectedDate = "";
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +32,17 @@ class _MyAgendaPageState extends State<MyAgendaPage> {
               color: kWhiteColor, fontFamily: kCircularStdNormal, fontSize: 18),
         ),
       ),
-      body: const Column(
-        children: [DateSectionWidget(), AgendaListPage()],
+      body: Column(
+        children: [
+          DateSectionWidget(
+            callbackDate: (val) {
+              setState(() {
+                selectedDate = val;
+              });
+            },
+          ),
+          AgendaListPage()
+        ],
       ),
     );
   }

@@ -11,9 +11,13 @@ typedef StringCallback = void Function(String val);
 class DatePickerWidget extends StatefulWidget {
   final StringCallback callbackDate;
   final String oldSelectedDate;
+  final bool dateError;
 
   const DatePickerWidget(
-      {Key? key, required this.callbackDate, required this.oldSelectedDate})
+      {Key? key,
+      required this.callbackDate,
+      required this.oldSelectedDate,
+      required this.dateError})
       : super(key: key);
 
   @override
@@ -39,7 +43,8 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
       decoration: BoxDecoration(
         color: kWhiteColor,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: kWhiteColor),
+        border: Border.all(
+            color: widget.dateError == true ? kErrorColor : kWhiteColor),
       ),
       child: InkWell(
         onTap: () {

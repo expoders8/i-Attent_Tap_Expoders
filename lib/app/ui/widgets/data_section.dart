@@ -7,8 +7,11 @@ import 'package:table_calendar/table_calendar.dart';
 
 import '../../../config/constant/color_constant.dart';
 
+typedef StringCallback = void Function(String val);
+
 class DateSectionWidget extends StatefulWidget {
-  const DateSectionWidget({super.key});
+  final StringCallback callbackDate;
+  const DateSectionWidget({super.key, required this.callbackDate});
 
   @override
   State<DateSectionWidget> createState() => _DateSectionWidgetState();
@@ -37,6 +40,7 @@ class _DateSectionWidgetState extends State<DateSectionWidget> {
       });
     }
     String formattedDate = DateFormat('dd/MM/yyyy').format(_selectedDay);
+    widget.callbackDate(formattedDate);
     String today = DateFormat('dd/MM/yyyy').format(todayDate);
     if (formattedDate == today) {
       setState(() {
@@ -58,7 +62,7 @@ class _DateSectionWidgetState extends State<DateSectionWidget> {
       width: Get.width,
       child: TableCalendar(
         firstDay: DateTime.utc(2010, 10, 16),
-        rowHeight: 60,
+        rowHeight: 51,
         lastDay: DateTime.utc(2030, 3, 14),
         focusedDay: _selectedDay,
         selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
@@ -99,6 +103,9 @@ class _DateSectionWidgetState extends State<DateSectionWidget> {
                         setState(() {
                           _selectedDay = DateTime.now();
                           focuseToday = false;
+                          String today =
+                              DateFormat('dd/MM/yyyy').format(todayDate);
+                          widget.callbackDate(today);
                         });
                       },
                       icon: const Icon(
