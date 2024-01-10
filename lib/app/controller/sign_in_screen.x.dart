@@ -7,8 +7,9 @@ import '../services/auth_service.dart';
 class SignInScreenX extends GetxController {
   AuthService authService = AuthService();
   final organizationId = ''.obs;
-  var username = ''.obs;
+  var email = ''.obs;
   final password = ''.obs;
+  final fcmToken = ''.obs;
 
   final isSigningIn = false.obs;
 
@@ -16,8 +17,7 @@ class SignInScreenX extends GetxController {
     isSigningIn(true);
     try {
       await authService.login(
-          organizationId.value, username.value, password.value);
-    } catch (e) {
+          organizationId.value, email.value, password.value, fcmToken.value);
     } finally {
       isSigningIn(false);
     }

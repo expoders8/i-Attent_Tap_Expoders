@@ -1,15 +1,13 @@
-import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../config/provider/loader_provider.dart';
 import '../auth/sing_in_footer.dart';
-import '../../routes/app_pages.dart';
 import '../widgets/custom_textfield.dart';
 import '../../controller/sign_in_screen.x.dart';
 import '../../../config/constant/color_constant.dart';
+import '../../services/fcm_notification_service.dart';
 
 class SignInScreen extends StatefulWidget {
   final int? selectedTabIndex;
@@ -22,10 +20,22 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final _loginFormKey = GlobalKey<FormState>();
   final signInController = Get.put(SignInScreenX());
+  String fcmToken = "";
   TextEditingController organizationController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  FCMNotificationServices fCMNotificationServices = FCMNotificationServices();
   bool isFormSubmitted = false;
+
+  @override
+  void initState() {
+    fCMNotificationServices.requestNotificationPermission();
+    fCMNotificationServices.firebaseInit();
+    fCMNotificationServices
+        .getDeviceToken()
+        .then((value) => {setState(() => fcmToken = value)});
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -168,14 +178,12 @@ class _SignInScreenState extends State<SignInScreen> {
     FocusScope.of(context).requestFocus(FocusNode());
     Future.delayed(const Duration(milliseconds: 100), () async {
       if (_loginFormKey.currentState!.validate()) {
-        signInController.organizationId(userNameController.text);
-        signInController.username(organizationController.text);
+        signInController.organizationId(organizationController.text);
+        signInController.email(userNameController.text);
         signInController.password(passwordController.text);
-        // LoaderX.show(context, 60.0, 60.0);
+        signInController.fcmToken(fcmToken);
+        LoaderX.show(context, 60.0, 60.0);
         signInController.login();
-        userNameController.clear();
-        organizationController.clear();
-        passwordController.clear();
       }
     });
   }

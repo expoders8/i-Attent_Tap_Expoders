@@ -2,6 +2,7 @@ import 'package:confrance_expoders/app/ui/home/tab_page.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
+import '../../controller/conferance_controller.dart';
 import '../../routes/app_pages.dart';
 import '../../controller/tab_controller.dart';
 import '../../../config/constant/font_constant.dart';
@@ -20,6 +21,8 @@ class _HomePageState extends State<HomePage> {
     "assets/images/i-test1.png",
     "assets/images/i-test2.png"
   ];
+  final GetAllConferanceController getAllConferanceController =
+      Get.put(GetAllConferanceController());
   final controller = Get.put(TabCountController());
   TextEditingController searchController = TextEditingController();
   @override
@@ -92,151 +95,246 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: SizedBox(
-        width: Get.width,
-        height: Get.height,
-        child: ListView.builder(
-          padding: const EdgeInsets.only(top: 10),
-          itemCount: 3,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                Get.offAll(
-                  () => const TabPage(
-                    screenDef: "Details",
+      body: Obx(
+        () {
+          if (getAllConferanceController.isLoading.value) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            if (getAllConferanceController.conferanceList[0].data != null) {
+              if (getAllConferanceController.conferanceList[0].data!.isEmpty) {
+                return Center(
+                  child: SizedBox(
+                    width: Get.width - 80,
+                    child: const Text(
+                      "Conferance not Found",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: kWhiteColor,
+                          fontSize: 15,
+                          fontFamily: kCircularStdMedium),
+                    ),
                   ),
                 );
-              },
-              child: Column(
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
-                    child: Card(
-                      elevation: 6,
-                      shadowColor: const Color.fromARGB(50, 0, 0, 0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: kCardColor,
-                            borderRadius: BorderRadius.circular(14.0)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: Get.width,
-                              height: 180,
-                              child: ClipRRect(
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(10.0),
-                                  topRight: Radius.circular(10.0),
-                                ),
-                                child: Image.asset(
-                                  "assets/images/images.jpg",
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(10),
+              } else {
+                return Column(
+                  children: [
+                    SizedBox(
+                      height: Get.height - 160,
+                      child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        itemCount: getAllConferanceController
+                            .conferanceList[0].data!.length,
+                        itemBuilder: (context, index) {
+                          var discoverData = getAllConferanceController
+                              .conferanceList[0].data!;
+
+                          if (discoverData.isNotEmpty) {
+                            var data = discoverData[index];
+                            return GestureDetector(
+                              onTap: () {
+                                Get.offAll(
+                                  () => const TabPage(
+                                    screenDef: "Details",
+                                  ),
+                                );
+                              },
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text(
-                                    "Coffee with Aim Team",
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      fontSize: 18.0,
-                                      fontFamily: kCircularStdMedium,
-                                      color: kPrimaryColor,
-                                    ),
-                                  ),
-                                  const Text(
-                                    "Dec 27, 2023 09:30 AM - Dec 28, 2023 10:00 PM",
-                                    style: TextStyle(
-                                        color: kTextSecondaryColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: kWorkSans),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      const Row(
-                                        children: [
-                                          Icon(
-                                            Icons.location_on_outlined,
-                                            color: kPrimaryColor,
-                                            size: 18,
-                                          ),
-                                          Text(
-                                            "To Be Announced",
-                                            style: TextStyle(
-                                                color: kPrimaryColor,
-                                                fontSize: 14,
-                                                fontFamily: kCircularStdNormal),
-                                          ),
-                                        ],
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 10.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 7),
+                                    child: Card(
+                                      elevation: 6,
+                                      shadowColor:
+                                          const Color.fromARGB(50, 0, 0, 0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: kCardColor,
+                                            borderRadius:
+                                                BorderRadius.circular(14.0)),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            const Text(
-                                              "+2 Sessions",
-                                              style: TextStyle(
-                                                  color: kPrimaryColor,
-                                                  fontSize: 13,
-                                                  fontFamily: kCircularStdBook),
-                                            ),
-                                            const SizedBox(width: 10),
-                                            for (int i = 0;
-                                                i < image.length;
-                                                i++)
-                                              Align(
-                                                alignment: Alignment.topCenter,
-                                                widthFactor: 0.3,
+                                            SizedBox(
+                                              width: Get.width,
+                                              height: 180,
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    const BorderRadius.only(
+                                                  topLeft:
+                                                      Radius.circular(10.0),
+                                                  topRight:
+                                                      Radius.circular(10.0),
+                                                ),
                                                 child: Image.asset(
-                                                  image[i],
-                                                  errorBuilder: (context, error,
-                                                          stackTrace) =>
-                                                      Image.asset(
-                                                    "assets/images/blank_profile.png",
-                                                    fit: BoxFit.fill,
-                                                  ),
-                                                  scale: 2,
+                                                  "assets/images/images.jpg",
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.all(10),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    data.name.toString(),
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                      fontSize: 18.0,
+                                                      fontFamily:
+                                                          kCircularStdMedium,
+                                                      color: kPrimaryColor,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    // "Dec 27, 2023 09:30 AM - Dec 28, 2023 10:00 PM",
+                                                    "  ${data.startDate} - ${data.endDate}",
+                                                    style: TextStyle(
+                                                        color:
+                                                            kTextSecondaryColor,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontFamily: kWorkSans),
+                                                  ),
+                                                  const SizedBox(height: 10),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          const Icon(
+                                                            Icons
+                                                                .location_on_outlined,
+                                                            color:
+                                                                kPrimaryColor,
+                                                            size: 18,
+                                                          ),
+                                                          Text(
+                                                            data.venue == ""
+                                                                ? "To Be Announced"
+                                                                : data.venue
+                                                                    .toString(),
+                                                            style: const TextStyle(
+                                                                color:
+                                                                    kPrimaryColor,
+                                                                fontSize: 14,
+                                                                fontFamily:
+                                                                    kCircularStdNormal),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                right: 10.0),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text(
+                                                              "+${data.eventCount} Sessions",
+                                                              style: TextStyle(
+                                                                  color:
+                                                                      kPrimaryColor,
+                                                                  fontSize: 13,
+                                                                  fontFamily:
+                                                                      kCircularStdBook),
+                                                            ),
+                                                            const SizedBox(
+                                                                width: 10),
+                                                            for (int i = 0;
+                                                                i <
+                                                                    image
+                                                                        .length;
+                                                                i++)
+                                                              Align(
+                                                                alignment:
+                                                                    Alignment
+                                                                        .topCenter,
+                                                                widthFactor:
+                                                                    0.3,
+                                                                child:
+                                                                    Image.asset(
+                                                                  image[i],
+                                                                  errorBuilder: (context,
+                                                                          error,
+                                                                          stackTrace) =>
+                                                                      Image
+                                                                          .asset(
+                                                                    "assets/images/blank_profile.png",
+                                                                    fit: BoxFit
+                                                                        .fill,
+                                                                  ),
+                                                                  scale: 2,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
+                                                              ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
-                                    ],
+                                    ),
                                   ),
+                                  const SizedBox(
+                                    height: 10,
+                                  )
                                 ],
                               ),
-                            ),
-                          ],
-                        ),
+                            );
+                          } else {
+                            return const Center(
+                              child: Text(
+                                "Conferance not Found",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: kWhiteColor,
+                                    fontSize: 15,
+                                    fontFamily: kCircularStdMedium),
+                              ),
+                            );
+                          }
+                        },
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  )
-                ],
-              ),
-            );
-          },
-        ),
+                  ],
+                );
+              }
+            } else {
+              return const Center(
+                child: Text(
+                  "Conferance not Found",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: kWhiteColor,
+                      fontSize: 15,
+                      fontFamily: kCircularStdMedium),
+                ),
+              );
+            }
+          }
+        },
       ),
     );
   }

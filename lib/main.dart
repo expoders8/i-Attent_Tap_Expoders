@@ -1,3 +1,4 @@
+import 'package:confrance_expoders/config/constant/constant.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +10,20 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'app/routes/app_pages.dart';
 import 'config/provider/theme_provider.dart';
 
+int? isviewed = 0;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await GetStorage.init();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  if (getStorage.read('firstTimeLaunch') == null) {
+    getStorage.erase();
+    getStorage.remove('user');
+    getStorage.remove('authToken');
+    getStorage.write('firstTimeLaunch', true);
+    getStorage.write('onBoard', 0);
+  }
+  isviewed = getStorage.read('onBoard');
   return runApp(
     ChangeNotifierProvider<ThemeProvider>(
       child: const MyApp(),
@@ -44,7 +54,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
       theme: Provider.of<ThemeProvider>(context, listen: false).getTheme(),
-      initialRoute: Routes.signInScreen,
+      initialRoute: isviewed == 0 ? Routes.tabPage : Routes.tabPage,
       getPages: AppPages.routes,
     );
   }

@@ -2,13 +2,12 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-import '../../services/fcm_notification_service.dart';
-import '../details/conference_details.dart';
 import '../home/home.dart';
-import '../message/message_page.dart';
 import '../profile/profile.dart';
 import '../myAgenda/my_agenda.dart';
+import '../message/message_page.dart';
 import '../myAgenda/create_activity.dart';
+import '../details/conference_details.dart';
 import '../../controller/tab_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
@@ -23,21 +22,12 @@ class TabPage extends StatefulWidget {
 }
 
 class _TabPageState extends State<TabPage> {
-  FCMNotificationServices fCMNotificationServices = FCMNotificationServices();
   final controller = Get.put(TabCountController());
   String authToken = "";
   int accessLevel = 1;
   @override
   void initState() {
     controller.changeTabIndex(widget.selectedTabIndex!.toInt());
-    fCMNotificationServices.requestNotificationPermission();
-    // notificationServices.isTokenRefresh();
-    fCMNotificationServices.firebaseInit();
-    fCMNotificationServices.getDeviceToken().then(
-          (value) => print(
-            value,
-          ),
-        );
     super.initState();
   }
 

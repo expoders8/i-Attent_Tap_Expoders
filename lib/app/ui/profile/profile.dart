@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:dotted_border/dotted_border.dart';
 
+import '../../../config/constant/constant.dart';
 import '../auth/sign_in.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
@@ -15,6 +18,28 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  String userName = "";
+  String userEmail = "";
+  String userImage = "";
+  @override
+  void initState() {
+    getUser();
+    super.initState();
+  }
+
+  Future getUser() async {
+    var data = getStorage.read('user');
+    var getUserData = jsonDecode(data);
+    if (getUserData != null) {
+      var name = "${getUserData['firstName']} ${getUserData['lastName']}";
+      setState(() {
+        userName = name;
+        userEmail = getUserData['emailAddress'] ?? "";
+        userImage = getUserData['profilePhoto'] ?? "";
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,11 +107,11 @@ class _ProfilePageState extends State<ProfilePage> {
                               const SizedBox(height: 10),
                               SizedBox(
                                 width: Get.width / 2.27,
-                                child: const Text(
-                                  "Jone Brams",
+                                child: Text(
+                                  userName,
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: kPrimaryColor,
                                       fontSize: 18,
                                       fontFamily: kCircularStdMedium),
@@ -95,11 +120,11 @@ class _ProfilePageState extends State<ProfilePage> {
                               const SizedBox(height: 5),
                               SizedBox(
                                 width: Get.width / 2.10,
-                                child: const Text(
-                                  "Jone@gmail.com",
+                                child: Text(
+                                  userEmail,
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: kBlack54Color,
                                     fontSize: 14,
                                   ),
@@ -142,7 +167,7 @@ class _ProfilePageState extends State<ProfilePage> {
               Column(
                 children: [
                   QrImageView(
-                    data: 'Jones Brams',
+                    data: userName,
                     version: QrVersions.auto,
                     size: 200.0,
                   ),
@@ -223,6 +248,11 @@ class _ProfilePageState extends State<ProfilePage> {
         actions: <Widget>[
           TextButton(
             onPressed: () async {
+              Get.back();
+              getStorage.write('onBoard', 0);
+              getStorage.remove('user');
+              getStorage.remove('authToken');
+
               Get.offAll(const SignInScreen());
             },
             child: const Text(
