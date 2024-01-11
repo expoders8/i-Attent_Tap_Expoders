@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../config/constant/color_constant.dart';
+import '../../controller/agenda_controller.dart';
 
 typedef StringCallback = void Function(String val);
 
@@ -22,7 +23,8 @@ class _DateSectionWidgetState extends State<DateSectionWidget> {
   DateTime _selectedDay = DateTime.now();
   DateTime todayDate = DateTime.now();
   bool focuseToday = false;
-
+  final GetAllAgendaController getAllAgendaController =
+      Get.put(GetAllAgendaController());
   @override
   void initState() {
     super.initState();
@@ -39,6 +41,8 @@ class _DateSectionWidgetState extends State<DateSectionWidget> {
         _selectedDay = selectedDay;
       });
     }
+    getAllAgendaController.selectedDateString(_selectedDay.toString());
+    getAllAgendaController.fetchAllAgenda();
     String formattedDate = DateFormat('dd/MM/yyyy').format(_selectedDay);
     widget.callbackDate(formattedDate);
     String today = DateFormat('dd/MM/yyyy').format(todayDate);
@@ -106,6 +110,9 @@ class _DateSectionWidgetState extends State<DateSectionWidget> {
                           String today =
                               DateFormat('dd/MM/yyyy').format(todayDate);
                           widget.callbackDate(today);
+                          getAllAgendaController
+                              .selectedDateString(today.toString());
+                          getAllAgendaController.fetchAllAgenda();
                         });
                       },
                       icon: const Icon(

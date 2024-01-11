@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../ui/agenda_details/Register_Attendees_details.dart';
 import '../ui/auth/sign_in.dart';
+import '../ui/details/conference_details.dart';
 import '../ui/details/event_details.dart';
 import '../ui/home/tab_page.dart';
 import '../ui/myAgenda/create_activity.dart';
@@ -43,6 +44,10 @@ class AppPages {
     GetPage(
       name: _Paths.registerAttendeesPage,
       page: () => const RegisterAttendeesPage(),
+    ),
+    GetPage(
+      name: _Paths.conferenceDetailsPage,
+      page: () => const ConferenceDetailsPage(),
     ),
   ];
 }

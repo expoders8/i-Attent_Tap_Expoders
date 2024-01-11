@@ -41,7 +41,7 @@ class _MyAgendaPageState extends State<MyAgendaPage> {
               });
             },
           ),
-          AgendaListPage()
+          const AgendaListPage()
         ],
       ),
     );

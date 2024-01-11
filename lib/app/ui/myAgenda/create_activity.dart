@@ -1,6 +1,15 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../config/constant/constant.dart';
+import '../../../config/provider/loader_provider.dart';
+import '../../../config/provider/snackbar_provider.dart';
+import '../../controller/agenda_controller.dart';
+import '../../controller/tab_controller.dart';
+import '../../services/agenda_service.dart';
 import '../widgets/date_time_picker.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
@@ -24,6 +33,7 @@ class _CreateActivityState extends State<CreateActivity> {
       endTimeError = false;
   String pickedDate = "",
       pickedStartTime = "",
+      userId = "",
       pickedStartDate = "",
       pickedEndDate = "",
       pickedEndTime = "",
@@ -35,10 +45,29 @@ class _CreateActivityState extends State<CreateActivity> {
       oldConvertedTime = "",
       convertedStartTime = "",
       convertedEndTime = "";
-
+  final controller = Get.put(TabCountController());
+  final GetAllAgendaController getAllAgendaController =
+      Get.put(GetAllAgendaController());
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController locationcontroller = TextEditingController();
+  AgendaService agendaService = AgendaService();
+  @override
+  void initState() {
+    getUser();
+    super.initState();
+  }
+
+  Future getUser() async {
+    var data = getStorage.read('user');
+    var getUserData = jsonDecode(data);
+    if (getUserData != null) {
+      setState(() {
+        userId = getUserData['id'].toString();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -105,9 +134,10 @@ class _CreateActivityState extends State<CreateActivity> {
                                                 ? kErrorColor
                                                 : kIconColor),
                                       ),
-                                      contentPadding: EdgeInsets.only(top: 5),
+                                      contentPadding:
+                                          const EdgeInsets.only(top: 5),
                                       hintText: 'Title',
-                                      hintStyle: TextStyle(
+                                      hintStyle: const TextStyle(
                                         fontFamily: kCircularStdNormal,
                                         fontWeight: FontWeight.w400,
                                         color: kPrimaryColor,
@@ -172,9 +202,10 @@ class _CreateActivityState extends State<CreateActivity> {
                                                 ? kErrorColor
                                                 : kIconColor),
                                       ),
-                                      contentPadding: EdgeInsets.only(top: 5),
+                                      contentPadding:
+                                          const EdgeInsets.only(top: 5),
                                       hintText: 'Description',
-                                      hintStyle: TextStyle(
+                                      hintStyle: const TextStyle(
                                         fontFamily: kCircularStdNormal,
                                         fontWeight: FontWeight.w400,
                                         color: kPrimaryColor,
@@ -400,7 +431,32 @@ class _CreateActivityState extends State<CreateActivity> {
                               pickedEndTime != "" &&
                               pickedStartDate != "" &&
                               pickedEndDate != "") {
-                            addMyAgendaDialog(context);
+                            LoaderX.show(context, 60.0, 60.0);
+                            agendaService
+                                .addAgenda(
+                                    titleController.text,
+                                    descriptionController.text,
+                                    locationcontroller.text,
+                                    "${pickedStartDate}T$pickedStartTime",
+                                    "${pickedEndDate}T$pickedEndTime",
+                                    null,
+                                    userId)
+                                .then((value) => {
+                                      if (value['data'])
+                                        {
+                                          LoaderX.hide(),
+                                          controller.changeTabIndex(1),
+                                          getAllAgendaController
+                                              .fetchAllAgenda()
+                                        }
+                                      else
+                                        {
+                                          LoaderX.hide(),
+                                          SnackbarUtils.showErrorSnackbar(
+                                              "Failed to Add Agenda",
+                                              value["message"])
+                                        }
+                                    });
                           } else {
                             if (pickedStartTime == "") {
                               setState(() {
@@ -478,7 +534,7 @@ class _CreateActivityState extends State<CreateActivity> {
     );
   }
 
-  addMyAgendaDialog(context) async {
+  addMyAgendaBottomSheet(context) async {
     return showModalBottomSheet<dynamic>(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(

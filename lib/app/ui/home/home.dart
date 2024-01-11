@@ -1,7 +1,9 @@
 import 'package:confrance_expoders/app/ui/home/tab_page.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
+import '../../controller/agenda_controller.dart';
 import '../../controller/conferance_controller.dart';
 import '../../routes/app_pages.dart';
 import '../../controller/tab_controller.dart';
@@ -23,8 +25,20 @@ class _HomePageState extends State<HomePage> {
   ];
   final GetAllConferanceController getAllConferanceController =
       Get.put(GetAllConferanceController());
+  final GetDetailsConferanceController getDetailsConferanceController =
+      Get.put(GetDetailsConferanceController());
+  final GetAllAgendaController getAllAgendaController =
+      Get.put(GetAllAgendaController());
   final controller = Get.put(TabCountController());
   TextEditingController searchController = TextEditingController();
+  @override
+  void initState() {
+    var date = DateTime.now();
+    getAllAgendaController.selectedDateString(date.toString());
+    getAllAgendaController.fetchAllAgenda();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                       "Conferance not Found",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: kWhiteColor,
+                          color: kPrimaryColor,
                           fontSize: 15,
                           fontFamily: kCircularStdMedium),
                     ),
@@ -130,13 +144,22 @@ class _HomePageState extends State<HomePage> {
 
                           if (discoverData.isNotEmpty) {
                             var data = discoverData[index];
+                            String dateStartString = data.startDate.toString();
+                            String dateEndString = data.endDate.toString();
+                            DateTime myDateStartTime =
+                                DateTime.parse(dateStartString);
+                            DateTime myDateEndTime =
+                                DateTime.parse(dateEndString);
+
+                            String startTime = DateFormat('MMM d, yyyy hh:mm a')
+                                .format(myDateStartTime);
+                            String endTime = DateFormat('MMM d, yyyy hh:mm a')
+                                .format(myDateEndTime);
                             return GestureDetector(
                               onTap: () {
-                                Get.offAll(
-                                  () => const TabPage(
-                                    screenDef: "Details",
-                                  ),
-                                );
+                                getDetailsConferanceController
+                                    .conferanceIdString(data.id.toString());
+                                Get.toNamed(Routes.conferenceDetailsPage);
                               },
                               child: Column(
                                 children: [
@@ -194,8 +217,8 @@ class _HomePageState extends State<HomePage> {
                                                   ),
                                                   Text(
                                                     // "Dec 27, 2023 09:30 AM - Dec 28, 2023 10:00 PM",
-                                                    "  ${data.startDate} - ${data.endDate}",
-                                                    style: TextStyle(
+                                                    "  $startTime - $endTime",
+                                                    style: const TextStyle(
                                                         color:
                                                             kTextSecondaryColor,
                                                         fontSize: 12,
@@ -247,7 +270,7 @@ class _HomePageState extends State<HomePage> {
                                                           children: [
                                                             Text(
                                                               "+${data.eventCount} Sessions",
-                                                              style: TextStyle(
+                                                              style: const TextStyle(
                                                                   color:
                                                                       kPrimaryColor,
                                                                   fontSize: 13,
@@ -256,34 +279,34 @@ class _HomePageState extends State<HomePage> {
                                                             ),
                                                             const SizedBox(
                                                                 width: 10),
-                                                            for (int i = 0;
-                                                                i <
-                                                                    image
-                                                                        .length;
-                                                                i++)
-                                                              Align(
-                                                                alignment:
-                                                                    Alignment
-                                                                        .topCenter,
-                                                                widthFactor:
-                                                                    0.3,
-                                                                child:
-                                                                    Image.asset(
-                                                                  image[i],
-                                                                  errorBuilder: (context,
-                                                                          error,
-                                                                          stackTrace) =>
-                                                                      Image
-                                                                          .asset(
-                                                                    "assets/images/blank_profile.png",
-                                                                    fit: BoxFit
-                                                                        .fill,
-                                                                  ),
-                                                                  scale: 2,
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                ),
-                                                              ),
+                                                            // for (int i = 0;
+                                                            //     i <
+                                                            //         image
+                                                            //             .length;
+                                                            //     i++)
+                                                            //   Align(
+                                                            //     alignment:
+                                                            //         Alignment
+                                                            //             .topCenter,
+                                                            //     widthFactor:
+                                                            //         0.3,
+                                                            //     child:
+                                                            //         Image.asset(
+                                                            //       image[i],
+                                                            //       errorBuilder: (context,
+                                                            //               error,
+                                                            //               stackTrace) =>
+                                                            //           Image
+                                                            //               .asset(
+                                                            //         "assets/images/blank_profile.png",
+                                                            //         fit: BoxFit
+                                                            //             .fill,
+                                                            //       ),
+                                                            //       scale: 2,
+                                                            //       fit: BoxFit
+                                                            //           .cover,
+                                                            //     ),
+                                                            //   ),
                                                           ],
                                                         ),
                                                       ),
@@ -292,6 +315,7 @@ class _HomePageState extends State<HomePage> {
                                                 ],
                                               ),
                                             ),
+                                            const SizedBox(height: 3)
                                           ],
                                         ),
                                       ),
@@ -309,7 +333,7 @@ class _HomePageState extends State<HomePage> {
                                 "Conferance not Found",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    color: kWhiteColor,
+                                    color: kPrimaryColor,
                                     fontSize: 15,
                                     fontFamily: kCircularStdMedium),
                               ),
@@ -327,7 +351,7 @@ class _HomePageState extends State<HomePage> {
                   "Conferance not Found",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      color: kWhiteColor,
+                      color: kPrimaryColor,
                       fontSize: 15,
                       fontFamily: kCircularStdMedium),
                 ),

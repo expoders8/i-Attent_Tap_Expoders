@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
       theme: Provider.of<ThemeProvider>(context, listen: false).getTheme(),
-      initialRoute: isviewed == 0 ? Routes.tabPage : Routes.tabPage,
+      initialRoute: isviewed == 0 ? Routes.signInScreen : Routes.tabPage,
       getPages: AppPages.routes,
     );
   }

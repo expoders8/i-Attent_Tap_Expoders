@@ -56,14 +56,12 @@ class _TabPageState extends State<TabPage> {
           body: Obx(
             () => IndexedStack(
               index: tabCountController.tabIndex.value,
-              children: [
-                widget.screenDef == "Details"
-                    ? const ConferenceDetailsPage()
-                    : const HomePage(),
-                const MyAgendaPage(),
-                const CreateActivity(),
-                const MessagePage(),
-                const ProfilePage(),
+              children: const [
+                HomePage(),
+                MyAgendaPage(),
+                CreateActivity(),
+                MessagePage(),
+                ProfilePage(),
               ],
             ),
           ),
