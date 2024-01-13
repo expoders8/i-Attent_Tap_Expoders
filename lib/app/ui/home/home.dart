@@ -1,13 +1,13 @@
-import 'package:confrance_expoders/app/ui/home/tab_page.dart';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
 
-import '../../controller/agenda_controller.dart';
-import '../../controller/conferance_controller.dart';
 import '../../routes/app_pages.dart';
 import '../../controller/tab_controller.dart';
+import '../../controller/event_contoller.dart';
+import '../../controller/agenda_controller.dart';
 import '../../../config/constant/font_constant.dart';
+import '../../controller/conferance_controller.dart';
 import '../../../config/constant/color_constant.dart';
 
 class HomePage extends StatefulWidget {
@@ -29,12 +29,15 @@ class _HomePageState extends State<HomePage> {
       Get.put(GetDetailsConferanceController());
   final GetAllAgendaController getAllAgendaController =
       Get.put(GetAllAgendaController());
+  final GetAllEventsController getAllEventsController =
+      Get.put(GetAllEventsController());
   final controller = Get.put(TabCountController());
   TextEditingController searchController = TextEditingController();
   @override
   void initState() {
     var date = DateTime.now();
     getAllAgendaController.selectedDateString(date.toString());
+    getAllEventsController.selectedDateString(date.toString());
     getAllAgendaController.fetchAllAgenda();
     super.initState();
   }
@@ -159,6 +162,9 @@ class _HomePageState extends State<HomePage> {
                               onTap: () {
                                 getDetailsConferanceController
                                     .conferanceIdString(data.id.toString());
+                                getAllEventsController
+                                    .selectedIdString(data.id.toString());
+                                getAllEventsController.fetchAllEvents();
                                 Get.toNamed(Routes.conferenceDetailsPage);
                               },
                               child: Column(

@@ -7,6 +7,7 @@ import 'package:table_calendar/table_calendar.dart';
 
 import '../../../config/constant/color_constant.dart';
 import '../../controller/agenda_controller.dart';
+import '../../controller/event_contoller.dart';
 
 typedef StringCallback = void Function(String val);
 
@@ -25,15 +26,8 @@ class _DateSectionWidgetState extends State<DateSectionWidget> {
   bool focuseToday = false;
   final GetAllAgendaController getAllAgendaController =
       Get.put(GetAllAgendaController());
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  final GetAllEventsController getAllEventsController =
+      Get.put(GetAllEventsController());
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     if (!isSameDay(_selectedDay, selectedDay)) {
@@ -41,10 +35,9 @@ class _DateSectionWidgetState extends State<DateSectionWidget> {
         _selectedDay = selectedDay;
       });
     }
-    getAllAgendaController.selectedDateString(_selectedDay.toString());
-    getAllAgendaController.fetchAllAgenda();
+
+    widget.callbackDate(_selectedDay.toString());
     String formattedDate = DateFormat('dd/MM/yyyy').format(_selectedDay);
-    widget.callbackDate(formattedDate);
     String today = DateFormat('dd/MM/yyyy').format(todayDate);
     if (formattedDate == today) {
       setState(() {
@@ -112,6 +105,9 @@ class _DateSectionWidgetState extends State<DateSectionWidget> {
                           widget.callbackDate(today);
                           getAllAgendaController
                               .selectedDateString(today.toString());
+                          getAllEventsController
+                              .selectedDateString(today.toString());
+                          getAllEventsController.fetchAllEvents();
                           getAllAgendaController.fetchAllAgenda();
                         });
                       },

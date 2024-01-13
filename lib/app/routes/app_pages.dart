@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 
-import '../ui/agenda_details/Register_Attendees_details.dart';
 import '../ui/auth/sign_in.dart';
+import '../ui/details/agenda_details.dart';
 import '../ui/details/conference_details.dart';
 import '../ui/details/event_details.dart';
 import '../ui/home/tab_page.dart';
-import '../ui/myAgenda/create_activity.dart';
+import '../ui/crerate_agenda/create_activity.dart';
 import '../ui/notification/notification.dart';
 import '../ui/profile/qr_code.dart';
 
@@ -42,12 +42,12 @@ class AppPages {
       page: () => const NotificationPage(),
     ),
     GetPage(
-      name: _Paths.registerAttendeesPage,
-      page: () => const RegisterAttendeesPage(),
-    ),
-    GetPage(
       name: _Paths.conferenceDetailsPage,
       page: () => const ConferenceDetailsPage(),
+    ),
+    GetPage(
+      name: _Paths.agendaDetailsPage,
+      page: () => const AgendaDetailsPage(),
     ),
   ];
 }

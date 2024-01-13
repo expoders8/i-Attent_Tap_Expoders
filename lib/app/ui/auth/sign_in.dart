@@ -2,12 +2,12 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../config/provider/loader_provider.dart';
 import '../auth/sing_in_footer.dart';
 import '../widgets/custom_textfield.dart';
 import '../../controller/sign_in_screen.x.dart';
 import '../../../config/constant/color_constant.dart';
 import '../../services/fcm_notification_service.dart';
+import '../../../config/provider/loader_provider.dart';
 
 class SignInScreen extends StatefulWidget {
   final int? selectedTabIndex;
@@ -155,6 +155,20 @@ class _SignInScreenState extends State<SignInScreen> {
                                 ),
                               ),
                               const SizedBox(height: 30),
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                  textStyle: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                onPressed: () => {},
+                                child: const Text(
+                                  'Configure App',
+                                  style: TextStyle(color: kPrimaryColor),
+                                ),
+                              ),
+                              const SizedBox(height: 40),
                               const SignInFooter()
                             ],
                           ),
@@ -183,6 +197,7 @@ class _SignInScreenState extends State<SignInScreen> {
         signInController.password(passwordController.text);
         signInController.fcmToken(fcmToken);
         LoaderX.show(context, 60.0, 60.0);
+
         signInController.login();
       }
     });

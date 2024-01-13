@@ -2,28 +2,29 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../controller/agenda_controller.dart';
-import '../../../routes/app_pages.dart';
-import '../../../../config/constant/font_constant.dart';
-import '../../../../config/constant/color_constant.dart';
+import '../controller/agenda_controller.dart';
+import '../routes/app_pages.dart';
+import '../../config/constant/font_constant.dart';
+import '../../config/constant/color_constant.dart';
+import '../services/agenda_service.dart';
 
-class AgendaListPage extends StatefulWidget {
-  const AgendaListPage({super.key});
+class AgendaViewPage extends StatefulWidget {
+  const AgendaViewPage({super.key});
 
   @override
-  State<AgendaListPage> createState() => _AgendaListPageState();
+  State<AgendaViewPage> createState() => _AgendaViewPageState();
 }
 
-class _AgendaListPageState extends State<AgendaListPage> {
+class _AgendaViewPageState extends State<AgendaViewPage> {
   List image = [
     "assets/images/i-test.png",
     "assets/images/i-test1.png",
-    // "assets/images/i-test2.png"
   ];
   final GetAllAgendaController getAllAgendaController =
       Get.put(GetAllAgendaController());
   final GetDetailsAgendaController getDetailsAgendaController =
       Get.put(GetDetailsAgendaController());
+  AgendaService agendaService = AgendaService();
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -82,7 +83,7 @@ class _AgendaListPageState extends State<AgendaListPage> {
                             onTap: () {
                               getDetailsAgendaController
                                   .agendaIdString(data.id.toString());
-                              Get.toNamed(Routes.eventDetailsPage);
+                              Get.toNamed(Routes.agendaDetailsPage);
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(
@@ -194,7 +195,18 @@ class _AgendaListPageState extends State<AgendaListPage> {
                                         children: [
                                           const SizedBox(height: 8),
                                           GestureDetector(
-                                            onTap: () {},
+                                            onTap: () {
+                                              agendaService
+                                                  .deleteAgenda(
+                                                      data.id.toString())
+                                                  .then((value) => {
+                                                        if (value['success'])
+                                                          {
+                                                            getAllAgendaController
+                                                                .fetchAllAgenda()
+                                                          }
+                                                      });
+                                            },
                                             child: Container(
                                               padding: const EdgeInsets.all(8),
                                               width: 40,

@@ -12,7 +12,20 @@
           "package_name": "com.tnetic.tap"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "456243249877-u4fgti5kgj6q1hd80dvvqboij22as80g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tnetic.tap",
+            "certificate_hash": "1c07923d4fd0b9e56b6dbb98651e0b99e2a3ce93"
+          }
+        },
+        {
+          "client_id": "456243249877-4grb6b57gthaa80438us9vol21rqke3s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyC-QVHxOK0-tLHcayOpXSmggWKVBBYex10"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "456243249877-4grb6b57gthaa80438us9vol21rqke3s.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "456243249877-4joa8d4355k0sbjk5j1u8369ur9hu5qe.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tnetic.tap"
+              }
+            }
+          ]
         }
       }
     }

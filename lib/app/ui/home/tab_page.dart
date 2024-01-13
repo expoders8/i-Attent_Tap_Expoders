@@ -6,9 +6,8 @@ import '../home/home.dart';
 import '../profile/profile.dart';
 import '../myAgenda/my_agenda.dart';
 import '../message/message_page.dart';
-import '../myAgenda/create_activity.dart';
-import '../details/conference_details.dart';
 import '../../controller/tab_controller.dart';
+import '../crerate_agenda/create_activity.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 

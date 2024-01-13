@@ -10,7 +10,15 @@ import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 
 class RegisterAttendeesPage extends StatefulWidget {
-  const RegisterAttendeesPage({super.key});
+  final String? attendeesImage;
+  final String? attendeesName;
+  final String? attendeesEmail;
+  const RegisterAttendeesPage({
+    super.key,
+    required this.attendeesImage,
+    required this.attendeesName,
+    required this.attendeesEmail,
+  });
 
   @override
   State<RegisterAttendeesPage> createState() => _MembersDetailsPageState();
@@ -79,11 +87,11 @@ class _MembersDetailsPageState extends State<RegisterAttendeesPage> {
                           Container(
                             width: Get.width / 2.27,
                             padding: const EdgeInsets.only(left: 5),
-                            child: const Text(
-                              "Jone Brams",
+                            child: Text(
+                              widget.attendeesName.toString(),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: kPrimaryColor,
                                   fontSize: 18,
                                   fontFamily: kCircularStdMedium),
@@ -94,19 +102,20 @@ class _MembersDetailsPageState extends State<RegisterAttendeesPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
+                              const SizedBox(width: 3),
                               const Icon(
-                                Icons.location_on_outlined,
+                                Icons.email_outlined,
                                 color: kTitleColor,
-                                size: 22,
+                                size: 21,
                               ),
-                              const SizedBox(width: 5),
+                              const SizedBox(width: 6),
                               SizedBox(
                                 width: Get.width - 190,
-                                child: const Text(
-                                  "Lavaska Center",
+                                child: Text(
+                                  widget.attendeesEmail.toString(),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: kSecondaryPrimaryColor,
                                     fontSize: 15,
                                     fontFamily: kCircularStdMedium,
@@ -127,24 +136,25 @@ class _MembersDetailsPageState extends State<RegisterAttendeesPage> {
               thickness: 0.8,
               color: kDividerColor,
             ),
-            Container(
-              padding: const EdgeInsets.only(top: 6),
-              child: const Text(
-                "About",
-                style: TextStyle(
-                  color: kTitleColor,
-                  fontSize: 17,
-                  fontFamily: kCircularStdBold,
-                ),
-              ),
-            ),
-            builddetailsWidget(
-                Icons.description_outlined, "Lavaska Center", "Description"),
-            const Divider(
-              thickness: 0.8,
-              color: kDividerColor,
-            ),
-            SizedBox(height: Get.height / 2.4),
+            // Container(
+            //   padding: const EdgeInsets.only(top: 6),
+            //   child: const Text(
+            //     "About",
+            //     style: TextStyle(
+            //       color: kTitleColor,
+            //       fontSize: 17,
+            //       fontFamily: kCircularStdBold,
+            //     ),
+            //   ),
+            // ),
+            // widget.attendeesDescription == "" ?
+            // builddetailsWidget(
+            //     Icons.description_outlined,widget.attendeesDescription == "" ? "Lavaska Center" :widget.attendeesDescription.toString(), "Description"),
+            // const Divider(
+            //   thickness: 0.8,
+            //   color: kDividerColor,
+            // ),
+            SizedBox(height: Get.height / 1.7),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),

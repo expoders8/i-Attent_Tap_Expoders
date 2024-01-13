@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
+import '../../config/provider/snackbar_provider.dart';
 import '../models/conference_model.dart';
 import '../../config/constant/constant.dart';
 import '../services/conference_service.dart';
@@ -57,6 +58,8 @@ class GetDetailsConferanceController extends GetxController {
         return Future.error("Server Error");
       }
     } catch (error) {
+      SnackbarUtils.showErrorSnackbar(error.toString(),
+          "Error while Conferance, Please try after some time.");
       return Future.error(error);
     } finally {
       isLoading(false);

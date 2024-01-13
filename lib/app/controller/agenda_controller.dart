@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
+import '../../config/provider/snackbar_provider.dart';
 import '../models/agenda_model.dart';
 import '../services/agenda_service.dart';
 import '../models/agenda_details_model.dart';
@@ -62,6 +63,8 @@ class GetDetailsAgendaController extends GetxController {
         return Future.error("Server Error");
       }
     } catch (error) {
+      SnackbarUtils.showErrorSnackbar(
+          error.toString(), "Error while Agenda, Please try after some time.");
       return Future.error(error);
     } finally {
       isLoading(false);

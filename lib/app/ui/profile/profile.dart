@@ -6,6 +6,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:dotted_border/dotted_border.dart';
 
 import '../../../config/constant/constant.dart';
+import '../../services/firebase_auth_service.dart';
 import '../auth/sign_in.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
@@ -252,7 +253,7 @@ class _ProfilePageState extends State<ProfilePage> {
               getStorage.write('onBoard', 0);
               getStorage.remove('user');
               getStorage.remove('authToken');
-
+              FirebaseAuthServices().signOut();
               Get.offAll(const SignInScreen());
             },
             child: const Text(

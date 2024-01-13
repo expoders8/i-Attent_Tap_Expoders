@@ -1,13 +1,13 @@
 import 'dart:io';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
 
-import '../../controller/conferance_controller.dart';
-import '../../routes/app_pages.dart';
-import '../home/tab_page.dart';
+import '../../controller/event_contoller.dart';
+import '../../view/event_view.dart';
 import '../widgets/data_section.dart';
 import '../../../config/constant/font_constant.dart';
+import '../../controller/conferance_controller.dart';
 import '../../../config/constant/color_constant.dart';
 
 class ConferenceDetailsPage extends StatefulWidget {
@@ -24,6 +24,8 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
   ];
   final GetDetailsConferanceController getDetailsConferanceController =
       Get.put(GetDetailsConferanceController());
+  final GetAllEventsController getAllEventsController =
+      Get.put(GetAllEventsController());
   String selectedDate = "";
 
   @override
@@ -84,11 +86,7 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
                       padding: const EdgeInsets.only(left: 8.0, bottom: 10),
                       child: IconButton(
                         onPressed: () {
-                          Get.offAll(
-                            () => const TabPage(
-                              screenDef: "Home",
-                            ),
-                          );
+                          Get.back();
                         },
                         icon: const Icon(
                           Icons.arrow_back_ios,
@@ -131,9 +129,10 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
                     children: [
                       DateSectionWidget(
                         callbackDate: (val) {
-                          setState(() {
-                            selectedDate = val;
-                          });
+                          getAllEventsController.selectedDateString(val);
+                          getAllEventsController
+                              .selectedIdString(data.id.toString());
+                          getAllEventsController.fetchAllEvents();
                         },
                       ),
                       Container(
@@ -147,202 +146,7 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: Container(
-                          width: Get.width,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(16.0),
-                              topRight: Radius.circular(16.0),
-                              bottomRight: Radius.circular(16.0),
-                            ),
-                          ),
-                          padding: const EdgeInsets.only(bottom: 5.0),
-                          child: ListView.builder(
-                            padding: const EdgeInsets.only(top: 0),
-                            itemCount: 4,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Get.toNamed(Routes.eventDetailsPage);
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 10.0,
-                                      left: 10.0,
-                                      top: 5.0,
-                                      bottom: 5.0),
-                                  child: Card(
-                                    elevation: 7,
-                                    shadowColor:
-                                        const Color.fromARGB(50, 0, 0, 0),
-                                    child: Container(
-                                      width: Get.width,
-                                      padding: const EdgeInsets.only(right: 10),
-                                      decoration: BoxDecoration(
-                                          color: kCardColor,
-                                          borderRadius:
-                                              BorderRadius.circular(15)),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                height: 110,
-                                                decoration: const BoxDecoration(
-                                                    color: kBackGroundColor,
-                                                    borderRadius:
-                                                        BorderRadius.only(
-                                                            topLeft: Radius
-                                                                .circular(14),
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    15))),
-                                                padding: const EdgeInsets.only(
-                                                    left: 10,
-                                                    right: 10,
-                                                    top: 20),
-                                                child: const Column(
-                                                  children: [
-                                                    Text(
-                                                      "09:30 AM",
-                                                      style: TextStyle(
-                                                          color: kTitleColor,
-                                                          fontFamily:
-                                                              kCircularStdMedium,
-                                                          fontSize: 13.2),
-                                                    ),
-                                                    SizedBox(height: 8),
-                                                    Text(
-                                                      "09:45 AM",
-                                                      style: TextStyle(
-                                                          color:
-                                                              kTitleSecondColor,
-                                                          fontFamily:
-                                                              kCircularStdMedium,
-                                                          fontSize: 13.2),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              const SizedBox(width: 10),
-                                              const Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  SizedBox(height: 19.8),
-                                                  Text(
-                                                    "Coffee with Aim Team",
-                                                    style: TextStyle(
-                                                        color: kPrimaryColor,
-                                                        fontFamily:
-                                                            kCircularStdMedium,
-                                                        fontSize: 15),
-                                                  ),
-                                                  SizedBox(height: 25),
-                                                  Row(
-                                                    children: [
-                                                      Icon(
-                                                        Icons
-                                                            .location_on_outlined,
-                                                        color: kPrimaryColor,
-                                                        size: 18,
-                                                      ),
-                                                      SizedBox(width: 2),
-                                                      Text(
-                                                        "Coral Lounge",
-                                                        style: TextStyle(
-                                                            color:
-                                                                kPrimaryColor,
-                                                            fontSize: 13,
-                                                            fontFamily:
-                                                                kCircularStdNormal),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: [
-                                              const SizedBox(height: 10),
-                                              GestureDetector(
-                                                onTap: () {},
-                                                child: Container(
-                                                  padding:
-                                                      const EdgeInsets.all(8),
-                                                  width: 40,
-                                                  height: 40,
-                                                  child: Image.asset(
-                                                    'assets/icons/calender_plus.png',
-                                                    color:
-                                                        const Color(0xFF415880),
-                                                    scale: 6,
-                                                  ),
-                                                ),
-                                              ),
-                                              const SizedBox(height: 4),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 5.0),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    const Text(
-                                                      "+2   ",
-                                                      style: TextStyle(
-                                                          color: kPrimaryColor,
-                                                          fontSize: 15,
-                                                          fontFamily:
-                                                              kCircularStdMedium),
-                                                    ),
-                                                    for (int i = 0;
-                                                        i < image.length;
-                                                        i++)
-                                                      Align(
-                                                        widthFactor: 0.3,
-                                                        child: Image.asset(
-                                                          image[i],
-                                                          errorBuilder: (context,
-                                                                  error,
-                                                                  stackTrace) =>
-                                                              Image.asset(
-                                                            "assets/images/blank_profile.png",
-                                                            fit: BoxFit.fill,
-                                                          ),
-                                                          scale: 2,
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ),
-                                                  ],
-                                                ),
-                                              )
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
+                      const EventViewPage()
                     ],
                   ),
                 ),
@@ -351,10 +155,6 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
           );
         }
       }),
-
-      // bottomNavigationBar: const TabPage(
-      //   screenDef: "Details",
-      // ),
     );
   }
 

@@ -1,18 +1,16 @@
 import 'dart:convert';
-import 'dart:developer';
-
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
-import '../../../config/constant/constant.dart';
-import '../../../config/provider/loader_provider.dart';
-import '../../../config/provider/snackbar_provider.dart';
-import '../../controller/agenda_controller.dart';
-import '../../controller/tab_controller.dart';
-import '../../services/agenda_service.dart';
 import '../widgets/date_time_picker.dart';
+import '../../services/agenda_service.dart';
+import '../../controller/tab_controller.dart';
+import '../../../config/constant/constant.dart';
+import '../../controller/agenda_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../../../config/provider/loader_provider.dart';
+import '../../../config/provider/snackbar_provider.dart';
 
 class CreateActivity extends StatefulWidget {
   const CreateActivity({super.key});
@@ -447,7 +445,8 @@ class _CreateActivityState extends State<CreateActivity> {
                                           LoaderX.hide(),
                                           controller.changeTabIndex(1),
                                           getAllAgendaController
-                                              .fetchAllAgenda()
+                                              .fetchAllAgenda(),
+                                          clearallFild()
                                         }
                                       else
                                         {
@@ -532,6 +531,18 @@ class _CreateActivityState extends State<CreateActivity> {
         ),
       ),
     );
+  }
+
+  clearallFild() {
+    titleController.clear();
+    descriptionController.clear();
+    locationcontroller.clear();
+    setState(() {
+      pickedStartDate = "";
+      pickedEndDate = "";
+      pickedStartTime = "";
+      pickedEndTime = "";
+    });
   }
 
   addMyAgendaBottomSheet(context) async {

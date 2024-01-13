@@ -1,20 +1,17 @@
-class GetAllEventsModel {
+class GetEventByIdModel {
   bool? success;
   String? message;
-  List<GetAllEventsDataModel>? data;
+  GetEventByIdDataModel? data;
   int? code;
 
-  GetAllEventsModel({this.success, this.message, this.data, this.code});
+  GetEventByIdModel({this.success, this.message, this.data, this.code});
 
-  GetAllEventsModel.fromJson(Map<String, dynamic> json) {
+  GetEventByIdModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     message = json['message'];
-    if (json['data'] != null) {
-      data = <GetAllEventsDataModel>[];
-      json['data'].forEach((v) {
-        data!.add(GetAllEventsDataModel.fromJson(v));
-      });
-    }
+    data = json['data'] != null
+        ? GetEventByIdDataModel.fromJson(json['data'])
+        : null;
     code = json['code'];
   }
 
@@ -23,39 +20,42 @@ class GetAllEventsModel {
     data['success'] = success;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.toJson();
     }
     data['code'] = code;
     return data;
   }
 }
 
-class GetAllEventsDataModel {
-  int? eventId;
+class GetEventByIdDataModel {
+  int? id;
   String? eventName;
-  String? startDate;
   String? description;
+  String? startDate;
   String? endDate;
+  String? roomName;
   String? venue;
   String? attendees;
   List<LstAttendees>? lstAttendees;
 
-  GetAllEventsDataModel(
-      {this.eventId,
+  GetEventByIdDataModel(
+      {this.id,
       this.eventName,
       this.description,
       this.startDate,
       this.endDate,
+      this.roomName,
       this.venue,
       this.attendees,
       this.lstAttendees});
 
-  GetAllEventsDataModel.fromJson(Map<String, dynamic> json) {
-    eventId = json['eventId'];
+  GetEventByIdDataModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     eventName = json['eventName'];
     description = json['description'];
     startDate = json['startDate'];
     endDate = json['endDate'];
+    roomName = json['roomName'];
     venue = json['venue'];
     attendees = json['attendees'];
     if (json['lstAttendees'] != null) {
@@ -68,11 +68,12 @@ class GetAllEventsDataModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['eventId'] = eventId;
+    data['id'] = id;
     data['eventName'] = eventName;
     data['description'] = description;
     data['startDate'] = startDate;
     data['endDate'] = endDate;
+    data['roomName'] = roomName;
     data['venue'] = venue;
     data['attendees'] = attendees;
     if (lstAttendees != null) {

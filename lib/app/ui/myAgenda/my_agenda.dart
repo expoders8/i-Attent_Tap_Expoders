@@ -1,8 +1,10 @@
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/data_section.dart';
-import '../myAgenda/components/agenda_list.dart';
+import '../../view/agenda_view.dart';
+import '../../controller/agenda_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 
@@ -17,7 +19,8 @@ class _MyAgendaPageState extends State<MyAgendaPage> {
   String formattedDate = DateFormat('MM/dd/yyyy').format(DateTime.now());
   int tabSelection = 0;
   String selectedDate = "";
-
+  final GetAllAgendaController getAllAgendaController =
+      Get.put(GetAllAgendaController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,12 +39,11 @@ class _MyAgendaPageState extends State<MyAgendaPage> {
         children: [
           DateSectionWidget(
             callbackDate: (val) {
-              setState(() {
-                selectedDate = val;
-              });
+              getAllAgendaController.selectedDateString(val);
+              getAllAgendaController.fetchAllAgenda();
             },
           ),
-          const AgendaListPage()
+          const AgendaViewPage()
         ],
       ),
     );
