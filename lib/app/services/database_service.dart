@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../config/constant/constant.dart';
 import '../models/message_model.dart';
 import '../models/firebase_user_model.dart';
 import '../services/firebase_auth_service.dart';
@@ -18,16 +21,20 @@ class DBServices {
   }
 
   Stream<List<FirebaseUser>> getAppUser() {
+    var data = getStorage.read('user');
+    var getUserData = jsonDecode(data);
     return userCollection
-        .where('uid', isEqualTo: FirebaseAuthServices().user?.uid)
+        .where('uid', isEqualTo: getUserData['id'].toString())
         .snapshots()
         .map((event) =>
             event.docs.map((e) => FirebaseUser.fromJson(e.data())).toList());
   }
 
   Stream<List<FirebaseUser>> getDiscussionUser(String query) {
+    var data = getStorage.read('user');
+    var getUserData = jsonDecode(data);
     return userCollection
-        .where('uid', isNotEqualTo: FirebaseAuthServices().user?.uid)
+        .where('uid', isNotEqualTo: getUserData['id'].toString())
         .snapshots()
         .map((event) => event.docs
                 .map((e) => FirebaseUser.fromJson(e.data()))
@@ -39,46 +46,14 @@ class DBServices {
             }).toList());
   }
 
-  // Stream<List<Message>> getMessage(String reciverUID, [bool myMessage = true]) {
-  //   final refMessages =
-  //       FirebaseFirestore.instance.collection('chats/$reciverUID/messages');
-  //   return refMessages
-  //       .where("senderUID",
-  //           isEqualTo: myMessage ? FirebaseAuthServices().user?.uid : reciverUID)
-  //       .where("reciverUID",
-  //           isEqualTo: myMessage ? reciverUID : FirebaseAuthServices().user?.uid)
-  //       .snapshots()
-  //       .map((event) =>
-  //           event.docs.map((e) => Message.fromJson(e.data(), e.id)).toList());
-  // }
-
-  // Future<bool> sendMessage(Message msg) async {
-  //   final refMessages = FirebaseFirestore.instance
-  //       .collection('chats/${msg.reciverUID}/messages');
-  //   try {
-  //     await refMessages.add(msg.toJson());
-  //     await userCollection.doc(msg.reciverUID).update({
-  //       UserField.lastMessageTime: msg.createAt,
-  //       UserField.lastMessage: msg.content
-  //     });
-  //     await userCollection.doc(msg.senderUID).update({
-  //       UserField.lastMessageTime: msg.createAt,
-  //       UserField.lastMessage: msg.content
-  //     });
-  //     return true;
-  //   } catch (e) {
-  //     return false;
-  //   }
-  // }
-
   Stream<List<Message>> getMessage(String reciverUID, [bool myMessage = true]) {
+    var data = getStorage.read('user');
+    var getUserData = jsonDecode(data);
     var xx = msgCollection
         .where("senderUID",
-            isEqualTo:
-                myMessage ? FirebaseAuthServices().user?.uid : reciverUID)
+            isEqualTo: myMessage ? getUserData['id'].toString() : reciverUID)
         .where("reciverUID",
-            isEqualTo:
-                myMessage ? reciverUID : FirebaseAuthServices().user?.uid)
+            isEqualTo: myMessage ? reciverUID : getUserData['id'].toString())
         .snapshots()
         .map((event) =>
             event.docs.map((e) => Message.fromJson(e.data(), e.id)).toList());

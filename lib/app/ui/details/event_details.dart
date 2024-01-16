@@ -1,21 +1,20 @@
-import 'dart:convert';
 import 'dart:io';
+import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:intl/intl.dart';
 
-import '../../../config/constant/constant.dart';
-import '../../../config/provider/loader_provider.dart';
-import '../../../config/provider/snackbar_provider.dart';
-import '../../controller/agenda_controller.dart';
-import '../../routes/app_pages.dart';
+import '../../services/agenda_service.dart';
 import '../../controller/tab_controller.dart';
 import '../../controller/event_contoller.dart';
+import '../../../config/constant/constant.dart';
+import '../../controller/agenda_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
-import '../../services/agenda_service.dart';
-import '../agenda_details/Register_Attendees_details.dart';
+import '../../../config/provider/loader_provider.dart';
+import '../../../config/provider/snackbar_provider.dart';
+import '../ragister_Attendees_Detail/Register_Attendees_details.dart';
 
 class EventDetailsPage extends StatefulWidget {
   const EventDetailsPage({super.key});

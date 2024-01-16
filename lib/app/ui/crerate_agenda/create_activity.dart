@@ -429,33 +429,8 @@ class _CreateActivityState extends State<CreateActivity> {
                               pickedEndTime != "" &&
                               pickedStartDate != "" &&
                               pickedEndDate != "") {
-                            LoaderX.show(context, 60.0, 60.0);
-                            agendaService
-                                .addAgenda(
-                                    titleController.text,
-                                    descriptionController.text,
-                                    locationcontroller.text,
-                                    "${pickedStartDate}T$pickedStartTime",
-                                    "${pickedEndDate}T$pickedEndTime",
-                                    null,
-                                    userId)
-                                .then((value) => {
-                                      if (value['data'])
-                                        {
-                                          LoaderX.hide(),
-                                          controller.changeTabIndex(1),
-                                          getAllAgendaController
-                                              .fetchAllAgenda(),
-                                          clearallFild()
-                                        }
-                                      else
-                                        {
-                                          LoaderX.hide(),
-                                          SnackbarUtils.showErrorSnackbar(
-                                              "Failed to Add Agenda",
-                                              value["message"])
-                                        }
-                                    });
+                            FocusScope.of(context).requestFocus(FocusNode());
+                            addMyAgendaBottomSheet(context);
                           } else {
                             if (pickedStartTime == "") {
                               setState(() {
@@ -606,6 +581,31 @@ class _CreateActivityState extends State<CreateActivity> {
     return GestureDetector(
       onTap: () {
         Get.back();
+        LoaderX.show(context, 60.0, 60.0);
+        agendaService
+            .addAgenda(
+                titleController.text,
+                descriptionController.text,
+                locationcontroller.text,
+                "${pickedStartDate}T$pickedStartTime",
+                "${pickedEndDate}T$pickedEndTime",
+                null,
+                userId)
+            .then((value) => {
+                  if (value['data'])
+                    {
+                      LoaderX.hide(),
+                      controller.changeTabIndex(1),
+                      getAllAgendaController.fetchAllAgenda(),
+                      clearallFild()
+                    }
+                  else
+                    {
+                      LoaderX.hide(),
+                      SnackbarUtils.showErrorSnackbar(
+                          "Failed to Add Agenda", value["message"])
+                    }
+                });
       },
       child: Column(
         children: [

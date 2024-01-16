@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../config/constant/constant.dart';
 import '../../../models/message_model.dart';
 import '../../../services/database_service.dart';
 import '../../../models/firebase_user_model.dart';
@@ -17,9 +20,22 @@ class MessageComponent extends StatefulWidget {
 }
 
 class _MessageComponentState extends State<MessageComponent> {
+  String userId = "";
+
   @override
   void initState() {
+    getUser();
     super.initState();
+  }
+
+  Future getUser() async {
+    var data = getStorage.read('user');
+    var getUserData = jsonDecode(data);
+    if (getUserData != null) {
+      setState(() {
+        userId = getUserData['id'].toString();
+      });
+    }
   }
 
   @override
@@ -36,11 +52,11 @@ class _MessageComponentState extends State<MessageComponent> {
             final user = s.data;
             return Row(
               crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: widget.msg!.isMe
+              mainAxisAlignment: widget.msg!.senderUID == userId
                   ? MainAxisAlignment.end
                   : MainAxisAlignment.start,
               children: [
-                widget.msg!.isMe
+                widget.msg!.senderUID == userId
                     ? Container()
                     : Padding(
                         padding: const EdgeInsets.only(
@@ -50,7 +66,7 @@ class _MessageComponentState extends State<MessageComponent> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 3),
                   child: Column(
-                    crossAxisAlignment: widget.msg!.isMe
+                    crossAxisAlignment: widget.msg!.senderUID == userId
                         ? CrossAxisAlignment.end
                         : CrossAxisAlignment.start,
                     children: [
@@ -58,16 +74,16 @@ class _MessageComponentState extends State<MessageComponent> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 12, vertical: 10),
                         decoration: BoxDecoration(
-                          color: widget.msg!.isMe
+                          color: widget.msg!.senderUID == userId
                               ? kButtonColor
                               : kBackGroundColor,
                           borderRadius: BorderRadius.only(
                             topLeft: const Radius.circular(12),
                             topRight: const Radius.circular(12),
-                            bottomLeft: widget.msg!.isMe
+                            bottomLeft: widget.msg!.senderUID == userId
                                 ? const Radius.circular(12)
                                 : const Radius.circular(0),
-                            bottomRight: widget.msg!.isMe
+                            bottomRight: widget.msg!.senderUID == userId
                                 ? const Radius.circular(0)
                                 : const Radius.circular(12),
                           ),
@@ -78,7 +94,7 @@ class _MessageComponentState extends State<MessageComponent> {
                           widget.msg!.content!,
                           textAlign: TextAlign.start,
                           style: TextStyle(
-                              color: widget.msg!.isMe
+                              color: widget.msg!.senderUID == userId
                                   ? kWhiteColor
                                   : kPrimaryColor,
                               fontSize: 16,
@@ -97,7 +113,7 @@ class _MessageComponentState extends State<MessageComponent> {
                     ],
                   ),
                 ),
-                widget.msg!.isMe
+                widget.msg!.senderUID == userId
                     ? Padding(
                         padding: const EdgeInsets.only(
                             bottom: 18, right: 5, left: 5),

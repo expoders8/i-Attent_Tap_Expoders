@@ -2,8 +2,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/data_section.dart';
 import '../../view/agenda_view.dart';
+import '../widgets/data_section.dart';
 import '../../controller/agenda_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';

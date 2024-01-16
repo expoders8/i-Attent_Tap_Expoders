@@ -77,8 +77,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       radius: const Radius.circular(30),
                       padding: const EdgeInsets.all(3),
                       child: SizedBox(
-                        height: 100,
-                        width: 100,
+                        height: 85,
+                        width: 85,
                         child: ClipOval(
                             child: Material(
                           color: kTransparentColor,
@@ -107,7 +107,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             children: [
                               const SizedBox(height: 10),
                               SizedBox(
-                                width: Get.width / 2.27,
+                                width: Get.width / 2,
                                 child: Text(
                                   userName,
                                   overflow: TextOverflow.ellipsis,

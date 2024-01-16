@@ -10,35 +10,23 @@ class FirebaseAuthServices {
 
   Future<bool> signIn(String email, String password) async {
     try {
-      final getPassword = await createPasswordForFirebase(email);
-      await _auth.signInWithEmailAndPassword(
-          email: email, password: getPassword);
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
       return true;
     } on FirebaseAuthException {
       return false;
     }
   }
 
-  createPasswordForFirebase(String getEmailID) {
-    String result = getEmailID.substring(0, getEmailID.indexOf('@'));
-    String createNewPass = "$result-og-2023";
-    return createNewPass;
-  }
-
-  Future<bool> signUp(String name, String email, String password) async {
+  Future<bool> signUp(
+      String name, String email, String password, String uid) async {
     try {
-      final getPassword = await createPasswordForFirebase(email);
-      await _auth.createUserWithEmailAndPassword(
-          email: email, password: getPassword);
       await DBServices().saveUser(FirebaseUser(
-        uid: user?.uid,
-        email: user?.email,
+        uid: uid,
+        email: email,
         name: name,
         image:
             'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
         lastMessage: "",
-        // stateId: "",
-        // cityId: "",
         lastMessageTime: Timestamp.now(),
       ));
       return true;

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -6,13 +8,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stts;
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 
+import '../../../../config/constant/color_constant.dart';
+import '../../../../config/constant/constant.dart';
 import '../../../../config/constant/font_constant.dart';
 import '../../../models/message_model.dart';
 import '../components/message_component.dart';
 import '../../../services/database_service.dart';
 import '../../../models/firebase_user_model.dart';
 import '../../../services/firebase_auth_service.dart';
-import '../../../../config/constant/color_constant.dart';
 
 class ChatScreen extends StatefulWidget {
   final FirebaseUser? user;
@@ -24,7 +27,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   String text = "";
-  String lastDate = "";
+  String lastDate = "", userId = "";
   bool show = false;
   bool isSame = false;
   bool sendButton = false;
@@ -34,13 +37,29 @@ class _ChatScreenState extends State<ChatScreen> {
   var msgController = TextEditingController();
   final ScrollController _controller = ScrollController();
   final TextEditingController emojicontroller = TextEditingController();
+  @override
+  void initState() {
+    speechToText = stts.SpeechToText();
+    getUser();
+    super.initState();
+  }
+
+  Future getUser() async {
+    var data = getStorage.read('user');
+    var getUserData = jsonDecode(data);
+    if (getUserData != null) {
+      setState(() {
+        userId = getUserData['id'].toString();
+      });
+    }
+  }
 
   sendMessageOnClick() async {
     var msg = Message(
       content: msgController.text,
       createAt: Timestamp.now(),
       reciverUID: widget.user!.uid,
-      senderUID: FirebaseAuthServices().user?.uid,
+      senderUID: userId,
     );
     msgController.clear();
     emojicontroller.clear();
@@ -117,13 +136,8 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   @override
-  void initState() {
-    speechToText = stts.SpeechToText();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
@@ -180,158 +194,104 @@ class _ChatScreenState extends State<ChatScreen> {
         body: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Flexible(
-                child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 3, horizontal: 11),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      SizedBox(height: Get.height - 250),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 10),
-                        decoration: const BoxDecoration(
-                          color: kButtonColor,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(12),
-                            topRight: Radius.circular(12),
-                            bottomLeft: Radius.circular(12),
-                            bottomRight: Radius.circular(0),
-                          ),
-                        ),
-                        constraints: BoxConstraints(
-                            minHeight: 30, maxWidth: Get.width / 1.4),
-                        child: const Text(
-                          "Hii",
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                              color: kWhiteColor,
-                              fontSize: 16,
-                              fontFamily: kCircularStdNormal,
-                              fontWeight: FontWeight.w300),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 2,
-                      ),
-                      const Text(
-                        "8:00",
-                        style:
-                            TextStyle(color: kTextSecondaryColor, fontSize: 12),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            )),
-            // Expanded(
-            //   child: StreamBuilder<List<Message>>(
-            //     stream: DBServices().getMessage(widget.user!.uid!),
-            //     builder: (context, s1) {
-            //       if (s1.hasData) {
-            //         return StreamBuilder<List<Message>>(
-            //           stream: DBServices().getMessage(widget.user!.uid!, false),
-            //           builder: (context, s2) {
-            //             if (s2.hasData) {
-            //               var messages = [...s1.data!, ...s2.data!];
-            //               messages.sort(
-            //                   (i, j) => i.createAt!.compareTo(j.createAt!));
-            //               messages = messages.reversed.toList();
-            //               return messages.isEmpty
-            //                   ? const Center(
-            //                       child: Text("No Messages"),
-            //                     )
-            //                   : ListView.builder(
-            //                       controller: _controller,
-            //                       reverse: true,
-            //                       itemCount: messages.length,
-            //                       itemBuilder: (context, index) {
-            //                         final image = widget.user!.image;
-            //                         final msg = messages[index];
-            //                         final date = DateFormat('dd-MM-yyyy')
-            //                             .format(DateTime.parse(messages[index]
-            //                                 .createAt!
-            //                                 .toDate()
-            //                                 .toString()));
-            //                         final nextDate = messages.length - 1 >=
-            //                                 index + 1
-            //                             ? DateFormat('dd-MM-yyyy').format(
-            //                                 DateTime.parse(messages[index + 1]
-            //                                     .createAt!
-            //                                     .toDate()
-            //                                     .toString()))
-            //                             : '';
+            Expanded(
+              child: StreamBuilder<List<Message>>(
+                stream: DBServices().getMessage(widget.user!.uid!),
+                builder: (context, s1) {
+                  if (s1.hasData) {
+                    return StreamBuilder<List<Message>>(
+                      stream: DBServices().getMessage(widget.user!.uid!, false),
+                      builder: (context, s2) {
+                        if (s2.hasData) {
+                          var messages = [...s1.data!, ...s2.data!];
+                          messages.sort(
+                              (i, j) => i.createAt!.compareTo(j.createAt!));
+                          messages = messages.reversed.toList();
+                          return messages.isEmpty
+                              ? const Center(
+                                  child: Text("No Messages"),
+                                )
+                              : ListView.builder(
+                                  controller: _controller,
+                                  reverse: true,
+                                  itemCount: messages.length,
+                                  itemBuilder: (context, index) {
+                                    final image = widget.user!.image;
+                                    final msg = messages[index];
+                                    final date = DateFormat('dd-MM-yyyy')
+                                        .format(DateTime.parse(messages[index]
+                                            .createAt!
+                                            .toDate()
+                                            .toString()));
+                                    final nextDate = messages.length - 1 >=
+                                            index + 1
+                                        ? DateFormat('dd-MM-yyyy').format(
+                                            DateTime.parse(messages[index + 1]
+                                                .createAt!
+                                                .toDate()
+                                                .toString()))
+                                        : '';
+                                    isSame = date == nextDate ? true : false;
+                                    lastDate = date;
 
-            //                         isSame = date == nextDate ? true : false;
-            //                         // if (index != 0) {
-            //                         //   //isSame = lastDate == date ? true : false;
-            //                         //   isSame = date == nextDate ? true : false;
-            //                         // }
-            //                         lastDate = date;
-
-            //                         return Container(
-            //                           margin: const EdgeInsets.only(bottom: 10),
-            //                           child: Column(
-            //                             children: [
-            //                               const SizedBox(
-            //                                 height: 5,
-            //                               ),
-            //                               !isSame
-            //                                   ? Container(
-            //                                       padding:
-            //                                           const EdgeInsets.all(3),
-            //                                       decoration: BoxDecoration(
-            //                                           color: kDividerColor,
-            //                                           borderRadius:
-            //                                               BorderRadius.circular(
-            //                                                   15)),
-            //                                       child: Text(
-            //                                         date,
-            //                                         style: const TextStyle(
-            //                                             color: kBlack54Color,
-            //                                             fontWeight:
-            //                                                 FontWeight.w200),
-            //                                       ),
-            //                                     )
-            //                                   : Container(),
-            //                               !isSame
-            //                                   ? const SizedBox(
-            //                                       height: 5,
-            //                                     )
-            //                                   : Container(),
-            //                               MessageComponent(
-            //                                 msg: msg,
-            //                                 image: image,
-            //                               ),
-            //                             ],
-            //                           ),
-            //                         );
-            //                       },
-            //                     );
-            //             } else {
-            //               return const Center(
-            //                 child: CircularProgressIndicator(
-            //                   color: kPrimaryColor,
-            //                 ),
-            //               );
-            //             }
-            //           },
-            //         );
-            //       } else {
-            //         return const Center(
-            //           child: CircularProgressIndicator(
-            //             color: kPrimaryColor,
-            //           ),
-            //         );
-            //       }
-            //     },
-            //   ),
-            // ),
+                                    return Container(
+                                      margin: const EdgeInsets.only(bottom: 10),
+                                      child: Column(
+                                        children: [
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          !isSame
+                                              ? Container(
+                                                  padding:
+                                                      const EdgeInsets.all(3),
+                                                  decoration: BoxDecoration(
+                                                      color: kDividerColor,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15)),
+                                                  child: Text(
+                                                    date,
+                                                    style: const TextStyle(
+                                                        color: kBlack54Color,
+                                                        fontWeight:
+                                                            FontWeight.w200),
+                                                  ),
+                                                )
+                                              : Container(),
+                                          !isSame
+                                              ? const SizedBox(
+                                                  height: 5,
+                                                )
+                                              : Container(),
+                                          MessageComponent(
+                                            msg: msg,
+                                            image: image,
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: kPrimaryColor,
+                            ),
+                          );
+                        }
+                      },
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: kPrimaryColor,
+                      ),
+                    );
+                  }
+                },
+              ),
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -416,11 +376,11 @@ class _ChatScreenState extends State<ChatScreen> {
                                         )),
                                   ),
                             onPressed: () async {
-                              // if (sendButton) {
-                              //   sendMessageOnClick();
-                              // } else {
-                              //   listen();
-                              // }
+                              if (sendButton) {
+                                sendMessageOnClick();
+                              } else {
+                                listen();
+                              }
                             },
                           ),
                         ],
@@ -475,6 +435,7 @@ class _ChatScreenState extends State<ChatScreen> {
           skinToneDialogBgColor: Colors.white,
           skinToneIndicatorColor: Colors.grey,
           enableSkinTones: true,
+          // showRecentsTab: true,
           recentsLimit: 28,
           replaceEmojiOnLimitExceed: false,
           noRecents: Text(
@@ -488,73 +449,6 @@ class _ChatScreenState extends State<ChatScreen> {
           checkPlatformCompatibility: true,
         ),
       ),
-    );
-  }
-
-  callTypeBottomSheet() {
-    FocusScope.of(context).requestFocus(FocusNode());
-    return showModalBottomSheet<dynamic>(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(40.0),
-          topRight: Radius.circular(40.0),
-        ),
-      ),
-      isScrollControlled: true,
-      backgroundColor: kWhiteColor,
-      context: context,
-      builder: (context) {
-        return Wrap(
-          children: [
-            const Center(
-              child: ImageIcon(
-                AssetImage("assets/icons/line.png"),
-                size: 30,
-                color: Color(0XffBFC5CC),
-              ),
-            ),
-            Theme(
-              data: ThemeData(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-              ),
-              child: SizedBox(
-                height: 125,
-                child: Column(
-                  children: [
-                    ListTile(
-                      title: const Center(
-                        child: Text(
-                          "General Call",
-                          style: TextStyle(
-                            fontFamily: kWorkSans,
-                            fontSize: 15,
-                            color: kPrimaryColor,
-                          ),
-                        ),
-                      ),
-                      onTap: () {},
-                    ),
-                    ListTile(
-                      title: const Center(
-                        child: Text(
-                          "Video Call",
-                          style: TextStyle(
-                            fontFamily: kWorkSans,
-                            fontSize: 15,
-                            color: kPrimaryColor,
-                          ),
-                        ),
-                      ),
-                      onTap: () {},
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ],
-        );
-      },
     );
   }
 
