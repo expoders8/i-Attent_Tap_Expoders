@@ -1,12 +1,10 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../config/constant/constant.dart';
 import '../models/message_model.dart';
 import '../models/firebase_user_model.dart';
-import '../services/firebase_auth_service.dart';
+import '../../config/constant/constant.dart';
 
 class DBServices {
   var userCollection = FirebaseFirestore.instance.collection("Users");

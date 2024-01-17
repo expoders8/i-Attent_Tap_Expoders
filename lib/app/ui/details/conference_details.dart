@@ -100,15 +100,27 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
                     bottom: 10,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 15.0, bottom: 10),
-                      child: SizedBox(
-                        width: 250,
-                        child: Text(
-                          data.name.toString(),
-                          style: const TextStyle(
-                              color: kBackGroundColor,
-                              fontFamily: kCircularStdNormal,
-                              fontSize: 19),
-                        ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: 280,
+                            child: Text(
+                              data.name.toString(),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              style: const TextStyle(
+                                  color: kBackGroundColor,
+                                  fontFamily: kCircularStdNormal,
+                                  fontSize: 19),
+                            ),
+                          ),
+                          Image.asset(
+                            'assets/icons/gallary.png',
+                            scale: 5,
+                            color: kBackGroundColor,
+                          )
+                        ],
                       ),
                     ),
                   )

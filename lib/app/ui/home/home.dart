@@ -123,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                   child: SizedBox(
                     width: Get.width - 80,
                     child: const Text(
-                      "Conferance not Found",
+                      "No Conference",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: kPrimaryColor,
@@ -336,7 +336,7 @@ class _HomePageState extends State<HomePage> {
                           } else {
                             return const Center(
                               child: Text(
-                                "Conferance not Found",
+                                "No Conference",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: kPrimaryColor,
@@ -354,7 +354,7 @@ class _HomePageState extends State<HomePage> {
             } else {
               return const Center(
                 child: Text(
-                  "Conferance not Found",
+                  "No Conference",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: kPrimaryColor,

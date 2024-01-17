@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -8,14 +7,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stts;
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 
-import '../../../../config/constant/color_constant.dart';
-import '../../../../config/constant/constant.dart';
-import '../../../../config/constant/font_constant.dart';
 import '../../../models/message_model.dart';
 import '../components/message_component.dart';
 import '../../../services/database_service.dart';
 import '../../../models/firebase_user_model.dart';
-import '../../../services/firebase_auth_service.dart';
+import '../../../../config/constant/constant.dart';
+import '../../../../config/constant/font_constant.dart';
+import '../../../../config/constant/color_constant.dart';
 
 class ChatScreen extends StatefulWidget {
   final FirebaseUser? user;
@@ -137,7 +135,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());

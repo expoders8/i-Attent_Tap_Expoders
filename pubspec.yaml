@@ -68,16 +68,16 @@ dev_dependencies:
   flutter_launcher_icons: ^0.13.1
 
 flutter_native_splash:
-  color: "#E86C08"
-  image: "assets/tap_icon.png"
+  color: "#fafdff"
+  image: "assets/splash.png"
   android_12:
-    image: assets/tap_icon.png
+    image: assets/splash.png
   fullscreen: true
   android: true
   ios: true
 
 flutter_icons:
-  image_path: "assets/tap_icon.png"
+  image_path: "assets/TAP.png"
   android: true
   ios: true
 # For information on the generic Dart part of this file, see the

@@ -14,6 +14,7 @@ import '../services/agenda_service.dart';
 import '../controller/tab_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
+import '../services/notification_service.dart';
 
 class EventViewPage extends StatefulWidget {
   const EventViewPage({super.key});
@@ -36,6 +37,7 @@ class _EventViewPageState extends State<EventViewPage> {
       Get.put(GetAllAgendaController());
   final GetDetailsEventController getDetailsEventController =
       Get.put(GetDetailsEventController());
+  NotificationService notificationService = NotificationService();
   @override
   void initState() {
     getUser();
@@ -221,7 +223,20 @@ class _EventViewPageState extends State<EventViewPage> {
                                           const SizedBox(height: 10),
                                           GestureDetector(
                                             onTap: () {
-                                              addMyAgendaDialog(
+                                              // addMyAgendaDialog(
+                                              //     context,
+                                              //     data.eventName,
+                                              //     data.description == ""
+                                              //         ? "test"
+                                              //         : data.description
+                                              //             .toString(),
+                                              //     data.venue != ""
+                                              //         ? data.venue.toString()
+                                              //         : "test",
+                                              //     data.startDate,
+                                              //     data.endDate,
+                                              //     data.eventId.toString());
+                                              addMyAgendaBottomSheet(
                                                   context,
                                                   data.eventName,
                                                   data.description == ""
@@ -426,60 +441,188 @@ class _EventViewPageState extends State<EventViewPage> {
     );
   }
 
-  addMyAgendaDialog(context, title, description, location, startDate, endDate,
-      eventId) async {
-    return await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
+  addMyAgendaBottomSheet(context, title, description, location, startDate,
+      endDate, eventId) async {
+    return showModalBottomSheet<dynamic>(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(40.0),
+          topRight: Radius.circular(40.0),
         ),
-        backgroundColor: kCardColor,
-        title: const Text("Alert !"),
-        elevation: 5,
-        titleTextStyle: const TextStyle(fontSize: 19, color: kRedColor),
-        content: const Text("Are you sure want to Add in My Agenda?"),
-        contentPadding: const EdgeInsets.only(left: 25, top: 10),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () async {
-              Get.back();
-              LoaderX.show(context, 60.0, 60.0);
-              agendaService
-                  .addAgenda(title, description, location, startDate, endDate,
-                      eventId, userId)
-                  .then((value) => {
-                        if (value['data'])
-                          {
-                            LoaderX.hide(),
-                            Get.back(),
-                            controller.changeTabIndex(1),
-                            getAllAgendaController.fetchAllAgenda(),
-                          }
-                        else
-                          {
-                            LoaderX.hide(),
-                            SnackbarUtils.showErrorSnackbar(
-                                "Failed to Add Agenda", value["message"])
-                          }
-                      });
-            },
-            child: const Text(
-              'Yes',
-              style: TextStyle(fontSize: 16, color: kPrimaryColor),
+      ),
+      isScrollControlled: true,
+      backgroundColor: kWhiteColor,
+      context: context,
+      builder: (context) {
+        return Wrap(
+          children: [
+            const Center(
+              child: ImageIcon(
+                AssetImage("assets/icons/line.png"),
+                size: 30,
+                color: Color(0XffBFC5CC),
+              ),
+            ),
+            Theme(
+                data: ThemeData(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 12.0),
+                      child: Text(
+                        "Session addes to My agenda. Do you also want to add reminder to phone",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: kTitleColor,
+                            fontFamily: kCircularStdBold,
+                            fontSize: 15),
+                      ),
+                    ),
+                    const Divider(
+                      thickness: 0.8,
+                      color: kDividerColor,
+                    ),
+                    buildRemindersTime("Remind me 10 min before", title,
+                        description, location, startDate, endDate, eventId),
+                    buildRemindersTime("Remind me 20 min before", title,
+                        description, location, startDate, endDate, eventId),
+                    buildRemindersTime("Remind me 30 min before", title,
+                        description, location, startDate, endDate, eventId),
+                    buildRemindersTime("No reminder", title, description,
+                        location, startDate, endDate, eventId),
+                  ],
+                )),
+          ],
+        );
+      },
+    );
+  }
+
+  buildRemindersTime(
+      String time, title, description, location, startDate, endDate, eventId) {
+    return GestureDetector(
+      onTap: () {
+        Get.back();
+        LoaderX.show(context, 60.0, 60.0);
+        notificationService
+            .addReminder(
+                time == "Remind me 10 min before"
+                    ? 10
+                    : time == "Remind me 20 min before"
+                        ? 20
+                        : time == "Remind me 30 min before"
+                            ? 20
+                            : 0,
+                0,
+                userId)
+            .then((value) => {
+                  if (value['success'])
+                    {
+                      agendaService
+                          .addAgenda(title, description, location, startDate,
+                              endDate, eventId, userId)
+                          .then((value) => {
+                                if (value['data'])
+                                  {
+                                    LoaderX.hide(),
+                                    Get.back(),
+                                    controller.changeTabIndex(1),
+                                    getAllAgendaController.fetchAllAgenda(),
+                                  }
+                                else
+                                  {
+                                    LoaderX.hide(),
+                                    SnackbarUtils.showErrorSnackbar(
+                                        "Failed to Add Agenda",
+                                        value["message"])
+                                  }
+                              })
+                    }
+                  else
+                    {
+                      LoaderX.hide(),
+                      SnackbarUtils.showErrorSnackbar(
+                          "Failed to Add Agenda", value['message'].toString())
+                    }
+                });
+      },
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Text(
+              time,
+              style: const TextStyle(
+                  color: kPrimaryColor, fontFamily: kCircularStdNormal),
             ),
           ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text(
-              'No',
-              style: TextStyle(fontSize: 16, color: kPrimaryColor),
-            ),
+          const Divider(
+            thickness: 0.8,
+            color: kDividerColor,
           ),
         ],
       ),
     );
   }
+  // addMyAgendaDialog(context, title, description, location, startDate, endDate,
+  //     eventId) async {
+  //   return await showDialog(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.circular(10.0),
+  //       ),
+  //       backgroundColor: kCardColor,
+  //       title: const Text("Alert !"),
+  //       elevation: 5,
+  //       titleTextStyle: const TextStyle(fontSize: 19, color: kRedColor),
+  //       content: const Text("Are you sure want to Add in My Agenda?"),
+  //       contentPadding: const EdgeInsets.only(left: 25, top: 10),
+  //       actions: <Widget>[
+  //         TextButton(
+  //           onPressed: () async {
+  //             Get.back();
+  //             LoaderX.show(context, 60.0, 60.0);
+  //             agendaService
+  //                 .addAgenda(title, description, location, startDate, endDate,
+  //                     eventId, userId)
+  //                 .then((value) => {
+  //                       if (value['data'])
+  //                         {
+  //                           LoaderX.hide(),
+  //                           Get.back(),
+  //                           controller.changeTabIndex(1),
+  //                           getAllAgendaController.fetchAllAgenda(),
+  //                         }
+  //                       else
+  //                         {
+  //                           LoaderX.hide(),
+  //                           SnackbarUtils.showErrorSnackbar(
+  //                               "Failed to Add Agenda", value["message"])
+  //                         }
+  //                     });
+  //           },
+  //           child: const Text(
+  //             'Yes',
+  //             style: TextStyle(fontSize: 16, color: kPrimaryColor),
+  //           ),
+  //         ),
+  //         TextButton(
+  //           onPressed: () {
+  //             Navigator.of(context).pop();
+  //           },
+  //           child: const Text(
+  //             'No',
+  //             style: TextStyle(fontSize: 16, color: kPrimaryColor),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

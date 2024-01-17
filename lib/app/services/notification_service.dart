@@ -6,7 +6,7 @@ import '../../config/provider/loader_provider.dart';
 import '../../config/provider/snackbar_provider.dart';
 
 class NotificationService {
-  addReminder(String minutes, String agendaId, String userId) async {
+  addReminder(int minutes, int agendaId, String userId) async {
     try {
       var response =
           await http.post(Uri.parse('$baseUrl/api/Notification/AddReminder'),
@@ -23,12 +23,12 @@ class NotificationService {
       } else {
         LoaderX.hide();
         SnackbarUtils.showErrorSnackbar("Server Error",
-            "Error while user login, Please try after some time.");
+            "Error while Add Reminder, Please try after some time.");
         return Future.error("Server Error");
       }
     } catch (e) {
       LoaderX.hide();
-      SnackbarUtils.showErrorSnackbar("Failed to login", e.toString());
+      SnackbarUtils.showErrorSnackbar("Failed to Add Reminder", e.toString());
       throw e.toString();
     }
   }

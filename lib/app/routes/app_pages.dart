@@ -8,6 +8,7 @@ import '../ui/home/tab_page.dart';
 import '../ui/crerate_agenda/create_activity.dart';
 import '../ui/notification/notification.dart';
 import '../ui/profile/qr_code.dart';
+import '../ui/splash_screen.dart';
 
 part 'app_routes.dart';
 
@@ -20,6 +21,10 @@ class AppPages {
     GetPage(
       name: _Paths.tabPage,
       page: () => const TabPage(),
+    ),
+    GetPage(
+      name: _Paths.splashScreen,
+      page: () => const SplashScreen(),
     ),
     GetPage(
       name: _Paths.signInScreen,

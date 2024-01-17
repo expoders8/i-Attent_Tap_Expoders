@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
+import '../../services/notification_service.dart';
 import '../widgets/date_time_picker.dart';
 import '../../services/agenda_service.dart';
 import '../../controller/tab_controller.dart';
@@ -50,6 +52,7 @@ class _CreateActivityState extends State<CreateActivity> {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController locationcontroller = TextEditingController();
   AgendaService agendaService = AgendaService();
+  NotificationService notificationService = NotificationService();
   @override
   void initState() {
     getUser();
@@ -582,28 +585,51 @@ class _CreateActivityState extends State<CreateActivity> {
       onTap: () {
         Get.back();
         LoaderX.show(context, 60.0, 60.0);
-        agendaService
-            .addAgenda(
-                titleController.text,
-                descriptionController.text,
-                locationcontroller.text,
-                "${pickedStartDate}T$pickedStartTime",
-                "${pickedEndDate}T$pickedEndTime",
-                null,
+        notificationService
+            .addReminder(
+                time == "Remind me 10 min before"
+                    ? 10
+                    : time == "Remind me 20 min before"
+                        ? 20
+                        : time == "Remind me 30 min before"
+                            ? 20
+                            : 0,
+                0,
                 userId)
             .then((value) => {
-                  if (value['data'])
+                  if (value['success'])
                     {
-                      LoaderX.hide(),
-                      controller.changeTabIndex(1),
-                      getAllAgendaController.fetchAllAgenda(),
-                      clearallFild()
+                      agendaService
+                          .addAgenda(
+                              titleController.text,
+                              descriptionController.text,
+                              locationcontroller.text,
+                              "${pickedStartDate}T$pickedStartTime",
+                              "${pickedEndDate}T$pickedEndTime",
+                              null,
+                              userId)
+                          .then((value) => {
+                                if (value['data'])
+                                  {
+                                    LoaderX.hide(),
+                                    controller.changeTabIndex(1),
+                                    getAllAgendaController.fetchAllAgenda(),
+                                    clearallFild()
+                                  }
+                                else
+                                  {
+                                    LoaderX.hide(),
+                                    SnackbarUtils.showErrorSnackbar(
+                                        "Failed to Add Agenda",
+                                        value["message"])
+                                  }
+                              })
                     }
                   else
                     {
                       LoaderX.hide(),
                       SnackbarUtils.showErrorSnackbar(
-                          "Failed to Add Agenda", value["message"])
+                          "Failed to Add Agenda", value['message'].toString())
                     }
                 });
       },

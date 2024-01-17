@@ -22,6 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String userName = "";
   String userEmail = "";
   String userImage = "";
+  String userBadgeID = "";
   @override
   void initState() {
     getUser();
@@ -37,6 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
         userName = name;
         userEmail = getUserData['emailAddress'] ?? "";
         userImage = getUserData['profilePhoto'] ?? "";
+        userBadgeID = getUserData['badgeID'] ?? "";
       });
     }
   }
@@ -168,9 +170,16 @@ class _ProfilePageState extends State<ProfilePage> {
               Column(
                 children: [
                   QrImageView(
-                    data: userName,
+                    data: userBadgeID.toString(),
                     version: QrVersions.auto,
-                    size: 200.0,
+                    size: 240.0,
+                  ),
+                  Text(
+                    userBadgeID.toString(),
+                    style: TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 15),
                   const Divider(
