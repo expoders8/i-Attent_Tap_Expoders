@@ -37,6 +37,7 @@ class GetDetailsConferanceController extends GetxController {
 
   void conferanceIdString(String newValue) {
     conferanceId.value = newValue;
+    fetchStoryDetail();
   }
 
   @override
@@ -45,7 +46,7 @@ class GetDetailsConferanceController extends GetxController {
     super.onInit();
   }
 
-  void fetchStoryDetail() async {
+  fetchStoryDetail() async {
     try {
       isLoading(true);
       var response = await http.get(

@@ -32,14 +32,15 @@ class _MessageAppBarState extends State<MessageAppBar> {
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: Platform.isAndroid ? 110 : 130,
-                color: kWhiteColor,
+                color: kAppBarColor,
+                // backgroundColor: kAppBarColor,
                 child: Padding(
                   padding: EdgeInsets.only(top: Platform.isAndroid ? 5.0 : 25),
                   child: const Center(
                       child: Text(
                     "Messages",
                     style: TextStyle(
-                      color: kPrimaryColor,
+                      color: kBackGroundColor,
                       fontSize: 20,
                       fontFamily: kCircularStdMedium,
                     ),

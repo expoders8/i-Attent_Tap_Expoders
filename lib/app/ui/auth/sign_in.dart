@@ -145,7 +145,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 height: 50,
                                 child: CupertinoButton(
                                   borderRadius: BorderRadius.circular(25),
-                                  color: const Color(0xFF4054FA),
+                                  color: kButtonColor,
                                   onPressed: onLoginButtonPress,
                                   child: const Text(
                                     'Login',

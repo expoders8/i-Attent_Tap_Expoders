@@ -47,10 +47,13 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kBackGroundColor,
+        backgroundColor: kAppBarColor,
         leadingWidth: 60,
         automaticallyImplyLeading: false,
-        title: const Text("My Profile"),
+        title: const Text(
+          "My Profile",
+          style: TextStyle(color: kBackGroundColor),
+        ),
         centerTitle: true,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1.0),

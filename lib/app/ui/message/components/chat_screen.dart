@@ -148,7 +148,7 @@ class _ChatScreenState extends State<ChatScreen> {
         backgroundColor: kWhiteColor,
         appBar: AppBar(
           toolbarHeight: 70,
-          backgroundColor: kWhiteColor,
+          backgroundColor: kAppBarColor,
           leadingWidth: 60,
           leading: Builder(
             builder: (BuildContext context) {
@@ -156,6 +156,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 icon: const Image(
                   image: AssetImage("assets/icons/back_icon.png"),
                   width: 20,
+                  color: kBackGroundColor,
                 ),
                 onPressed: () => Navigator.of(context).pop(),
               );
@@ -165,7 +166,7 @@ class _ChatScreenState extends State<ChatScreen> {
             IconButton(
               icon: const Icon(
                 Icons.more_vert,
-                color: kTextSecondaryColor,
+                color: kBackGroundColor,
                 size: 28,
               ),
               onPressed: optionTypeBottomSheet,
@@ -175,7 +176,7 @@ class _ChatScreenState extends State<ChatScreen> {
             children: [
               Text(
                 widget.user!.name!,
-                style: const TextStyle(fontSize: 18, color: kPrimaryColor),
+                style: const TextStyle(fontSize: 18, color: kBackGroundColor),
               ),
             ],
           ),
@@ -477,22 +478,23 @@ class _ChatScreenState extends State<ChatScreen> {
                 highlightColor: Colors.transparent,
               ),
               child: SizedBox(
-                height: 125,
+                height: 70,
                 child: Column(
                   children: [
-                    ListTile(
-                      title: const Center(
-                        child: Text(
-                          "Block",
-                          style: TextStyle(
-                            fontFamily: kWorkSans,
-                            fontSize: 15,
-                            color: kPrimaryColor,
-                          ),
-                        ),
-                      ),
-                      onTap: () {},
-                    ),
+                    const SizedBox(height: 10),
+                    // ListTile(
+                    //   title: const Center(
+                    //     child: Text(
+                    //       "Block",
+                    //       style: TextStyle(
+                    //         fontFamily: kWorkSans,
+                    //         fontSize: 15,
+                    //         color: kPrimaryColor,
+                    //       ),
+                    //     ),
+                    //   ),
+                    //   onTap: () {},
+                    // ),
                     ListTile(
                       title: const Center(
                         child: Text(

@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
-import '../../controller/event_contoller.dart';
 import '../../view/event_view.dart';
 import '../widgets/data_section.dart';
+import '../../controller/event_contoller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../controller/conferance_controller.dart';
 import '../../../config/constant/color_constant.dart';
@@ -32,6 +32,12 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
   void initState() {
     getDetailsConferanceController.fetchStoryDetail();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    getDetailsConferanceController.dispose();
+    super.dispose();
   }
 
   @override
@@ -86,7 +92,8 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
                       padding: const EdgeInsets.only(left: 8.0, bottom: 10),
                       child: IconButton(
                         onPressed: () {
-                          Get.back();
+                          Navigator.of(context).pop();
+                          getDetailsConferanceController.conferanceId("");
                         },
                         icon: const Icon(
                           Icons.arrow_back_ios,
@@ -100,27 +107,17 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
                     bottom: 10,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 15.0, bottom: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: 280,
-                            child: Text(
-                              data.name.toString(),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              style: const TextStyle(
-                                  color: kBackGroundColor,
-                                  fontFamily: kCircularStdNormal,
-                                  fontSize: 19),
-                            ),
-                          ),
-                          Image.asset(
-                            'assets/icons/gallary.png',
-                            scale: 5,
-                            color: kBackGroundColor,
-                          )
-                        ],
+                      child: SizedBox(
+                        width: 280,
+                        child: Text(
+                          data.name.toString(),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: const TextStyle(
+                              color: kBackGroundColor,
+                              fontFamily: kCircularStdNormal,
+                              fontSize: 19),
+                        ),
                       ),
                     ),
                   )

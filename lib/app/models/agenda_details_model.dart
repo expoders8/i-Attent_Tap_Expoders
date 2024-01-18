@@ -35,7 +35,7 @@ class GetAgendaByIdDataModel {
   String? startDate;
   String? endDate;
   int? eventId;
-  List? attendees;
+  List<Attendees>? attendees;
 
   GetAgendaByIdDataModel(
       {this.id,
@@ -56,9 +56,9 @@ class GetAgendaByIdDataModel {
     endDate = json['endDate'];
     eventId = json['eventId'];
     if (json['attendees'] != null) {
-      attendees = <Null>[];
+      attendees = <Attendees>[];
       json['attendees'].forEach((v) {
-        attendees!.add(v);
+        attendees!.add(Attendees.fromJson(v));
       });
     }
   }
@@ -75,6 +75,35 @@ class GetAgendaByIdDataModel {
     if (attendees != null) {
       data['attendees'] = attendees!.map((v) => v.toJson()).toList();
     }
+    return data;
+  }
+}
+
+class Attendees {
+  int? id;
+  String? firstName;
+  String? lastName;
+  String? emailAddress;
+  String? photo;
+
+  Attendees(
+      {this.id, this.firstName, this.lastName, this.emailAddress, this.photo});
+
+  Attendees.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    firstName = json['firstName'];
+    lastName = json['lastName'];
+    emailAddress = json['emailAddress'];
+    photo = json['photo'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['firstName'] = firstName;
+    data['lastName'] = lastName;
+    data['emailAddress'] = emailAddress;
+    data['photo'] = photo;
     return data;
   }
 }

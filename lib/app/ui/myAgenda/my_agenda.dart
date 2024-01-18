@@ -24,15 +24,14 @@ class _MyAgendaPageState extends State<MyAgendaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kWhiteColor,
+      // backgroundColor: kWhiteColor,
       appBar: AppBar(
-        backgroundColor: kSelectedIconColor,
+        backgroundColor: kAppBarColor,
         automaticallyImplyLeading: false,
         centerTitle: true,
         title: const Text(
           "My Agenda",
-          style: TextStyle(
-              color: kWhiteColor, fontFamily: kCircularStdNormal, fontSize: 18),
+          style: TextStyle(color: kBackGroundColor),
         ),
       ),
       body: Column(

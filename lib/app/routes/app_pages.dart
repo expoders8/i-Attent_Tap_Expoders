@@ -9,6 +9,7 @@ import '../ui/crerate_agenda/create_activity.dart';
 import '../ui/notification/notification.dart';
 import '../ui/profile/qr_code.dart';
 import '../ui/splash_screen.dart';
+import '../ui/widgets/gallery_custom.dart';
 
 part 'app_routes.dart';
 
@@ -53,6 +54,10 @@ class AppPages {
     GetPage(
       name: _Paths.agendaDetailsPage,
       page: () => const AgendaDetailsPage(),
+    ),
+    GetPage(
+      name: _Paths.galleryScreen,
+      page: () => const GalleryScreen(),
     ),
   ];
 }

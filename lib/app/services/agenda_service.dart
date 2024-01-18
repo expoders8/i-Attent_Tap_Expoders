@@ -69,6 +69,7 @@ class AgendaService {
       });
       if (response.statusCode == 200) {
         var decodedUser = jsonDecode(response.body);
+        LoaderX.hide();
         return decodedUser;
       } else {
         LoaderX.hide();

@@ -1,14 +1,13 @@
 import 'dart:convert';
-import 'dart:math';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-import '../../services/notification_service.dart';
 import '../widgets/date_time_picker.dart';
 import '../../services/agenda_service.dart';
 import '../../controller/tab_controller.dart';
 import '../../../config/constant/constant.dart';
 import '../../controller/agenda_controller.dart';
+import '../../services/notification_service.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 import '../../../config/provider/loader_provider.dart';
@@ -77,7 +76,11 @@ class _CreateActivityState extends State<CreateActivity> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Create Activity"),
+          backgroundColor: kAppBarColor,
+          title: const Text(
+            "Create Activity",
+            style: TextStyle(color: kBackGroundColor),
+          ),
           centerTitle: true,
           automaticallyImplyLeading: false,
         ),
@@ -417,6 +420,7 @@ class _CreateActivityState extends State<CreateActivity> {
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
+                        backgroundColor: kButtonColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),

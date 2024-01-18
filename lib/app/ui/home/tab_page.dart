@@ -31,13 +31,13 @@ class _TabPageState extends State<TabPage> {
   }
 
   final TextStyle unselectedLabelStyle = const TextStyle(
-      color: kTextSecondaryColor,
+      color: kIconColor,
       fontWeight: FontWeight.w500,
       fontSize: 11,
       fontFamily: kCircularStdNormal);
 
   final TextStyle selectedLabelStyle = const TextStyle(
-      color: kWhiteColor,
+      color: kSelectedIconColor,
       fontWeight: FontWeight.w500,
       fontSize: 11,
       fontFamily: kCircularStdNormal);
@@ -129,10 +129,15 @@ class _TabPageState extends State<TabPage> {
               BottomNavigationBarItem(
                 icon: Container(
                   margin: const EdgeInsets.only(top: 5.5),
-                  child: Image.asset(
-                    "assets/icons/plus_icon.png",
-                    scale: 2.4,
-                  ),
+                  child: landingPageController.tabIndex.value == 2
+                      ? Image.asset(
+                          "assets/icons/plus_iconslected.png",
+                          scale: 2.4,
+                        )
+                      : Image.asset(
+                          "assets/icons/plus_iconunselect.png",
+                          scale: 2.4,
+                        ),
                 ),
                 label: '',
                 backgroundColor: kBackGroundColor,

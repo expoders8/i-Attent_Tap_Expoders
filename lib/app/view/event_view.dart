@@ -223,19 +223,6 @@ class _EventViewPageState extends State<EventViewPage> {
                                           const SizedBox(height: 10),
                                           GestureDetector(
                                             onTap: () {
-                                              // addMyAgendaDialog(
-                                              //     context,
-                                              //     data.eventName,
-                                              //     data.description == ""
-                                              //         ? "test"
-                                              //         : data.description
-                                              //             .toString(),
-                                              //     data.venue != ""
-                                              //         ? data.venue.toString()
-                                              //         : "test",
-                                              //     data.startDate,
-                                              //     data.endDate,
-                                              //     data.eventId.toString());
                                               addMyAgendaBottomSheet(
                                                   context,
                                                   data.eventName,

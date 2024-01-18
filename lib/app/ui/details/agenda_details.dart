@@ -1,14 +1,15 @@
 import 'dart:io';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:intl/intl.dart';
 
-import '../../controller/agenda_controller.dart';
 import '../../routes/app_pages.dart';
 import '../../controller/tab_controller.dart';
+import '../../controller/agenda_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../ragister_Attendees_Detail/Register_Attendees_details.dart';
 
 class AgendaDetailsPage extends StatefulWidget {
   const AgendaDetailsPage({super.key});
@@ -18,10 +19,6 @@ class AgendaDetailsPage extends StatefulWidget {
 }
 
 class _AgendaDetailsPageState extends State<AgendaDetailsPage> {
-  List image = [
-    "assets/images/i-test.png",
-    "assets/images/i-test1.png",
-  ];
   final GetDetailsAgendaController getDetailsAgendaController =
       Get.put(GetDetailsAgendaController());
   final controller = Get.put(TabCountController());
@@ -30,6 +27,12 @@ class _AgendaDetailsPageState extends State<AgendaDetailsPage> {
   void initState() {
     getDetailsAgendaController.fetchAgendaDetail();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    getDetailsAgendaController.dispose();
+    super.dispose();
   }
 
   @override
@@ -146,27 +149,32 @@ class _AgendaDetailsPageState extends State<AgendaDetailsPage> {
                                   ],
                                 ),
                               ),
-                              SizedBox(
-                                width: 100,
-                                child: Column(
-                                  children: [
-                                    Image.asset(
-                                      "assets/icons/upload.png",
-                                      scale: 1.2,
-                                      color: const Color(0xFF184990),
-                                    ),
-                                    const SizedBox(height: 13),
-                                    const Text(
-                                      "Attachments",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: kSecondaryPrimaryColor,
-                                        fontSize: 12,
-                                        fontFamily: kCircularStdMedium,
+                              GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(Routes.galleryScreen);
+                                },
+                                child: SizedBox(
+                                  width: 100,
+                                  child: Column(
+                                    children: [
+                                      Image.asset(
+                                        "assets/icons/upload.png",
+                                        scale: 1.2,
+                                        color: const Color(0xFF184990),
                                       ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                  ],
+                                      const SizedBox(height: 13),
+                                      const Text(
+                                        "Attachments",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: kSecondaryPrimaryColor,
+                                          fontSize: 12,
+                                          fontFamily: kCircularStdMedium,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -275,96 +283,137 @@ class _AgendaDetailsPageState extends State<AgendaDetailsPage> {
                   height: Get.height / 3.7,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 13, right: 13),
-                    child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: 2,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Get.toNamed(Routes.registerAttendeesPage);
-                          },
-                          child: Card(
-                            elevation: 7,
-                            shadowColor: const Color.fromARGB(50, 0, 0, 0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: kCardColor,
-                                  borderRadius: BorderRadius.circular(15)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              color: const Color(0xFFE5E7E8),
-                                              borderRadius:
-                                                  BorderRadius.circular(25)),
-                                          height: 35,
-                                          width: 35,
-                                          child: const Center(
-                                            child: Text(
-                                              "JB",
-                                              style: TextStyle(
-                                                  color: Color.fromARGB(
-                                                      255, 109, 110, 110),
-                                                  fontSize: 14,
-                                                  fontFamily:
-                                                      kCircularStdNormal),
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(width: 10),
-                                        const Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Jone Brames",
-                                              style: TextStyle(
-                                                  color: kPrimaryColor,
-                                                  fontSize: 15,
-                                                  fontFamily:
-                                                      kCircularStdNormal),
-                                            ),
-                                            SizedBox(height: 3),
-                                            Text(
-                                              "jonebrames@gmail.com",
-                                              style: TextStyle(
-                                                  color: kGreyColor,
-                                                  fontSize: 12,
-                                                  fontFamily:
-                                                      kCircularStdNormal),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                    child: data.attendees!.isNotEmpty
+                        ? ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: data.attendees!.length,
+                            itemBuilder: (context, index) {
+                              var attendee = data.attendees![index];
+                              String fullfirstName =
+                                  attendee.firstName.toString();
+                              String fullLastName =
+                                  attendee.lastName.toString();
+                              String firstLatter =
+                                  fullfirstName.substring(0, 1);
+                              String lastLatter = fullLastName.substring(0, 1);
+                              String initials = (firstLatter) + (lastLatter);
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          RegisterAttendeesPage(
+                                        attendeesImage:
+                                            attendee.photo.toString(),
+                                        attendeesName:
+                                            attendee.firstName.toString(),
+                                        attendeesEmail:
+                                            attendee.emailAddress.toString(),
+                                      ),
                                     ),
-                                    Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 3.0),
-                                        child: IconButton(
-                                          onPressed: () {
-                                            Get.back();
-                                            controller.changeTabIndex(3);
-                                          },
-                                          icon: const Icon(
-                                            Icons.message_outlined,
-                                            color: kPrimaryColor,
-                                            size: 22,
+                                  );
+                                },
+                                child: Card(
+                                  elevation: 7,
+                                  shadowColor:
+                                      const Color.fromARGB(50, 0, 0, 0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: kCardColor,
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                    color:
+                                                        const Color(0xFFE5E7E8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            25)),
+                                                height: 35,
+                                                width: 35,
+                                                child: Center(
+                                                  child: Text(
+                                                    initials.toString(),
+                                                    style: const TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 109, 110, 110),
+                                                        fontSize: 14,
+                                                        fontFamily:
+                                                            kCircularStdNormal),
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(width: 10),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    attendee.firstName
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                        color: kPrimaryColor,
+                                                        fontSize: 15,
+                                                        fontFamily:
+                                                            kCircularStdNormal),
+                                                  ),
+                                                  const SizedBox(height: 3),
+                                                  Text(
+                                                    attendee.emailAddress
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                        color: kGreyColor,
+                                                        fontSize: 12,
+                                                        fontFamily:
+                                                            kCircularStdNormal),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
                                           ),
-                                        ))
-                                  ],
+                                          Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 3.0),
+                                              child: IconButton(
+                                                onPressed: () {
+                                                  Get.back();
+                                                  controller.changeTabIndex(3);
+                                                },
+                                                icon: const Icon(
+                                                  Icons.message_outlined,
+                                                  color: kPrimaryColor,
+                                                  size: 22,
+                                                ),
+                                              ))
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ),
+                              );
+                            },
+                          )
+                        : Center(
+                            child: SizedBox(
+                              width: Get.width - 80,
+                              child: const Text(
+                                "Attendees not Found",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 15,
+                                    fontFamily: kCircularStdMedium),
                               ),
                             ),
                           ),
-                        );
-                      },
-                    ),
                   ),
                 ),
                 Padding(
@@ -375,7 +424,7 @@ class _AgendaDetailsPageState extends State<AgendaDetailsPage> {
                     height: 40,
                     child: CupertinoButton(
                         padding: EdgeInsets.zero,
-                        color: kSelectedIconColor,
+                        color: kButtonColor,
                         child: const Text(
                           "Add to My Agenda", // Remove from My Agenda
                           style: TextStyle(

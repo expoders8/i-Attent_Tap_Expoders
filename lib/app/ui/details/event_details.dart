@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../controller/attachments_conroller.dart';
+import '../../routes/app_pages.dart';
 import '../../services/agenda_service.dart';
 import '../../controller/tab_controller.dart';
 import '../../controller/event_contoller.dart';
@@ -31,6 +33,8 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
   String userId = "";
   final GetDetailsEventController getDetailsEventController =
       Get.put(GetDetailsEventController());
+  final GetAllAttechmentController getAllAttechmentController =
+      Get.put(GetAllAttechmentController());
   final controller = Get.put(TabCountController());
   AgendaService agendaService = AgendaService();
   final GetAllAgendaController getAllAgendaController =
@@ -41,6 +45,12 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
     // getDetailsEventController.fetchEventDetail();
     getUser();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    getDetailsEventController.dispose();
+    super.dispose();
   }
 
   Future getUser() async {
@@ -162,6 +172,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                                       ),
                                       const SizedBox(height: 10),
                                       Text(
+                                        textAlign: TextAlign.center,
                                         data.roomName.toString(),
                                         style: const TextStyle(
                                           color: kSecondaryPrimaryColor,
@@ -172,27 +183,34 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                                     ],
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 100,
-                                  child: Column(
-                                    children: [
-                                      Image.asset(
-                                        "assets/icons/upload.png",
-                                        scale: 1.2,
-                                        color: const Color(0xFF184990),
-                                      ),
-                                      const SizedBox(height: 13),
-                                      const Text(
-                                        "Attachments",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: kSecondaryPrimaryColor,
-                                          fontSize: 12,
-                                          fontFamily: kCircularStdMedium,
+                                GestureDetector(
+                                  onTap: () {
+                                    getAllAttechmentController
+                                        .eventIdString(data.id.toString());
+                                    Get.toNamed(Routes.galleryScreen);
+                                  },
+                                  child: SizedBox(
+                                    width: 100,
+                                    child: Column(
+                                      children: [
+                                        Image.asset(
+                                          "assets/icons/upload.png",
+                                          scale: 1.2,
+                                          color: const Color(0xFF184990),
                                         ),
-                                      ),
-                                      const SizedBox(height: 8),
-                                    ],
+                                        const SizedBox(height: 13),
+                                        const Text(
+                                          "Attachments",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: kSecondaryPrimaryColor,
+                                            fontSize: 12,
+                                            fontFamily: kCircularStdMedium,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
@@ -454,7 +472,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                       height: 40,
                       child: CupertinoButton(
                           padding: EdgeInsets.zero,
-                          color: kSelectedIconColor,
+                          color: kButtonColor,
                           child: const Text(
                             "Add to My Agenda", // Remove from My Agenda
                             style: TextStyle(

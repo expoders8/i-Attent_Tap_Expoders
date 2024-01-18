@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kWhiteColor,
+        backgroundColor: kAppBarColor,
         automaticallyImplyLeading: false,
         title: const Text(""),
         leading: Theme(

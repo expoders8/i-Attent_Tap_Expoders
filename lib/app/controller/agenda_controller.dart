@@ -42,6 +42,7 @@ class GetDetailsAgendaController extends GetxController {
 
   void agendaIdString(String newValue) {
     agendaId.value = newValue;
+    fetchAgendaDetail();
   }
 
   @override
@@ -50,7 +51,7 @@ class GetDetailsAgendaController extends GetxController {
     super.onInit();
   }
 
-  void fetchAgendaDetail() async {
+  fetchAgendaDetail() async {
     try {
       isLoading(true);
       var response = await http.get(

@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../config/provider/loader_provider.dart';
 import '../controller/agenda_controller.dart';
 import '../routes/app_pages.dart';
 import '../../config/constant/font_constant.dart';
@@ -196,12 +197,14 @@ class _AgendaViewPageState extends State<AgendaViewPage> {
                                           const SizedBox(height: 8),
                                           GestureDetector(
                                             onTap: () {
+                                              LoaderX.show(context, 60.0, 60.0);
                                               agendaService
                                                   .deleteAgenda(
                                                       data.id.toString())
                                                   .then((value) => {
                                                         if (value['success'])
                                                           {
+                                                            LoaderX.hide(),
                                                             getAllAgendaController
                                                                 .fetchAllAgenda()
                                                           }

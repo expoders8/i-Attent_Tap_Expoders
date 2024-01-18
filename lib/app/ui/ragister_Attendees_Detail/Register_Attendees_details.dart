@@ -163,7 +163,7 @@ class _MembersDetailsPageState extends State<RegisterAttendeesPage> {
                 height: 40,
                 child: CupertinoButton(
                     padding: EdgeInsets.zero,
-                    color: kSelectedIconColor,
+                    color: kButtonColor,
                     child: const Text(
                       "Send Message",
                       style: TextStyle(

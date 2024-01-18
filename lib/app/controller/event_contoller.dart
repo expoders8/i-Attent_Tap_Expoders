@@ -57,7 +57,7 @@ class GetDetailsEventController extends GetxController {
     super.onInit();
   }
 
-  void fetchEventDetail() async {
+  fetchEventDetail() async {
     try {
       isLoading(true);
       var response = await http.get(
