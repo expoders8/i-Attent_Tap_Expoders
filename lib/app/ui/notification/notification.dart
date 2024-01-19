@@ -1,10 +1,8 @@
-import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-import '../../../config/constant/color_constant.dart';
 import '../../../config/constant/font_constant.dart';
+import '../../../config/constant/color_constant.dart';
 import '../../controller/notification_contoller.dart';
 
 class NotificationPage extends StatefulWidget {
@@ -26,21 +24,17 @@ class _NotificationPageState extends State<NotificationPage> {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: kPrimaryColor,
+            color: kBackGroundColor,
           ),
           onPressed: () {
             Get.back();
           },
         ),
-        title: const Text("Notification"),
-        centerTitle: true,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1.0),
-          child: Container(
-            color: kDividerColor,
-            height: 1.0,
-          ),
+        title: const Text(
+          "Notification",
+          style: TextStyle(color: kBackGroundColor),
         ),
+        centerTitle: true,
       ),
       body: Obx(
         () {
@@ -54,7 +48,7 @@ class _NotificationPageState extends State<NotificationPage> {
                   child: SizedBox(
                     width: Get.width - 80,
                     child: const Text(
-                      "Notification not Found",
+                      "No Notification",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: kPrimaryColor,
@@ -168,7 +162,7 @@ class _NotificationPageState extends State<NotificationPage> {
                           } else {
                             return const Center(
                               child: Text(
-                                "Notification not Found",
+                                "No Notification",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: kPrimaryColor,
@@ -186,7 +180,7 @@ class _NotificationPageState extends State<NotificationPage> {
             } else {
               return const Center(
                 child: Text(
-                  "Notification not Found",
+                  "No Notification",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: kPrimaryColor,

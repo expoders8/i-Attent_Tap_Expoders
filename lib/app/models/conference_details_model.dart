@@ -35,8 +35,9 @@ class GetConferanceByIdDataModel {
   String? photo;
   String? startDate;
   String? endDate;
-  int? eventCount;
-  List<Events>? events;
+  String? companyName;
+  String? companyLogo;
+  String? companyIntro;
 
   GetConferanceByIdDataModel(
       {this.id,
@@ -46,8 +47,9 @@ class GetConferanceByIdDataModel {
       this.photo,
       this.startDate,
       this.endDate,
-      this.eventCount,
-      this.events});
+      this.companyName,
+      this.companyLogo,
+      this.companyIntro});
 
   GetConferanceByIdDataModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -57,13 +59,9 @@ class GetConferanceByIdDataModel {
     photo = json['photo'] ?? "";
     startDate = json['startDate'];
     endDate = json['endDate'];
-    eventCount = json['eventCount'];
-    if (json['events'] != null) {
-      events = <Events>[];
-      json['events'].forEach((v) {
-        events!.add(Events.fromJson(v));
-      });
-    }
+    companyName = json['companyName'];
+    companyLogo = json['companyLogo'];
+    companyIntro = json['companyIntro'];
   }
 
   Map<String, dynamic> toJson() {
@@ -75,87 +73,10 @@ class GetConferanceByIdDataModel {
     data['photo'] = photo;
     data['startDate'] = startDate;
     data['endDate'] = endDate;
-    data['eventCount'] = eventCount;
-    if (events != null) {
-      data['events'] = events!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
+    data['companyName'] = companyName;
+    data['companyLogo'] = companyLogo;
+    data['companyIntro'] = companyIntro;
 
-class Events {
-  int? eventId;
-  String? eventName;
-  String? startDate;
-  String? endDate;
-  String? venue;
-  int? attendeeCount;
-  List<Attendees>? attendees;
-
-  Events(
-      {this.eventId,
-      this.eventName,
-      this.startDate,
-      this.endDate,
-      this.venue,
-      this.attendeeCount,
-      this.attendees});
-
-  Events.fromJson(Map<String, dynamic> json) {
-    eventId = json['eventId'];
-    eventName = json['eventName'];
-    startDate = json['startDate'];
-    endDate = json['endDate'];
-    venue = json['venue'];
-    attendeeCount = json['attendeeCount'];
-    if (json['attendees'] != null) {
-      attendees = <Attendees>[];
-      json['attendees'].forEach((v) {
-        attendees!.add(Attendees.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['eventId'] = eventId;
-    data['eventName'] = eventName;
-    data['startDate'] = startDate;
-    data['endDate'] = endDate;
-    data['venue'] = venue;
-    data['attendeeCount'] = attendeeCount;
-    if (attendees != null) {
-      data['attendees'] = attendees!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class Attendees {
-  int? attendeeId;
-  String? attendeeName;
-  String? attendeeEmail;
-  String? attendeePhoto;
-
-  Attendees(
-      {this.attendeeId,
-      this.attendeeName,
-      this.attendeeEmail,
-      this.attendeePhoto});
-
-  Attendees.fromJson(Map<String, dynamic> json) {
-    attendeeId = json['attendeeId'];
-    attendeeName = json['attendeeName'];
-    attendeeEmail = json['attendeeEmail'];
-    attendeePhoto = json['attendeePhoto'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['attendeeId'] = attendeeId;
-    data['attendeeName'] = attendeeName;
-    data['attendeeEmail'] = attendeeEmail;
-    data['attendeePhoto'] = attendeePhoto;
     return data;
   }
 }

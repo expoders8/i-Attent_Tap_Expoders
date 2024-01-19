@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:confrance_expoders/app/ui/widgets/image_viewer.dart';
+import 'package:confrance_expoders/app/ui/widgets/pdf_view.dart';
 import 'package:confrance_expoders/config/constant/font_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -47,7 +50,8 @@ class _GalleryScreenState extends State<GalleryScreen> {
       body: Obx(
         () {
           if (getAllAttechmentController.isLoading.value) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+                child: CircularProgressIndicator(color: kSelectedIconColor));
           } else {
             if (getAllAttechmentController.attechmentList[0].data != null) {
               if (getAllAttechmentController.attechmentList[0].data!.isEmpty) {
@@ -68,146 +72,136 @@ class _GalleryScreenState extends State<GalleryScreen> {
                 return Column(
                   children: [
                     SizedBox(
-                      height: Get.height - 160,
-                      child: ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        itemCount: getAllAttechmentController
-                            .attechmentList[0].data!.length,
-                        itemBuilder: (context, index) {
-                          var discoverData = getAllAttechmentController
-                              .attechmentList[0].data!;
-
-                          if (discoverData.isNotEmpty) {
+                        height: Get.height - 160,
+                        child: GridView.builder(
+                          itemCount: getAllAttechmentController
+                              .attechmentList[0].data!.length,
+                          physics: const ScrollPhysics(),
+                          shrinkWrap: true,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 8.0,
+                            mainAxisSpacing: 8.0,
+                          ),
+                          itemBuilder: (context, index) {
+                            var discoverData = getAllAttechmentController
+                                .attechmentList[0].data!;
                             var data = discoverData[index];
-
-                            return GridView.builder(
-                              itemCount: getAllAttechmentController
-                                  .attechmentList[0].data!.length,
-                              physics: const ScrollPhysics(),
-                              shrinkWrap: true,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 10,
-                                childAspectRatio: MediaQuery.of(context)
-                                        .size
-                                        .width /
-                                    (MediaQuery.of(context).size.height / 1.8),
-                              ),
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => ImageviewerWidget(
-                                          attechmentUrls:
-                                              data.attachment.toString(),
-                                          attechmentDescription:
-                                              data.description.toString(),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: Stack(
-                                    children: [
-                                      SizedBox(
-                                          height: 200,
-                                          child: Image.network(
-                                            data.attachment.toString(),
-                                            width: 40,
-                                            height: 40,
-                                            fit: BoxFit.cover,
-                                            loadingBuilder:
-                                                (BuildContext context,
-                                                    Widget child,
-                                                    ImageChunkEvent?
-                                                        loadingProgress) {
-                                              if (loadingProgress == null) {
-                                                return child;
-                                              }
-                                              return SizedBox(
-                                                width: 35,
-                                                height: 35,
-                                                child: Center(
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    color: kPrimaryColor,
-                                                    value: loadingProgress
-                                                                .expectedTotalBytes !=
-                                                            null
-                                                        ? loadingProgress
-                                                                .cumulativeBytesLoaded /
-                                                            loadingProgress
-                                                                .expectedTotalBytes!
-                                                        : null,
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          )),
-                                      Positioned(
-                                        bottom: 0,
-                                        child: Container(
-                                          padding: const EdgeInsets.only(
-                                              left: 6, top: 6, right: 6),
-                                          color:
-                                              const Color.fromARGB(99, 0, 0, 0),
-                                          height: 50,
-                                          width: 180,
-                                          child: Text(
-                                            data.description.toString(),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(
-                                              color: kBackGroundColor,
-                                              fontSize: 15,
-                                              fontFamily: kCircularStdMedium,
-                                            ),
+                            int dotIndex = data.attachment!.lastIndexOf('.');
+                            var extention =
+                                data.attachment!.substring(dotIndex + 1);
+                            return GestureDetector(
+                              onTap: () {
+                                extention == "pdf"
+                                    ? Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => PdfViewWidget(
+                                            attechmentUrls:
+                                                data.attachment.toString(),
+                                            attechmentDescription:
+                                                data.description.toString(),
                                           ),
                                         ),
-                                        // Container(
-                                        //   padding: const EdgeInsets.only(left: 6, top: 6),
-                                        //   height: 50,
-                                        //   width: Get.width,
-                                        //   color: const Color.fromARGB(99, 0, 0, 0),
-                                        //   child: Container(
-                                        //     padding: const EdgeInsets.only(left: 6, top: 6),
-                                        //     height: 50,
-                                        //     width: 50, // Increase the width to allow for longer text
-                                        //     child: const Text(
-                                        //       "Jones Bremssdfsdfsdfsdfsdfsdfsdf",
-                                        //       maxLines: 1,
-                                        //       overflow: TextOverflow.ellipsis,
-                                        //       style: TextStyle(
-                                        //         color: kBackGroundColor,
-                                        //         fontSize: 15,
-                                        //         fontFamily: kCircularStdMedium,
-                                        //       ),
-                                        //     ),
-                                        //   ),
-                                        // ),
                                       )
-                                    ],
-                                  ),
-                                );
+                                    : Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ImageviewerWidget(
+                                            attechmentUrls:
+                                                data.attachment.toString(),
+                                            attechmentDescription:
+                                                data.description.toString(),
+                                          ),
+                                        ),
+                                      );
                               },
-                            );
-                          } else {
-                            return const Center(
-                              child: Text(
-                                "No Attechments",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 15,
-                                    fontFamily: kCircularStdMedium),
+                              child: Stack(
+                                children: [
+                                  SizedBox(
+                                      height: 200,
+                                      child: extention == "pdf"
+                                          ? Image.asset(
+                                              'assets/icons/pdf.png',
+                                              scale: 8,
+                                            )
+                                          : Image.network(
+                                              data.attachment.toString(),
+                                              fit: BoxFit.cover,
+                                              loadingBuilder:
+                                                  (BuildContext context,
+                                                      Widget child,
+                                                      ImageChunkEvent?
+                                                          loadingProgress) {
+                                                if (loadingProgress == null) {
+                                                  return child;
+                                                }
+                                                return SizedBox(
+                                                  width: 35,
+                                                  height: 35,
+                                                  child: Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      color: kPrimaryColor,
+                                                      value: loadingProgress
+                                                                  .expectedTotalBytes !=
+                                                              null
+                                                          ? loadingProgress
+                                                                  .cumulativeBytesLoaded /
+                                                              loadingProgress
+                                                                  .expectedTotalBytes!
+                                                          : null,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            )),
+                                  Positioned(
+                                    bottom: 0,
+                                    child: Container(
+                                      padding: const EdgeInsets.only(
+                                          left: 6, top: 6, right: 6),
+                                      color: const Color.fromARGB(99, 0, 0, 0),
+                                      height: 50,
+                                      width: 180,
+                                      child: Text(
+                                        data.description.toString(),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          color: kBackGroundColor,
+                                          fontSize: 15,
+                                          fontFamily: kCircularStdMedium,
+                                        ),
+                                      ),
+                                    ),
+                                    // Container(
+                                    //   padding: const EdgeInsets.only(left: 6, top: 6),
+                                    //   height: 50,
+                                    //   width: Get.width,
+                                    //   color: const Color.fromARGB(99, 0, 0, 0),
+                                    //   child: Container(
+                                    //     padding: const EdgeInsets.only(left: 6, top: 6),
+                                    //     height: 50,
+                                    //     width: 50, // Increase the width to allow for longer text
+                                    //     child: const Text(
+                                    //       "Jones Bremssdfsdfsdfsdfsdfsdfsdf",
+                                    //       maxLines: 1,
+                                    //       overflow: TextOverflow.ellipsis,
+                                    //       style: TextStyle(
+                                    //         color: kBackGroundColor,
+                                    //         fontSize: 15,
+                                    //         fontFamily: kCircularStdMedium,
+                                    //       ),
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                  )
+                                ],
                               ),
                             );
-                          }
-                        },
-                      ),
-                    ),
+                          },
+                        )),
                   ],
                 );
               }

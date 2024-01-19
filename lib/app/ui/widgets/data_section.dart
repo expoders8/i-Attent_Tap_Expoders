@@ -140,6 +140,10 @@ class _DateSectionWidgetState extends State<DateSectionWidget> {
           holidayTextStyle: const TextStyle(color: kTextSecondaryColor),
           selectedTextStyle: const TextStyle(color: kWhiteColor),
           weekendTextStyle: const TextStyle(color: kTextSecondaryColor),
+          todayDecoration: BoxDecoration(
+            color: kIconColor,
+            borderRadius: BorderRadius.circular(Platform.isIOS ? 20 : 30),
+          ),
         ),
         onFormatChanged: (formet) {
           if (_calendarFormat != formet) {

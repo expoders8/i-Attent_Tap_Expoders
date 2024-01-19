@@ -17,10 +17,6 @@ class AgendaViewPage extends StatefulWidget {
 }
 
 class _AgendaViewPageState extends State<AgendaViewPage> {
-  List image = [
-    "assets/images/i-test.png",
-    "assets/images/i-test1.png",
-  ];
   final GetAllAgendaController getAllAgendaController =
       Get.put(GetAllAgendaController());
   final GetDetailsAgendaController getDetailsAgendaController =
@@ -35,7 +31,9 @@ class _AgendaViewPageState extends State<AgendaViewPage> {
             return Container(
               color: kBackGroundColor,
               child: const Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  color: kSelectedIconColor,
+                ),
               ),
             );
           } else {
@@ -109,7 +107,7 @@ class _AgendaViewPageState extends State<AgendaViewPage> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Container(
-                                            height: 102,
+                                            height: 90,
                                             decoration: const BoxDecoration(
                                                 color: kBackGroundColor,
                                                 borderRadius: BorderRadius.only(
@@ -150,7 +148,7 @@ class _AgendaViewPageState extends State<AgendaViewPage> {
                                             children: [
                                               const SizedBox(height: 15.7),
                                               SizedBox(
-                                                width: 150,
+                                                width: 175,
                                                 child: Text(
                                                   data.title.toString(),
                                                   maxLines: 2,
@@ -194,9 +192,8 @@ class _AgendaViewPageState extends State<AgendaViewPage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.end,
                                         children: [
-                                          const SizedBox(height: 8),
-                                          GestureDetector(
-                                            onTap: () {
+                                          IconButton(
+                                            onPressed: () {
                                               LoaderX.show(context, 60.0, 60.0);
                                               agendaService
                                                   .deleteAgenda(
@@ -210,7 +207,7 @@ class _AgendaViewPageState extends State<AgendaViewPage> {
                                                           }
                                                       });
                                             },
-                                            child: Container(
+                                            icon: Container(
                                               padding: const EdgeInsets.all(8),
                                               width: 40,
                                               height: 40,
@@ -220,47 +217,45 @@ class _AgendaViewPageState extends State<AgendaViewPage> {
                                               ),
                                             ),
                                           ),
+                                          // GestureDetector(
+                                          //   onTap: () {
+                                          //     LoaderX.show(context, 60.0, 60.0);
+                                          //     agendaService
+                                          //         .deleteAgenda(
+                                          //             data.id.toString())
+                                          //         .then((value) => {
+                                          //               if (value['success'])
+                                          //                 {
+                                          //                   LoaderX.hide(),
+                                          //                   getAllAgendaController
+                                          //                       .fetchAllAgenda()
+                                          //                 }
+                                          //             });
+                                          //   },
+                                          //   child: Container(
+                                          //     padding: const EdgeInsets.all(8),
+                                          //     width: 40,
+                                          //     height: 40,
+                                          //     child: Image.asset(
+                                          //       'assets/icons/calendar_minus.png',
+                                          //       color: const Color(0xFF415880),
+                                          //     ),
+                                          //   ),
+                                          // ),
+                                          const SizedBox(height: 10),
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 right: 1.0),
-                                            child: Row(
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          right: 8.0),
-                                                  child: Text(
-                                                    data.totalAttendeeCount == 0
-                                                        ? ""
-                                                        : "+${data.totalAttendeeCount}",
-                                                    style: const TextStyle(
-                                                        color: kPrimaryColor,
-                                                        fontSize: 13,
-                                                        fontFamily:
-                                                            kCircularStdBook),
-                                                  ),
-                                                ),
-                                                for (int i = 0;
-                                                    i < image.length;
-                                                    i++)
-                                                  data.totalAttendeeCount == 0
-                                                      ? Container()
-                                                      : Align(
-                                                          widthFactor: 0.3,
-                                                          child: Image.asset(
-                                                            image[i],
-                                                            errorBuilder: (context,
-                                                                    error,
-                                                                    stackTrace) =>
-                                                                Image.asset(
-                                                              "assets/images/blank_profile.png",
-                                                              fit: BoxFit.fill,
-                                                            ),
-                                                            scale: 2,
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                        ),
-                                              ],
+                                            child: Text(
+                                              data.totalAttendeeCount == 0
+                                                  ? ""
+                                                  : data.totalAttendeeCount == 1
+                                                      ? "${data.totalAttendeeCount} Attendee"
+                                                      : "+${data.totalAttendeeCount} Attendees",
+                                              style: const TextStyle(
+                                                  color: kPrimaryColor,
+                                                  fontSize: 12,
+                                                  fontFamily: kCircularStdBook),
                                             ),
                                           )
                                         ],

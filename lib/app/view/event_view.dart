@@ -24,10 +24,6 @@ class EventViewPage extends StatefulWidget {
 }
 
 class _EventViewPageState extends State<EventViewPage> {
-  List image = [
-    "assets/images/i-test.png",
-    "assets/images/i-test1.png",
-  ];
   String userId = "";
   AgendaService agendaService = AgendaService();
   final controller = Get.put(TabCountController());
@@ -60,12 +56,8 @@ class _EventViewPageState extends State<EventViewPage> {
       child: Obx(
         () {
           if (getAllEventsController.isLoading.value) {
-            return Container(
-              color: kBackGroundColor,
-              child: const Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
+            return const Center(
+                child: CircularProgressIndicator(color: kSelectedIconColor));
           } else {
             if (getAllEventsController.eventList[0].data != null) {
               if (getAllEventsController.eventList[0].data!.isEmpty) {
@@ -178,7 +170,7 @@ class _EventViewPageState extends State<EventViewPage> {
                                             children: [
                                               const SizedBox(height: 15.7),
                                               SizedBox(
-                                                width: 150,
+                                                width: 160,
                                                 child: Text(
                                                   data.eventName.toString(),
                                                   maxLines: 2,

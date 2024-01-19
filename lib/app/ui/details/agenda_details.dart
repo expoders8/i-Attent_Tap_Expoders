@@ -4,11 +4,13 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../../config/provider/loader_provider.dart';
 import '../../routes/app_pages.dart';
 import '../../controller/tab_controller.dart';
 import '../../controller/agenda_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../../services/agenda_service.dart';
 import '../ragister_Attendees_Detail/Register_Attendees_details.dart';
 
 class AgendaDetailsPage extends StatefulWidget {
@@ -21,6 +23,9 @@ class AgendaDetailsPage extends StatefulWidget {
 class _AgendaDetailsPageState extends State<AgendaDetailsPage> {
   final GetDetailsAgendaController getDetailsAgendaController =
       Get.put(GetDetailsAgendaController());
+  final GetAllAgendaController getAllAgendaController =
+      Get.put(GetAllAgendaController());
+  AgendaService agendaService = AgendaService();
   final controller = Get.put(TabCountController());
 
   @override
@@ -54,7 +59,10 @@ class _AgendaDetailsPageState extends State<AgendaDetailsPage> {
       ),
       body: Obx(() {
         if (getDetailsAgendaController.isLoading.value) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+              child: CircularProgressIndicator(
+            color: kSelectedIconColor,
+          ));
         } else {
           var data = getDetailsAgendaController.detailAgendaModel!.data;
           String dateStartString = data!.startDate.toString();
@@ -426,7 +434,7 @@ class _AgendaDetailsPageState extends State<AgendaDetailsPage> {
                         padding: EdgeInsets.zero,
                         color: kButtonColor,
                         child: const Text(
-                          "Add to My Agenda", // Remove from My Agenda
+                          "Remove from My Agenda", // Remove from My Agenda
                           style: TextStyle(
                               letterSpacing: 0.8,
                               color: kWhiteColor,
@@ -434,9 +442,17 @@ class _AgendaDetailsPageState extends State<AgendaDetailsPage> {
                               fontSize: 15),
                         ),
                         onPressed: () {
-                          // Get.back();
-                          // controller.changeTabIndex(2);
-                          addMyAgendaDialog(context);
+                          LoaderX.show(context, 60.0, 60.0);
+                          agendaService
+                              .deleteAgenda(data.id.toString())
+                              .then((value) => {
+                                    if (value['success'])
+                                      {
+                                        Get.back(),
+                                        LoaderX.hide(),
+                                        getAllAgendaController.fetchAllAgenda()
+                                      }
+                                  });
                         }),
                   ),
                 )
@@ -448,62 +464,62 @@ class _AgendaDetailsPageState extends State<AgendaDetailsPage> {
     );
   }
 
-  addMyAgendaDialog(context) async {
-    return showModalBottomSheet<dynamic>(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(40.0),
-          topRight: Radius.circular(40.0),
-        ),
-      ),
-      isScrollControlled: true,
-      backgroundColor: kWhiteColor,
-      context: context,
-      builder: (context) {
-        return Wrap(
-          children: [
-            const Center(
-              child: ImageIcon(
-                AssetImage("assets/icons/line.png"),
-                size: 30,
-                color: Color(0XffBFC5CC),
-              ),
-            ),
-            Theme(
-                data: ThemeData(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 12.0),
-                      child: Text(
-                        "Session addes to My agenda. Do you also want to add reminder to phone",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: kTitleColor,
-                            fontFamily: kCircularStdBold,
-                            fontSize: 15),
-                      ),
-                    ),
-                    const Divider(
-                      thickness: 0.8,
-                      color: kDividerColor,
-                    ),
-                    buildRemindersTime("Remind me 10 min before"),
-                    buildRemindersTime("Remind me 20 min before"),
-                    buildRemindersTime("Remind me 30 min before"),
-                    buildRemindersTime("No reminder"),
-                  ],
-                )),
-          ],
-        );
-      },
-    );
-  }
+  // addMyAgendaDialog(context) async {
+  //   return showModalBottomSheet<dynamic>(
+  //     shape: const RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.only(
+  //         topLeft: Radius.circular(40.0),
+  //         topRight: Radius.circular(40.0),
+  //       ),
+  //     ),
+  //     isScrollControlled: true,
+  //     backgroundColor: kWhiteColor,
+  //     context: context,
+  //     builder: (context) {
+  //       return Wrap(
+  //         children: [
+  //           const Center(
+  //             child: ImageIcon(
+  //               AssetImage("assets/icons/line.png"),
+  //               size: 30,
+  //               color: Color(0XffBFC5CC),
+  //             ),
+  //           ),
+  //           Theme(
+  //               data: ThemeData(
+  //                 splashColor: Colors.transparent,
+  //                 highlightColor: Colors.transparent,
+  //               ),
+  //               child: Column(
+  //                 crossAxisAlignment: CrossAxisAlignment.center,
+  //                 children: [
+  //                   const Padding(
+  //                     padding: EdgeInsets.symmetric(
+  //                         vertical: 10.0, horizontal: 12.0),
+  //                     child: Text(
+  //                       "Session addes to My agenda. Do you also want to add reminder to phone",
+  //                       textAlign: TextAlign.center,
+  //                       style: TextStyle(
+  //                           color: kTitleColor,
+  //                           fontFamily: kCircularStdBold,
+  //                           fontSize: 15),
+  //                     ),
+  //                   ),
+  //                   const Divider(
+  //                     thickness: 0.8,
+  //                     color: kDividerColor,
+  //                   ),
+  //                   buildRemindersTime("Remind me 10 min before"),
+  //                   buildRemindersTime("Remind me 20 min before"),
+  //                   buildRemindersTime("Remind me 30 min before"),
+  //                   buildRemindersTime("No reminder"),
+  //                 ],
+  //               )),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
   buildRemindersTime(String time) {
     return GestureDetector(

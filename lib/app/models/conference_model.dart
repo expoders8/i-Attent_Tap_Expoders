@@ -40,17 +40,24 @@ class GetAllConferenceData {
   String? startDate;
   String? endDate;
   int? eventCount;
+  String? companyName;
+  String? companyLogo;
+  String? companyIntro;
 
-  GetAllConferenceData(
-      {this.totalCount,
-      this.id,
-      this.name,
-      this.venue,
-      this.description,
-      this.photo,
-      this.startDate,
-      this.endDate,
-      this.eventCount});
+  GetAllConferenceData({
+    this.totalCount,
+    this.id,
+    this.name,
+    this.venue,
+    this.description,
+    this.photo,
+    this.startDate,
+    this.endDate,
+    this.eventCount,
+    this.companyName,
+    this.companyLogo,
+    this.companyIntro,
+  });
 
   GetAllConferenceData.fromJson(Map<String, dynamic> json) {
     totalCount = json['totalCount'];
@@ -62,6 +69,9 @@ class GetAllConferenceData {
     startDate = json['startDate'];
     endDate = json['endDate'];
     eventCount = json['eventCount'];
+    companyName = json['companyName'];
+    companyLogo = json['companyLogo'];
+    companyIntro = json['companyIntro'];
   }
 
   Map<String, dynamic> toJson() {
@@ -75,6 +85,9 @@ class GetAllConferenceData {
     data['startDate'] = startDate;
     data['endDate'] = endDate;
     data['eventCount'] = eventCount;
+    data['companyName'] = companyName;
+    data['companyLogo'] = companyLogo;
+    data['companyIntro'] = companyIntro;
     return data;
   }
 }

@@ -43,7 +43,7 @@ class _ImageviewerWidgetState extends State<ImageviewerWidget> {
               ),
               Expanded(
                 child: PhotoView(
-                  imageProvider: AssetImage(widget.attechmentUrls),
+                  imageProvider: NetworkImage(widget.attechmentUrls),
                 ),
               ),
               Container(

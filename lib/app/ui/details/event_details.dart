@@ -26,10 +26,6 @@ class EventDetailsPage extends StatefulWidget {
 }
 
 class _EventDetailsPageState extends State<EventDetailsPage> {
-  List image = [
-    "assets/images/i-test.png",
-    "assets/images/i-test1.png",
-  ];
   String userId = "";
   final GetDetailsEventController getDetailsEventController =
       Get.put(GetDetailsEventController());
@@ -82,7 +78,8 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
       ),
       body: Obx(() {
         if (getDetailsEventController.isLoading.value) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+              child: CircularProgressIndicator(color: kSelectedIconColor));
         } else {
           var data = getDetailsEventController.detailEventModel!.data;
           String dateStartString = data!.startDate.toString();
@@ -453,7 +450,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                               child: SizedBox(
                                 width: Get.width - 80,
                                 child: const Text(
-                                  "Attendees not Found",
+                                  "No Attendees",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: kPrimaryColor,

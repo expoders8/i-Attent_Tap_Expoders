@@ -273,19 +273,15 @@ class _ChatScreenState extends State<ChatScreen> {
                                 );
                         } else {
                           return const Center(
-                            child: CircularProgressIndicator(
-                              color: kPrimaryColor,
-                            ),
-                          );
+                              child: CircularProgressIndicator(
+                                  color: kSelectedIconColor));
                         }
                       },
                     );
                   } else {
                     return const Center(
-                      child: CircularProgressIndicator(
-                        color: kPrimaryColor,
-                      ),
-                    );
+                        child: CircularProgressIndicator(
+                            color: kSelectedIconColor));
                   }
                 },
               ),

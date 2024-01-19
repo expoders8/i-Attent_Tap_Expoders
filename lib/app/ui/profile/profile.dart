@@ -179,7 +179,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   Text(
                     userBadgeID.toString(),
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: kPrimaryColor,
                         fontSize: 13,
                         fontWeight: FontWeight.bold),

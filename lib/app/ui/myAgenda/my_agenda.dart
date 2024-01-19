@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../../view/agenda_view.dart';
 import '../widgets/data_section.dart';
 import '../../controller/agenda_controller.dart';
-import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 
 class MyAgendaPage extends StatefulWidget {

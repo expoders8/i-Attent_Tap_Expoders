@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -18,15 +19,12 @@ class ConferenceDetailsPage extends StatefulWidget {
 }
 
 class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
-  List image = [
-    "assets/images/i-test.png",
-    "assets/images/i-test1.png",
-  ];
   final GetDetailsConferanceController getDetailsConferanceController =
       Get.put(GetDetailsConferanceController());
   final GetAllEventsController getAllEventsController =
       Get.put(GetAllEventsController());
   String selectedDate = "";
+  String selectedsession = "Sessions";
 
   @override
   void initState() {
@@ -46,7 +44,8 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
       appBar: AppBar(toolbarHeight: 0),
       body: Obx(() {
         if (getDetailsConferanceController.isLoading.value) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+              child: CircularProgressIndicator(color: kSelectedIconColor));
         } else {
           var data = getDetailsConferanceController.detailModel!.data;
           String dateStartString = data!.startDate.toString();
@@ -63,6 +62,7 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
           return Column(
             children: [
               Stack(
+                // clipBehavior: Clip.none,
                 children: [
                   Container(
                     width: Get.width,
@@ -103,6 +103,52 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
                       ),
                     ),
                   ),
+                  // Positioned(
+                  //     bottom: -35.0,
+                  //     right: 20.0,
+                  //     child: Column(
+                  //       children: [
+                  //         Card(
+                  //             elevation: 6,
+                  //             child: Container(
+                  //               height: 40,
+                  //               width: 40,
+                  //               child: Image.network(
+                  //                 data.companyLogo.toString(),
+                  //                 fit: BoxFit.cover,
+                  //                 loadingBuilder: (BuildContext context,
+                  //                     Widget child,
+                  //                     ImageChunkEvent? loadingProgress) {
+                  //                   if (loadingProgress == null) {
+                  //                     return child;
+                  //                   }
+                  //                   return SizedBox(
+                  //                     width: 33,
+                  //                     height: 33,
+                  //                     child: Center(
+                  //                       child: CircularProgressIndicator(
+                  //                         color: kPrimaryColor,
+                  //                         value: loadingProgress
+                  //                                     .expectedTotalBytes !=
+                  //                                 null
+                  //                             ? loadingProgress
+                  //                                     .cumulativeBytesLoaded /
+                  //                                 loadingProgress
+                  //                                     .expectedTotalBytes!
+                  //                             : null,
+                  //                       ),
+                  //                     ),
+                  //                   );
+                  //                 },
+                  //               ),
+                  //             )),
+                  //         Text(
+                  //           data.companyName.toString(),
+                  //           style: TextStyle(
+                  //               fontFamily: kCircularStdMedium, fontSize: 13),
+                  //         )
+                  //       ],
+                  //     )),
                   Positioned(
                     bottom: 10,
                     child: Padding(
@@ -116,14 +162,14 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
                           style: const TextStyle(
                               color: kBackGroundColor,
                               fontFamily: kCircularStdNormal,
-                              fontSize: 19),
+                              fontSize: 17),
                         ),
                       ),
                     ),
                   )
                 ],
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
               Expanded(
                 child: NestedScrollView(
                   headerSliverBuilder:
@@ -134,28 +180,86 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
                     ];
                   },
                   body: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      DateSectionWidget(
-                        callbackDate: (val) {
-                          getAllEventsController.selectedDateString(val);
-                          getAllEventsController
-                              .selectedIdString(data.id.toString());
-                          getAllEventsController.fetchAllEvents();
-                        },
-                      ),
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(17, 13, 0, 8),
-                        child: const Text(
-                          "Sessions",
-                          style: TextStyle(
-                            color: kTitleColor,
-                            fontSize: 17,
-                            fontFamily: kCircularStdBold,
+                      Row(
+                        children: [
+                          const SizedBox(width: 10),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedsession = "Sessions";
+                              });
+                            },
+                            child: Container(
+                              child: const Text(
+                                "Sessions",
+                                style: TextStyle(
+                                  color: kTitleColor,
+                                  fontSize: 17,
+                                  fontFamily: kCircularStdBold,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
+                          // CupertinoButton(
+                          //     padding: const EdgeInsets.symmetric(
+                          //         horizontal: 10, vertical: 0),
+                          //     color: kRedColor,
+                          //     child: Container(
+                          //       child: const Text(
+                          //         "Sessions",
+                          //         style: TextStyle(
+                          //           color: kTitleColor,
+                          //           fontSize: 17,
+                          //           fontFamily: kCircularStdBold,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //     onPressed: () {
+                          //       setState(() {
+                          //         selectedsession = "Sessions";
+                          //       });
+                          //     }),
+                          const SizedBox(width: 15),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedsession = "Sponsor";
+                              });
+                            },
+                            child: Container(
+                              child: const Text(
+                                "Sponsor",
+                                style: TextStyle(
+                                  color: kTitleColor,
+                                  fontSize: 17,
+                                  fontFamily: kCircularStdBold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      const EventViewPage()
+                      const SizedBox(height: 10),
+                      Expanded(
+                        child: selectedsession == "Sessions"
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  DateSectionWidget(
+                                    callbackDate: (val) {
+                                      getAllEventsController
+                                          .selectedDateString(val);
+                                      getAllEventsController
+                                          .selectedIdString(data.id.toString());
+                                      getAllEventsController.fetchAllEvents();
+                                    },
+                                  ),
+                                  const EventViewPage()
+                                ],
+                              )
+                            : Container(),
+                      ),
                     ],
                   ),
                 ),
@@ -171,14 +275,14 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
     return Padding(
       padding: text == "Description"
           ? const EdgeInsets.only(left: 15, top: 11, bottom: 18, right: 10)
-          : const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+          : const EdgeInsets.only(left: 10, top: 10, bottom: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(
             icon,
             color: kTitleColor,
-            size: 22,
+            size: 21,
           ),
           const SizedBox(width: 10),
           SizedBox(
@@ -187,7 +291,7 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
               value,
               style: const TextStyle(
                 color: kSecondaryPrimaryColor,
-                fontSize: 15,
+                fontSize: 12.5,
                 fontFamily: kCircularStdMedium,
               ),
             ),
@@ -205,7 +309,7 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
       expandedHeight: Platform.isAndroid
           ? decription != ""
               ? 172
-              : 120
+              : 100
           : 153,
       floating: false,
       flexibleSpace: LayoutBuilder(
@@ -220,14 +324,14 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
                 builddetailsWidget(
                     Icons.calendar_month_outlined, "$startDate - $endDate", ""),
                 builddetailsWidget(Icons.location_on_outlined, venue, ""),
+                decription != ""
+                    ? builddetailsWidget(
+                        Icons.description, decription, "Description")
+                    : Container(),
                 const Divider(
                   thickness: 0.8,
                   color: kDividerColor,
                 ),
-                decription != ""
-                    ? builddetailsWidget(
-                        Icons.description, decription, "Description")
-                    : Container()
               ],
             ),
           ),

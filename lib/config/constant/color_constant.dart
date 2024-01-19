@@ -1,34 +1,25 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
-const kAppBarColor = Color(0xFFEE7674);
-
-const ksecondaryColor = Color(0xFFF1966E);
-const kHintTextStyleColor = Color(0x99000000);
+const kAppBarColor = Color(0xFFEF5B5B);
 const kButtonColor = Color(0XFF08415C);
 // const kButtonColor = Color(0XFF3E54FF);
+const kPrimaryColor = Color(0XFF153165);
 const kTitleColor = Color(0XFF484340);
 const kTitleSecondColor = Color.fromARGB(255, 144, 141, 139);
 const kErrorColor = Color(0xFFC8352A);
-
-const kBackGroundColor = Color(0XFFF4F6F7);
-// const kBackGroundColor = Color(0XFFFFFDFD);
-const kPrimaryColor = Color(0XFF153165);
 const kSecondaryPrimaryColor = Color(0xFF666670);
+// const kSelectedIconColor = Color(0xFF4B52C3);
 const kIconColor = Color(0xFF7D8CA3);
 // const kIconColor = Color(0xFFA3A6D1);
-// const kSelectedIconColor = Color(0xFF4B52C3);
+const kBackGroundColor = Color(0XFFF4F6F7);
+// const kBackGroundColor = Color(0XFFFFFDFD);
 const kSelectedIconColor = Color(0xFF08415C);
 const kSectionColor = Color(0xFF2C9BD9);
-const kSelectedTextandBgColor = Color(0XFF6AD3F6);
 const kTextSecondaryColor = Color(0xFF99A5BD);
-const kTextTwoSecondaryColor = Color(0xFFC3D1ED);
 const kCardColor = Color(0XFFFFFFFF);
 const kDividerColor = Color(0XFFBFC5CC);
-const kCardTextColor = Color(0xFF4C626C);
 
-const kDottedBorderColor = Color(0Xff707070);
-const kTitleBorderColor = Color(0xFFC1C1C4);
 const kTransparentColor = Color(0x00000000);
 const kWhiteColor = Color(0XFFFFFFFF);
 const kBlackColor = Color(0XFF000000);

@@ -18,11 +18,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List image = [
-    "assets/images/i-test.png",
-    "assets/images/i-test1.png",
-    "assets/images/i-test2.png"
-  ];
   final GetAllConferanceController getAllConferanceController =
       Get.put(GetAllConferanceController());
   final GetDetailsConferanceController getDetailsConferanceController =
@@ -61,11 +56,10 @@ class _HomePageState extends State<HomePage> {
                 blurRadius: 10.0,
               ),
             ]),
-            margin: const EdgeInsets.only(left: 10),
-            child: IconButton(
-              icon: CircleAvatar(
-                backgroundColor: kBackGroundColor,
-                child: ClipOval(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 3.0),
+              child: IconButton(
+                icon: ClipOval(
                   child: Material(
                       child: Image.asset(
                     "assets/images/blank_profile.png",
@@ -78,10 +72,10 @@ class _HomePageState extends State<HomePage> {
                     fit: BoxFit.cover,
                   )),
                 ),
+                onPressed: () {
+                  controller.changeTabIndex(4);
+                },
               ),
-              onPressed: () {
-                controller.changeTabIndex(4);
-              },
             ),
           ),
         ),
@@ -103,10 +97,10 @@ class _HomePageState extends State<HomePage> {
                       blurRadius: 10.0,
                     ),
                   ]),
-                  margin: const EdgeInsets.only(right: 12),
+                  margin: const EdgeInsets.only(right: 14),
                   child: Image.asset(
                     "assets/icons/notification.png",
-                    scale: 2.5,
+                    scale: 2.2,
                   )),
             ),
           ),
@@ -115,7 +109,8 @@ class _HomePageState extends State<HomePage> {
       body: Obx(
         () {
           if (getAllConferanceController.isLoading.value) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+                child: CircularProgressIndicator(color: kSelectedIconColor));
           } else {
             if (getAllConferanceController.conferanceList[0].data != null) {
               if (getAllConferanceController.conferanceList[0].data!.isEmpty) {
@@ -215,15 +210,14 @@ class _HomePageState extends State<HomePage> {
                                                         TextOverflow.ellipsis,
                                                     textAlign: TextAlign.left,
                                                     style: const TextStyle(
-                                                      fontSize: 18.0,
+                                                      fontSize: 17.0,
                                                       fontFamily:
                                                           kCircularStdMedium,
                                                       color: kPrimaryColor,
                                                     ),
                                                   ),
                                                   Text(
-                                                    // "Dec 27, 2023 09:30 AM - Dec 28, 2023 10:00 PM",
-                                                    "  $startTime - $endTime",
+                                                    "$startTime - $endTime",
                                                     style: const TextStyle(
                                                         color:
                                                             kTextSecondaryColor,
@@ -285,34 +279,6 @@ class _HomePageState extends State<HomePage> {
                                                             ),
                                                             const SizedBox(
                                                                 width: 10),
-                                                            // for (int i = 0;
-                                                            //     i <
-                                                            //         image
-                                                            //             .length;
-                                                            //     i++)
-                                                            //   Align(
-                                                            //     alignment:
-                                                            //         Alignment
-                                                            //             .topCenter,
-                                                            //     widthFactor:
-                                                            //         0.3,
-                                                            //     child:
-                                                            //         Image.asset(
-                                                            //       image[i],
-                                                            //       errorBuilder: (context,
-                                                            //               error,
-                                                            //               stackTrace) =>
-                                                            //           Image
-                                                            //               .asset(
-                                                            //         "assets/images/blank_profile.png",
-                                                            //         fit: BoxFit
-                                                            //             .fill,
-                                                            //       ),
-                                                            //       scale: 2,
-                                                            //       fit: BoxFit
-                                                            //           .cover,
-                                                            //     ),
-                                                            //   ),
                                                           ],
                                                         ),
                                                       ),

@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker_bdaya/flutter_datetime_picker_bdaya.dart';
 
-import '../widgets/date_time_picker.dart';
 import '../../services/agenda_service.dart';
 import '../../controller/tab_controller.dart';
 import '../../../config/constant/constant.dart';
@@ -30,20 +31,17 @@ class _CreateActivityState extends State<CreateActivity> {
       endDateError = false,
       startTimeError = false,
       endTimeError = false;
-  String pickedDate = "",
-      pickedStartTime = "",
+  String pickedStartTime = "",
       userId = "",
       pickedStartDate = "",
       pickedEndDate = "",
       pickedEndTime = "",
-      oldDate = "",
-      newDate = "",
-      oldTime = "",
       newStartTime = "",
-      newEndTime = "",
-      oldConvertedTime = "",
-      convertedStartTime = "",
-      convertedEndTime = "";
+      selectStartdate = "YYYY/MM/DD",
+      selectEnddate = "YYYY/MM/DD",
+      newEndTime = "";
+  var selectStartTime = "Time";
+  var selectEndTime = "Time";
   final controller = Get.put(TabCountController());
   final GetAllAgendaController getAllAgendaController =
       Get.put(GetAllAgendaController());
@@ -52,6 +50,7 @@ class _CreateActivityState extends State<CreateActivity> {
   final TextEditingController locationcontroller = TextEditingController();
   AgendaService agendaService = AgendaService();
   NotificationService notificationService = NotificationService();
+
   @override
   void initState() {
     getUser();
@@ -253,18 +252,80 @@ class _CreateActivityState extends State<CreateActivity> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          DatePickerWidget(
-                            dateError: startDateError,
-                            callbackDate: (val) {
-                              if (mounted) {
-                                setState(() {
-                                  pickedStartDate = val;
-                                  newStartTime = val;
-                                  startDateError = false;
-                                });
-                              }
-                            },
-                            oldSelectedDate: oldDate,
+                          Container(
+                            height: 45,
+                            margin: const EdgeInsets.only(top: 5),
+                            width: MediaQuery.of(context).size.width * 0.43,
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                            decoration: BoxDecoration(
+                              color: kWhiteColor,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                  color: startDateError == true
+                                      ? kErrorColor
+                                      : kWhiteColor),
+                            ),
+                            child: InkWell(
+                              onTap: () {
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+                                DatePickerBdaya.showDatePicker(
+                                  context,
+                                  showTitleActions: true,
+                                  minTime: DateTime.now(),
+                                  maxTime: DateTime(2050, 1, 1),
+                                  theme: const DatePickerThemeBdaya(
+                                    backgroundColor: kBackGroundColor,
+                                    itemStyle: TextStyle(
+                                      fontSize: 16,
+                                      color: kPrimaryColor,
+                                      fontFamily: kCircularStdMedium,
+                                    ),
+                                    doneStyle: TextStyle(
+                                      fontSize: 16,
+                                      color: kPrimaryColor,
+                                    ),
+                                    cancelStyle: TextStyle(
+                                      fontSize: 16,
+                                      color: kPrimaryColor,
+                                    ),
+                                  ),
+                                  onConfirm: (date) {
+                                    String formattedDate =
+                                        DateFormat('yyyy-MM-dd').format(date);
+                                    setState(() {
+                                      selectStartdate = formattedDate;
+                                      pickedStartDate = formattedDate;
+                                      newStartTime = formattedDate;
+                                      startDateError = false;
+                                    });
+                                  },
+                                  currentTime: DateTime.now(),
+                                  locale: LocaleType.en,
+                                );
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    selectStartdate == ""
+                                        ? "YYYY/MM/DD"
+                                        : selectStartdate,
+                                    style: const TextStyle(
+                                      fontFamily: kCircularStdBook,
+                                      fontWeight: FontWeight.w400,
+                                      color: kPrimaryColor,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  Image.asset(
+                                    "assets/icons/polygon_down.png",
+                                    scale: 2,
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                           startDateError == true
                               ? const Padding(
@@ -287,31 +348,82 @@ class _CreateActivityState extends State<CreateActivity> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TimePickerWidget(
-                            timeError: startTimeError,
-                            callbackTime: (val) {
-                              if (mounted) {
-                                setState(() {
-                                  pickedStartTime = val;
-                                  newStartTime = val;
-                                  startTimeError = false;
-                                });
-                              }
-                            },
-                            callbackConvertedTime: (val) {
-                              if (mounted) {
-                                setState(() => convertedStartTime = val);
-                              }
-                            },
-                            oldSelectedTime: oldTime,
+                          Container(
+                            height: 45,
+                            margin: const EdgeInsets.only(top: 5),
+                            width: MediaQuery.of(context).size.width * 0.43,
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                            decoration: BoxDecoration(
+                                color: kWhiteColor,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                    color: startTimeError == true
+                                        ? kErrorColor
+                                        : kWhiteColor)),
+                            child: InkWell(
+                              onTap: () {
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+                                DatePickerBdaya.showTimePicker(
+                                  context,
+                                  showTitleActions: true,
+                                  theme: const DatePickerThemeBdaya(
+                                    backgroundColor: kBackGroundColor,
+                                    itemStyle: TextStyle(
+                                      fontSize: 16,
+                                      color: kPrimaryColor,
+                                      fontFamily: kCircularStdMedium,
+                                    ),
+                                    doneStyle: TextStyle(
+                                      fontSize: 16,
+                                      color: kPrimaryColor,
+                                    ),
+                                    cancelStyle: TextStyle(
+                                      fontSize: 16,
+                                      color: kPrimaryColor,
+                                    ),
+                                  ),
+                                  onConfirm: (time) {
+                                    String convertedTime =
+                                        DateFormat("hh:mm a").format(time);
+                                    String formattedTime =
+                                        DateFormat('HH:mm:ss').format(time);
+                                    setState(() {
+                                      selectStartTime = convertedTime;
+                                      newStartTime = convertedTime;
+                                      pickedStartTime = formattedTime;
+                                      startTimeError = false;
+                                      // widget.callbackTime(formattedTime);
+                                      // widget.callbackConvertedTime(convertedTime);
+                                    });
+                                  },
+                                  currentTime: DateTime.now(),
+                                  locale: LocaleType.en,
+                                );
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    selectStartTime == ""
+                                        ? "Time"
+                                        : selectStartTime,
+                                    style: const TextStyle(
+                                      fontFamily: kCircularStdBook,
+                                      fontWeight: FontWeight.w400,
+                                      color: kPrimaryColor,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  Image.asset(
+                                    "assets/icons/polygon_down.png",
+                                    scale: 2,
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                          //   callbackConvertedTime: (val) {
-                          //     if (mounted) {
-                          //       setState(() => convertedTime = val);
-                          //     }
-                          //   },
-                          //   oldSelectedTime: oldTime,
-                          // ),
                           startTimeError == true
                               ? const Padding(
                                   padding: EdgeInsets.only(left: 10, top: 6),
@@ -338,18 +450,80 @@ class _CreateActivityState extends State<CreateActivity> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          DatePickerWidget(
-                            dateError: endDateError,
-                            callbackDate: (val) {
-                              if (mounted) {
-                                setState(() {
-                                  pickedEndDate = val;
-                                  newEndTime = val;
-                                  endDateError = false;
-                                });
-                              }
-                            },
-                            oldSelectedDate: oldDate,
+                          Container(
+                            height: 45,
+                            margin: const EdgeInsets.only(top: 5),
+                            width: MediaQuery.of(context).size.width * 0.43,
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                            decoration: BoxDecoration(
+                              color: kWhiteColor,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                  color: endDateError == true
+                                      ? kErrorColor
+                                      : kWhiteColor),
+                            ),
+                            child: InkWell(
+                              onTap: () {
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+                                DatePickerBdaya.showDatePicker(
+                                  context,
+                                  showTitleActions: true,
+                                  minTime: DateTime.now(),
+                                  maxTime: DateTime(2050, 1, 1),
+                                  theme: const DatePickerThemeBdaya(
+                                    backgroundColor: kBackGroundColor,
+                                    itemStyle: TextStyle(
+                                      fontSize: 16,
+                                      color: kPrimaryColor,
+                                      fontFamily: kCircularStdMedium,
+                                    ),
+                                    doneStyle: TextStyle(
+                                      fontSize: 16,
+                                      color: kPrimaryColor,
+                                    ),
+                                    cancelStyle: TextStyle(
+                                      fontSize: 16,
+                                      color: kPrimaryColor,
+                                    ),
+                                  ),
+                                  onConfirm: (date) {
+                                    String formattedDate =
+                                        DateFormat('yyyy-MM-dd').format(date);
+                                    setState(() {
+                                      selectEnddate = formattedDate;
+                                      pickedEndDate = formattedDate;
+                                      newEndTime = formattedDate;
+                                      endDateError = false;
+                                    });
+                                  },
+                                  currentTime: DateTime.now(),
+                                  locale: LocaleType.en,
+                                );
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    selectEnddate == ""
+                                        ? "YYYY/MM/DD"
+                                        : selectEnddate,
+                                    style: const TextStyle(
+                                      fontFamily: kCircularStdBook,
+                                      fontWeight: FontWeight.w400,
+                                      color: kPrimaryColor,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  Image.asset(
+                                    "assets/icons/polygon_down.png",
+                                    scale: 2,
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                           endDateError == true
                               ? const Padding(
@@ -372,23 +546,79 @@ class _CreateActivityState extends State<CreateActivity> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TimePickerWidget(
-                            timeError: endTimeError,
-                            callbackTime: (val) {
-                              if (mounted) {
-                                setState(() {
-                                  pickedEndTime = val;
-                                  newEndTime = val;
-                                  endTimeError = false;
-                                });
-                              }
-                            },
-                            callbackConvertedTime: (val) {
-                              if (mounted) {
-                                setState(() => convertedEndTime = val);
-                              }
-                            },
-                            oldSelectedTime: oldTime,
+                          Container(
+                            height: 45,
+                            margin: const EdgeInsets.only(top: 5),
+                            width: MediaQuery.of(context).size.width * 0.43,
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                            decoration: BoxDecoration(
+                                color: kWhiteColor,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                    color: endTimeError == true
+                                        ? kErrorColor
+                                        : kWhiteColor)),
+                            child: InkWell(
+                              onTap: () {
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+                                DatePickerBdaya.showTimePicker(
+                                  context,
+                                  showTitleActions: true,
+                                  theme: const DatePickerThemeBdaya(
+                                    backgroundColor: kBackGroundColor,
+                                    itemStyle: TextStyle(
+                                      fontSize: 16,
+                                      color: kPrimaryColor,
+                                      fontFamily: kCircularStdMedium,
+                                    ),
+                                    doneStyle: TextStyle(
+                                      fontSize: 16,
+                                      color: kPrimaryColor,
+                                    ),
+                                    cancelStyle: TextStyle(
+                                      fontSize: 16,
+                                      color: kPrimaryColor,
+                                    ),
+                                  ),
+                                  onConfirm: (time) {
+                                    String convertedTime =
+                                        DateFormat("hh:mm a").format(time);
+                                    String formattedTime =
+                                        DateFormat('HH:mm:ss').format(time);
+                                    setState(() {
+                                      selectEndTime = convertedTime;
+                                      newStartTime = convertedTime;
+                                      pickedEndTime = formattedTime;
+                                      endTimeError = false;
+                                    });
+                                  },
+                                  currentTime: DateTime.now(),
+                                  locale: LocaleType.en,
+                                );
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    selectEndTime == ""
+                                        ? "Time"
+                                        : selectEndTime,
+                                    style: const TextStyle(
+                                      fontFamily: kCircularStdBook,
+                                      fontWeight: FontWeight.w400,
+                                      color: kPrimaryColor,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  Image.asset(
+                                    "assets/icons/polygon_down.png",
+                                    scale: 2,
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                           endTimeError == true
                               ? const Padding(
@@ -524,6 +754,10 @@ class _CreateActivityState extends State<CreateActivity> {
       pickedEndDate = "";
       pickedStartTime = "";
       pickedEndTime = "";
+      selectStartTime = "";
+      selectEndTime = "";
+      selectStartdate = "";
+      selectEnddate = "";
     });
   }
 
