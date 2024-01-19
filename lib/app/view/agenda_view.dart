@@ -62,17 +62,16 @@ class _AgendaViewPageState extends State<AgendaViewPage> {
 
                     if (discoverData.isNotEmpty) {
                       var data = discoverData[index];
-
                       String dateStartString = data.startDate.toString();
                       String dateEndString = data.endDate.toString();
                       DateTime myDateStartTime =
                           DateTime.parse(dateStartString);
                       DateTime myDateEndTime = DateTime.parse(dateEndString);
-
+                      DateTime utcStartTime = myDateStartTime.toUtc();
+                      DateTime utcEndTime = myDateEndTime.toUtc();
                       String startTime =
-                          DateFormat('hh:mm a').format(myDateStartTime);
-                      String endTime =
-                          DateFormat('hh:mm a').format(myDateEndTime);
+                          DateFormat('hh:mm a').format(utcStartTime);
+                      String endTime = DateFormat('hh:mm a').format(utcEndTime);
                       return Container(
                           padding: const EdgeInsets.only(top: 10),
                           decoration: const BoxDecoration(
@@ -148,7 +147,7 @@ class _AgendaViewPageState extends State<AgendaViewPage> {
                                             children: [
                                               const SizedBox(height: 15.7),
                                               SizedBox(
-                                                width: 175,
+                                                width: 174,
                                                 child: Text(
                                                   data.title.toString(),
                                                   maxLines: 2,

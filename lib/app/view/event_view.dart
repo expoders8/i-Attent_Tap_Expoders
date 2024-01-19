@@ -65,7 +65,7 @@ class _EventViewPageState extends State<EventViewPage> {
                   child: SizedBox(
                     width: Get.width - 80,
                     child: const Text(
-                      "Event not Found",
+                      "No Events",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: kPrimaryColor,
@@ -84,17 +84,16 @@ class _EventViewPageState extends State<EventViewPage> {
 
                     if (discoverData.isNotEmpty) {
                       var data = discoverData[index];
-
                       String dateStartString = data.startDate.toString();
                       String dateEndString = data.endDate.toString();
                       DateTime myDateStartTime =
                           DateTime.parse(dateStartString);
                       DateTime myDateEndTime = DateTime.parse(dateEndString);
-
+                      DateTime utcStartTime = myDateStartTime.toUtc();
+                      DateTime utcEndTime = myDateEndTime.toUtc();
                       String startTime =
-                          DateFormat('hh:mm a').format(myDateStartTime);
-                      String endTime =
-                          DateFormat('hh:mm a').format(myDateEndTime);
+                          DateFormat('hh:mm a').format(utcStartTime);
+                      String endTime = DateFormat('hh:mm a').format(utcEndTime);
                       return Container(
                           padding: const EdgeInsets.only(top: 10),
                           decoration: const BoxDecoration(
@@ -390,7 +389,7 @@ class _EventViewPageState extends State<EventViewPage> {
                     } else {
                       return const Center(
                         child: Text(
-                          "Event not Found",
+                          "No Events",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: kPrimaryColor,
@@ -405,7 +404,7 @@ class _EventViewPageState extends State<EventViewPage> {
             } else {
               return const Center(
                 child: Text(
-                  "Event not Found",
+                  "No Events",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: kPrimaryColor,

@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -50,13 +49,17 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
           var data = getDetailsConferanceController.detailModel!.data;
           String dateStartString = data!.startDate.toString();
           String dateEndString = data.endDate.toString();
+
           DateTime myDateStartTime = DateTime.parse(dateStartString);
           DateTime myDateEndTime = DateTime.parse(dateEndString);
 
+          DateTime utcStartTime = myDateStartTime.toUtc();
+          DateTime utcEndTime = myDateEndTime.toUtc();
+
           String startTime =
-              DateFormat('MMM d, yyyy hh:mm a').format(myDateStartTime);
-          String endTime =
-              DateFormat('MMM d, yyyy hh:mm a').format(myDateEndTime);
+              DateFormat('MMM d, yyyy hh:mm a').format(utcStartTime);
+          String endTime = DateFormat('MMM d, yyyy hh:mm a').format(utcEndTime);
+
           String venue =
               data.venue == "" ? "Lavaska Center" : data.venue.toString();
           return Column(
@@ -191,47 +194,52 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
                               });
                             },
                             child: Container(
-                              child: const Text(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    color: selectedsession == "Sessions"
+                                        ? kSelectedIconColor
+                                        : kBackGroundColor,
+                                    width: 1.0,
+                                  ),
+                                ),
+                              ),
+                              child: Text(
                                 "Sessions",
                                 style: TextStyle(
-                                  color: kTitleColor,
+                                  color: selectedsession == "Sessions"
+                                      ? kSelectedIconColor
+                                      : kIconColor,
                                   fontSize: 17,
                                   fontFamily: kCircularStdBold,
                                 ),
                               ),
                             ),
                           ),
-                          // CupertinoButton(
-                          //     padding: const EdgeInsets.symmetric(
-                          //         horizontal: 10, vertical: 0),
-                          //     color: kRedColor,
-                          //     child: Container(
-                          //       child: const Text(
-                          //         "Sessions",
-                          //         style: TextStyle(
-                          //           color: kTitleColor,
-                          //           fontSize: 17,
-                          //           fontFamily: kCircularStdBold,
-                          //         ),
-                          //       ),
-                          //     ),
-                          //     onPressed: () {
-                          //       setState(() {
-                          //         selectedsession = "Sessions";
-                          //       });
-                          //     }),
                           const SizedBox(width: 15),
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                selectedsession = "Sponsor";
+                                selectedsession = "Sponsors";
                               });
                             },
                             child: Container(
-                              child: const Text(
-                                "Sponsor",
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    color: selectedsession == "Sponsors"
+                                        ? kSelectedIconColor
+                                        : kBackGroundColor,
+                                    width: 1.0,
+                                  ),
+                                ),
+                              ),
+                              child: Text(
+                                "Sponsors",
                                 style: TextStyle(
-                                  color: kTitleColor,
+                                  color: selectedsession == "Sponsors"
+                                      ? kSelectedIconColor
+                                      : kIconColor,
                                   fontSize: 17,
                                   fontFamily: kCircularStdBold,
                                 ),
@@ -258,7 +266,72 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
                                   const EventViewPage()
                                 ],
                               )
-                            : Container(),
+                            : data.sponsors!.isNotEmpty
+                                ? ListView.builder(
+                                    padding: const EdgeInsets.all(10),
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: data.sponsors!.length,
+                                    itemBuilder: (context, index) {
+                                      var sponsorsdata = data.sponsors![index];
+                                      return Row(
+                                        children: [
+                                          SizedBox(
+                                            height: 50,
+                                            width: 50,
+                                            child: ClipOval(
+                                              child: Image.network(
+                                                sponsorsdata.sponsorLogo
+                                                    .toString(),
+                                                errorBuilder: (context, error,
+                                                        stackTrace) =>
+                                                    Image.asset(
+                                                  "assets/images/images.jpg",
+                                                  fit: BoxFit.fill,
+                                                ),
+                                                width: 40,
+                                                height: 40,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 10),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                sponsorsdata.sponsorName
+                                                    .toString(),
+                                                style: const TextStyle(
+                                                    fontSize: 17,
+                                                    fontFamily:
+                                                        kCircularStdNormal),
+                                              ),
+                                              Text(
+                                                sponsorsdata.sponsorDescription
+                                                    .toString(),
+                                                style: const TextStyle(
+                                                    color: kTextSecondaryColor,
+                                                    fontSize: 14.5,
+                                                    fontFamily:
+                                                        kCircularStdNormal),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      );
+                                    },
+                                  )
+                                : const Center(
+                                    child: Text(
+                                      "No Sponsors",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: kPrimaryColor,
+                                          fontSize: 15,
+                                          fontFamily: kCircularStdMedium),
+                                    ),
+                                  ),
                       ),
                     ],
                   ),

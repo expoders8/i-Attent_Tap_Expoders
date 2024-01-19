@@ -43,7 +43,9 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: kAppBarColor,
         automaticallyImplyLeading: false,
-        title: const Text(""),
+        title: const Text("Conferences",
+            style: TextStyle(color: kBackGroundColor)),
+        centerTitle: true,
         leading: Theme(
           data: ThemeData(
             splashColor: Colors.transparent,
@@ -144,15 +146,19 @@ class _HomePageState extends State<HomePage> {
                             var data = discoverData[index];
                             String dateStartString = data.startDate.toString();
                             String dateEndString = data.endDate.toString();
+
                             DateTime myDateStartTime =
                                 DateTime.parse(dateStartString);
                             DateTime myDateEndTime =
                                 DateTime.parse(dateEndString);
 
+                            DateTime utcStartTime = myDateStartTime.toUtc();
+                            DateTime utcEndTime = myDateEndTime.toUtc();
+
                             String startTime = DateFormat('MMM d, yyyy hh:mm a')
-                                .format(myDateStartTime);
+                                .format(utcStartTime);
                             String endTime = DateFormat('MMM d, yyyy hh:mm a')
-                                .format(myDateEndTime);
+                                .format(utcEndTime);
                             return GestureDetector(
                               onTap: () {
                                 getDetailsConferanceController
@@ -191,9 +197,43 @@ class _HomePageState extends State<HomePage> {
                                                   topRight:
                                                       Radius.circular(10.0),
                                                 ),
-                                                child: Image.asset(
-                                                  "assets/images/images.jpg",
+                                                child: Image.network(
+                                                  data.photo.toString(),
                                                   fit: BoxFit.cover,
+                                                  errorBuilder: (context, error,
+                                                          stackTrace) =>
+                                                      Image.asset(
+                                                    "assets/images/images.jpg",
+                                                    fit: BoxFit.fill,
+                                                  ),
+                                                  loadingBuilder:
+                                                      (BuildContext context,
+                                                          Widget child,
+                                                          ImageChunkEvent?
+                                                              loadingProgress) {
+                                                    if (loadingProgress ==
+                                                        null) {
+                                                      return child;
+                                                    }
+                                                    return SizedBox(
+                                                      width: 50,
+                                                      height: 50,
+                                                      child: Center(
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                          color: kPrimaryColor,
+                                                          value: loadingProgress
+                                                                      .expectedTotalBytes !=
+                                                                  null
+                                                              ? loadingProgress
+                                                                      .cumulativeBytesLoaded /
+                                                                  loadingProgress
+                                                                      .expectedTotalBytes!
+                                                              : null,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
                                                 ),
                                               ),
                                             ),

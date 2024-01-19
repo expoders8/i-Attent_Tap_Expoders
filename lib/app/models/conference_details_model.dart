@@ -38,6 +38,7 @@ class GetConferanceByIdDataModel {
   String? companyName;
   String? companyLogo;
   String? companyIntro;
+  List<Sponsors>? sponsors;
 
   GetConferanceByIdDataModel(
       {this.id,
@@ -49,7 +50,8 @@ class GetConferanceByIdDataModel {
       this.endDate,
       this.companyName,
       this.companyLogo,
-      this.companyIntro});
+      this.companyIntro,
+      this.sponsors});
 
   GetConferanceByIdDataModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -62,6 +64,12 @@ class GetConferanceByIdDataModel {
     companyName = json['companyName'];
     companyLogo = json['companyLogo'];
     companyIntro = json['companyIntro'];
+    if (json['sponsors'] != null) {
+      sponsors = <Sponsors>[];
+      json['sponsors'].forEach((v) {
+        sponsors!.add(Sponsors.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -76,7 +84,39 @@ class GetConferanceByIdDataModel {
     data['companyName'] = companyName;
     data['companyLogo'] = companyLogo;
     data['companyIntro'] = companyIntro;
+    if (sponsors != null) {
+      data['sponsors'] = sponsors!.map((v) => v.toJson()).toList();
+    }
 
+    return data;
+  }
+}
+
+class Sponsors {
+  int? sponsorId;
+  String? sponsorName;
+  String? sponsorDescription;
+  String? sponsorLogo;
+
+  Sponsors(
+      {this.sponsorId,
+      this.sponsorName,
+      this.sponsorDescription,
+      this.sponsorLogo});
+
+  Sponsors.fromJson(Map<String, dynamic> json) {
+    sponsorId = json['sponsorId'];
+    sponsorName = json['sponsorName'];
+    sponsorDescription = json['sponsorDescription'];
+    sponsorLogo = json['sponsorLogo'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['sponsorId'] = sponsorId;
+    data['sponsorName'] = sponsorName;
+    data['sponsorDescription'] = sponsorDescription;
+    data['sponsorLogo'] = sponsorLogo;
     return data;
   }
 }

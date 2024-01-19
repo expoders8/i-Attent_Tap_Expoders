@@ -5,13 +5,13 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../controller/attachments_conroller.dart';
 import '../../routes/app_pages.dart';
 import '../../services/agenda_service.dart';
 import '../../controller/tab_controller.dart';
 import '../../controller/event_contoller.dart';
 import '../../../config/constant/constant.dart';
 import '../../controller/agenda_controller.dart';
+import '../../controller/attachments_conroller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 import '../../../config/provider/loader_provider.dart';
@@ -84,13 +84,21 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
           var data = getDetailsEventController.detailEventModel!.data;
           String dateStartString = data!.startDate.toString();
           String dateEndString = data.endDate.toString();
+
           DateTime myDateStartTime = DateTime.parse(dateStartString);
           DateTime myDateEndTime = DateTime.parse(dateEndString);
 
-          String startTime = DateFormat('MMM d, yyyy').format(myDateStartTime);
-          String endTime = DateFormat('MMM d, yyyy').format(myDateEndTime);
+          DateTime utcStartTime = myDateStartTime.toUtc();
+          DateTime utcEndTime = myDateEndTime.toUtc();
+
+          String startTime = DateFormat('MMM d, yyyy').format(utcStartTime);
+          String endTime = DateFormat('MMM d, yyyy').format(utcEndTime);
           String venue =
               data.venue == "" ? "Lavaska Center" : data.venue.toString();
+          String description =
+              data.description == "" || data.description == null
+                  ? "N/A"
+                  : data.description.toString();
           return PopScope(
             canPop: true,
             onPopInvoked: (didPop) {
@@ -280,37 +288,14 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                       ),
                     ),
                   ),
-                  data.description == "" || data.description == null
-                      ? Container()
-                      : const Divider(
-                          thickness: 0.8,
-                          color: kDividerColor,
-                        ),
-                  data.description == ""
-                      ? Container()
-                      : Container(
-                          padding: const EdgeInsets.fromLTRB(17, 7, 0, 7),
-                          child: const Text(
-                            "About this event",
-                            style: TextStyle(
-                              color: kTitleColor,
-                              fontSize: 17,
-                              fontFamily: kCircularStdBold,
-                            ),
-                          ),
-                        ),
-                  data.description == ""
-                      ? Container()
-                      : builddetailsWidget(Icons.description_outlined,
-                          data.description.toString(), "Description"),
                   const Divider(
                     thickness: 0.8,
                     color: kDividerColor,
                   ),
                   Container(
-                    padding: const EdgeInsets.fromLTRB(17, 5, 0, 8),
+                    padding: const EdgeInsets.fromLTRB(17, 7, 0, 7),
                     child: const Text(
-                      "Registered Attendees",
+                      "About this event",
                       style: TextStyle(
                         color: kTitleColor,
                         fontSize: 17,
@@ -318,149 +303,167 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: Get.height / 3.7,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 13, right: 13),
-                      child: data.lstAttendees!.isNotEmpty
-                          ? ListView.builder(
-                              physics: const BouncingScrollPhysics(),
-                              itemCount: data.lstAttendees!.length,
-                              itemBuilder: (context, index) {
-                                var attendee = data.lstAttendees![index];
-                                List<String> nameParts =
-                                    attendee.attendeeName!.split(" ");
-                                String firstName =
-                                    nameParts.isNotEmpty ? nameParts[0] : "";
-                                String lastName =
-                                    nameParts.length > 1 ? nameParts.last : "";
-                                String initials = (firstName.isNotEmpty
-                                        ? firstName[0]
-                                        : "") +
-                                    (lastName.isNotEmpty ? lastName[0] : "");
-                                return GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            RegisterAttendeesPage(
-                                          attendeesImage:
-                                              attendee.attendeePhoto.toString(),
-                                          attendeesName:
-                                              attendee.attendeeName.toString(),
-                                          attendeesEmail:
-                                              attendee.attendeeEmail.toString(),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: Card(
-                                    elevation: 7,
-                                    shadowColor:
-                                        const Color.fromARGB(50, 0, 0, 0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: kCardColor,
-                                          borderRadius:
-                                              BorderRadius.circular(15)),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(10),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                      color: const Color(
-                                                          0xFFE5E7E8),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              25)),
-                                                  height: 35,
-                                                  width: 35,
-                                                  child: Center(
-                                                    child: Text(
-                                                      initials.toString(),
-                                                      style: const TextStyle(
-                                                          color: Color.fromARGB(
-                                                              255,
-                                                              109,
-                                                              110,
-                                                              110),
-                                                          fontSize: 14,
-                                                          fontFamily:
-                                                              kCircularStdNormal),
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 10),
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      attendee.attendeeName
-                                                          .toString(),
-                                                      style: const TextStyle(
-                                                          color: kPrimaryColor,
-                                                          fontSize: 15,
-                                                          fontFamily:
-                                                              kCircularStdNormal),
-                                                    ),
-                                                    const SizedBox(height: 3),
-                                                    Text(
-                                                      attendee.attendeeEmail
-                                                          .toString(),
-                                                      style: const TextStyle(
-                                                          color: kGreyColor,
-                                                          fontSize: 12,
-                                                          fontFamily:
-                                                              kCircularStdNormal),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                            Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 3.0),
-                                                child: IconButton(
-                                                  onPressed: () {
-                                                    Get.back();
-                                                    controller
-                                                        .changeTabIndex(3);
-                                                  },
-                                                  icon: const Icon(
-                                                    Icons.message_outlined,
-                                                    color: kPrimaryColor,
-                                                    size: 22,
-                                                  ),
-                                                ))
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            )
-                          : Center(
-                              child: SizedBox(
-                                width: Get.width - 80,
-                                child: const Text(
-                                  "No Attendees",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: kPrimaryColor,
-                                      fontSize: 15,
-                                      fontFamily: kCircularStdMedium),
-                                ),
-                              ),
-                            ),
-                    ),
+                  builddetailsWidget(
+                      Icons.description_outlined, description, "Description"),
+                  const Divider(
+                    thickness: 0.8,
+                    color: kDividerColor,
                   ),
+                  SizedBox(height: Get.height / 3.7),
+                  // Container(
+                  //   padding: const EdgeInsets.fromLTRB(17, 5, 0, 8),
+                  //   child: const Text(
+                  //     "Registered Attendees",
+                  //     style: TextStyle(
+                  //       color: kTitleColor,
+                  //       fontSize: 17,
+                  //       fontFamily: kCircularStdBold,
+                  //     ),
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: Get.height / 3.7,
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.only(left: 13, right: 13),
+                  //     child: data.lstAttendees!.isNotEmpty
+                  //         ? ListView.builder(
+                  //             physics: const BouncingScrollPhysics(),
+                  //             itemCount: data.lstAttendees!.length,
+                  //             itemBuilder: (context, index) {
+                  //               var attendee = data.lstAttendees![index];
+                  //               List<String> nameParts =
+                  //                   attendee.attendeeName!.split(" ");
+                  //               String firstName =
+                  //                   nameParts.isNotEmpty ? nameParts[0] : "";
+                  //               String lastName =
+                  //                   nameParts.length > 1 ? nameParts.last : "";
+                  //               String initials = (firstName.isNotEmpty
+                  //                       ? firstName[0]
+                  //                       : "") +
+                  //                   (lastName.isNotEmpty ? lastName[0] : "");
+                  //               return GestureDetector(
+                  //                 onTap: () {
+                  //                   Navigator.of(context).push(
+                  //                     MaterialPageRoute(
+                  //                       builder: (context) =>
+                  //                           RegisterAttendeesPage(
+                  //                         attendeesImage:
+                  //                             attendee.attendeePhoto.toString(),
+                  //                         attendeesName:
+                  //                             attendee.attendeeName.toString(),
+                  //                         attendeesEmail:
+                  //                             attendee.attendeeEmail.toString(),
+                  //                       ),
+                  //                     ),
+                  //                   );
+                  //                 },
+                  //                 child: Card(
+                  //                   elevation: 7,
+                  //                   shadowColor:
+                  //                       const Color.fromARGB(50, 0, 0, 0),
+                  //                   child: Container(
+                  //                     decoration: BoxDecoration(
+                  //                         color: kCardColor,
+                  //                         borderRadius:
+                  //                             BorderRadius.circular(15)),
+                  //                     child: Padding(
+                  //                       padding: const EdgeInsets.all(10),
+                  //                       child: Row(
+                  //                         mainAxisAlignment:
+                  //                             MainAxisAlignment.spaceBetween,
+                  //                         children: [
+                  //                           Row(
+                  //                             children: [
+                  //                               Container(
+                  //                                 decoration: BoxDecoration(
+                  //                                     color: const Color(
+                  //                                         0xFFE5E7E8),
+                  //                                     borderRadius:
+                  //                                         BorderRadius.circular(
+                  //                                             25)),
+                  //                                 height: 35,
+                  //                                 width: 35,
+                  //                                 child: Center(
+                  //                                   child: Text(
+                  //                                     initials.toString(),
+                  //                                     style: const TextStyle(
+                  //                                         color: Color.fromARGB(
+                  //                                             255,
+                  //                                             109,
+                  //                                             110,
+                  //                                             110),
+                  //                                         fontSize: 14,
+                  //                                         fontFamily:
+                  //                                             kCircularStdNormal),
+                  //                                   ),
+                  //                                 ),
+                  //                               ),
+                  //                               const SizedBox(width: 10),
+                  //                               Column(
+                  //                                 crossAxisAlignment:
+                  //                                     CrossAxisAlignment.start,
+                  //                                 children: [
+                  //                                   Text(
+                  //                                     attendee.attendeeName
+                  //                                         .toString(),
+                  //                                     style: const TextStyle(
+                  //                                         color: kPrimaryColor,
+                  //                                         fontSize: 15,
+                  //                                         fontFamily:
+                  //                                             kCircularStdNormal),
+                  //                                   ),
+                  //                                   const SizedBox(height: 3),
+                  //                                   Text(
+                  //                                     attendee.attendeeEmail
+                  //                                         .toString(),
+                  //                                     style: const TextStyle(
+                  //                                         color: kGreyColor,
+                  //                                         fontSize: 12,
+                  //                                         fontFamily:
+                  //                                             kCircularStdNormal),
+                  //                                   ),
+                  //                                 ],
+                  //                               ),
+                  //                             ],
+                  //                           ),
+                  //                           Padding(
+                  //                               padding: const EdgeInsets.only(
+                  //                                   right: 3.0),
+                  //                               child: IconButton(
+                  //                                 onPressed: () {
+                  //                                   Get.back();
+                  //                                   controller
+                  //                                       .changeTabIndex(3);
+                  //                                 },
+                  //                                 icon: const Icon(
+                  //                                   Icons.message_outlined,
+                  //                                   color: kPrimaryColor,
+                  //                                   size: 22,
+                  //                                 ),
+                  //                               ))
+                  //                         ],
+                  //                       ),
+                  //                     ),
+                  //                   ),
+                  //                 ),
+                  //               );
+                  //             },
+                  //           )
+                  //         : Center(
+                  //             child: SizedBox(
+                  //               width: Get.width - 80,
+                  //               child: const Text(
+                  //                 "No Attendees",
+                  //                 textAlign: TextAlign.center,
+                  //                 style: TextStyle(
+                  //                     color: kPrimaryColor,
+                  //                     fontSize: 15,
+                  //                     fontFamily: kCircularStdMedium),
+                  //               ),
+                  //             ),
+                  //           ),
+                  //   ),
+                  // ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15.0, vertical: 10),

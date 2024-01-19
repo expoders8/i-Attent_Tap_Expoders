@@ -1,13 +1,14 @@
 import 'dart:convert';
-
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:dotted_border/dotted_border.dart';
 
+import '../auth/sign_in.dart';
+import '../../routes/app_pages.dart';
 import '../../../config/constant/constant.dart';
 import '../../services/firebase_auth_service.dart';
-import '../auth/sign_in.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 
@@ -72,7 +73,7 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 15),
+                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -148,7 +149,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     padding:
                                         const EdgeInsets.fromLTRB(0, 5, 0, 5)),
                                 label: const Text(
-                                  "Logout",
+                                  "Logoff",
                                   style: TextStyle(
                                     color: kRedColor,
                                     fontFamily: kCircularStdMedium,
@@ -169,45 +170,139 @@ class _ProfilePageState extends State<ProfilePage> {
                 thickness: 0.8,
                 color: kDividerColor,
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 5),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  QrImageView(
-                    data: userBadgeID.toString(),
-                    version: QrVersions.auto,
-                    size: 240.0,
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    child: Text(
+                      "QR Code",
+                      style: TextStyle(fontSize: 16, color: kBlack54Color),
+                    ),
                   ),
-                  Text(
-                    userBadgeID.toString(),
-                    style: const TextStyle(
-                        color: kPrimaryColor,
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 57.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        QrImageView(
+                          data: userBadgeID.toString(),
+                          version: QrVersions.auto,
+                          size: 240.0,
+                        ),
+                        Text(
+                          userBadgeID.toString(),
+                          style: const TextStyle(
+                              color: kPrimaryColor,
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 5),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(10, 5, 2, 0),
+                      child: Text(
+                          "- Check in to yout event if yout event is using i-Attent-TAP's check-in sevice"),
+                    ),
+                    // Padding(
+                    //   padding: EdgeInsets.fromLTRB(10, 7, 2, 10),
+                    //   child: Text(
+                    //       "- Give exhibitors and vendors your contact info(if your event has exhibitors)"),
+                    // )
+                  ),
                   const Divider(
                     thickness: 0.8,
                     color: kDividerColor,
                   ),
                   const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Use your QR Code to:"),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(10, 13, 2, 10),
-                          child: Text(
-                              "- Check in to yout event if yout event is using i-Attent-TAP's check-in sevice"),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(10, 7, 2, 10),
-                          child: Text(
-                              "- Give exhibitors and vendors your contact info(if your event has exhibitors)"),
-                        )
-                      ],
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    child: Text(
+                      "Settings",
+                      style: TextStyle(fontSize: 16, color: kBlack54Color),
                     ),
                   ),
+                  CupertinoButton(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 0, vertical: 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: kIconColor,
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
+                                child: const Icon(Icons.settings,
+                                    color: kBackGroundColor),
+                              ),
+                              const SizedBox(width: 10),
+                              const Text(
+                                "About",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: kCircularStdMedium),
+                              ),
+                            ],
+                          ),
+                          const Icon(
+                            Icons.arrow_forward_ios_outlined,
+                            size: 14,
+                            color: kIconColor,
+                          )
+                        ],
+                      ),
+                    ),
+                    onPressed: () {
+                      Get.toNamed(Routes.aboutPage);
+                    },
+                  )
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     Get.toNamed(Routes.aboutPage);
+                  //   },
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.symmetric(
+                  //         horizontal: 15, vertical: 10),
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: [
+                  //         Row(
+                  //           children: [
+                  //             Container(
+                  //               padding: const EdgeInsets.all(10),
+                  //               decoration: BoxDecoration(
+                  //                 color: kIconColor,
+                  //                 borderRadius: BorderRadius.circular(25),
+                  //               ),
+                  //               child: const Icon(Icons.settings,
+                  //                   color: kBackGroundColor),
+                  //             ),
+                  //             const SizedBox(width: 10),
+                  //             const Text(
+                  //               "About",
+                  //               style: TextStyle(
+                  //                   fontSize: 16,
+                  //                   fontFamily: kCircularStdMedium),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //         const Icon(
+                  //           Icons.arrow_forward_ios_outlined,
+                  //           size: 14,
+                  //         )
+                  //       ],
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
               const SizedBox(height: 15),

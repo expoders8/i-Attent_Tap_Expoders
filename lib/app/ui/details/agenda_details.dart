@@ -67,13 +67,19 @@ class _AgendaDetailsPageState extends State<AgendaDetailsPage> {
           var data = getDetailsAgendaController.detailAgendaModel!.data;
           String dateStartString = data!.startDate.toString();
           String dateEndString = data.endDate.toString();
+
           DateTime myDateStartTime = DateTime.parse(dateStartString);
           DateTime myDateEndTime = DateTime.parse(dateEndString);
 
-          String startTime = DateFormat('MMM d, yyyy').format(myDateStartTime);
-          String endTime = DateFormat('MMM d, yyyy').format(myDateEndTime);
+          DateTime utcStartTime = myDateStartTime.toUtc();
+          DateTime utcEndTime = myDateEndTime.toUtc();
+
+          String startTime = DateFormat('MMM d, yyyy').format(utcStartTime);
+          String endTime = DateFormat('MMM d, yyyy').format(utcEndTime);
           String venue =
               data.venue == "" ? "Lavaska Center" : data.venue.toString();
+          String decription =
+              data.description == "" ? "N/A" : data.description.toString();
           return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,6 +132,7 @@ class _AgendaDetailsPageState extends State<AgendaDetailsPage> {
                                         size: 30, color: Color(0xFF184990)),
                                     const SizedBox(height: 10),
                                     Text(
+                                      textAlign: TextAlign.center,
                                       venue,
                                       style: const TextStyle(
                                         color: kSecondaryPrimaryColor,
@@ -147,7 +154,7 @@ class _AgendaDetailsPageState extends State<AgendaDetailsPage> {
                                     ),
                                     SizedBox(height: 10),
                                     Text(
-                                      "3 Rooms",
+                                      "3 Room",
                                       style: TextStyle(
                                         color: kSecondaryPrimaryColor,
                                         fontSize: 12,
@@ -270,160 +277,161 @@ class _AgendaDetailsPageState extends State<AgendaDetailsPage> {
                     ),
                   ),
                 ),
-                builddetailsWidget(Icons.description_outlined,
-                    data.description.toString(), "Description"),
+                builddetailsWidget(
+                    Icons.description_outlined, decription, "Description"),
                 const Divider(
                   thickness: 0.8,
                   color: kDividerColor,
                 ),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(17, 5, 0, 8),
-                  child: const Text(
-                    "Registered Attendees",
-                    style: TextStyle(
-                      color: kTitleColor,
-                      fontSize: 17,
-                      fontFamily: kCircularStdBold,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: Get.height / 3.7,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 13, right: 13),
-                    child: data.attendees!.isNotEmpty
-                        ? ListView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            itemCount: data.attendees!.length,
-                            itemBuilder: (context, index) {
-                              var attendee = data.attendees![index];
-                              String fullfirstName =
-                                  attendee.firstName.toString();
-                              String fullLastName =
-                                  attendee.lastName.toString();
-                              String firstLatter =
-                                  fullfirstName.substring(0, 1);
-                              String lastLatter = fullLastName.substring(0, 1);
-                              String initials = (firstLatter) + (lastLatter);
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          RegisterAttendeesPage(
-                                        attendeesImage:
-                                            attendee.photo.toString(),
-                                        attendeesName:
-                                            attendee.firstName.toString(),
-                                        attendeesEmail:
-                                            attendee.emailAddress.toString(),
-                                      ),
-                                    ),
-                                  );
-                                },
-                                child: Card(
-                                  elevation: 7,
-                                  shadowColor:
-                                      const Color.fromARGB(50, 0, 0, 0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: kCardColor,
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                    color:
-                                                        const Color(0xFFE5E7E8),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            25)),
-                                                height: 35,
-                                                width: 35,
-                                                child: Center(
-                                                  child: Text(
-                                                    initials.toString(),
-                                                    style: const TextStyle(
-                                                        color: Color.fromARGB(
-                                                            255, 109, 110, 110),
-                                                        fontSize: 14,
-                                                        fontFamily:
-                                                            kCircularStdNormal),
-                                                  ),
-                                                ),
-                                              ),
-                                              const SizedBox(width: 10),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    attendee.firstName
-                                                        .toString(),
-                                                    style: const TextStyle(
-                                                        color: kPrimaryColor,
-                                                        fontSize: 15,
-                                                        fontFamily:
-                                                            kCircularStdNormal),
-                                                  ),
-                                                  const SizedBox(height: 3),
-                                                  Text(
-                                                    attendee.emailAddress
-                                                        .toString(),
-                                                    style: const TextStyle(
-                                                        color: kGreyColor,
-                                                        fontSize: 12,
-                                                        fontFamily:
-                                                            kCircularStdNormal),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 3.0),
-                                              child: IconButton(
-                                                onPressed: () {
-                                                  Get.back();
-                                                  controller.changeTabIndex(3);
-                                                },
-                                                icon: const Icon(
-                                                  Icons.message_outlined,
-                                                  color: kPrimaryColor,
-                                                  size: 22,
-                                                ),
-                                              ))
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          )
-                        : Center(
-                            child: SizedBox(
-                              width: Get.width - 80,
-                              child: const Text(
-                                "Attendees not Found",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 15,
-                                    fontFamily: kCircularStdMedium),
-                              ),
-                            ),
-                          ),
-                  ),
-                ),
+                SizedBox(height: Get.height / 3.7),
+                // Container(
+                //   padding: const EdgeInsets.fromLTRB(17, 5, 0, 8),
+                //   child: const Text(
+                //     "Registered Attendees",
+                //     style: TextStyle(
+                //       color: kTitleColor,
+                //       fontSize: 17,
+                //       fontFamily: kCircularStdBold,
+                //     ),
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: Get.height / 3.7,
+                //   child: Padding(
+                //     padding: const EdgeInsets.only(left: 13, right: 13),
+                //     child: data.attendees!.isNotEmpty
+                //         ? ListView.builder(
+                //             physics: const BouncingScrollPhysics(),
+                //             itemCount: data.attendees!.length,
+                //             itemBuilder: (context, index) {
+                //               var attendee = data.attendees![index];
+                //               String fullfirstName =
+                //                   attendee.firstName.toString();
+                //               String fullLastName =
+                //                   attendee.lastName.toString();
+                //               String firstLatter =
+                //                   fullfirstName.substring(0, 1);
+                //               String lastLatter = fullLastName.substring(0, 1);
+                //               String initials = (firstLatter) + (lastLatter);
+                //               return GestureDetector(
+                //                 onTap: () {
+                //                   Navigator.of(context).push(
+                //                     MaterialPageRoute(
+                //                       builder: (context) =>
+                //                           RegisterAttendeesPage(
+                //                         attendeesImage:
+                //                             attendee.photo.toString(),
+                //                         attendeesName:
+                //                             attendee.firstName.toString(),
+                //                         attendeesEmail:
+                //                             attendee.emailAddress.toString(),
+                //                       ),
+                //                     ),
+                //                   );
+                //                 },
+                //                 child: Card(
+                //                   elevation: 7,
+                //                   shadowColor:
+                //                       const Color.fromARGB(50, 0, 0, 0),
+                //                   child: Container(
+                //                     decoration: BoxDecoration(
+                //                         color: kCardColor,
+                //                         borderRadius:
+                //                             BorderRadius.circular(15)),
+                //                     child: Padding(
+                //                       padding: const EdgeInsets.all(10),
+                //                       child: Row(
+                //                         mainAxisAlignment:
+                //                             MainAxisAlignment.spaceBetween,
+                //                         children: [
+                //                           Row(
+                //                             children: [
+                //                               Container(
+                //                                 decoration: BoxDecoration(
+                //                                     color:
+                //                                         const Color(0xFFE5E7E8),
+                //                                     borderRadius:
+                //                                         BorderRadius.circular(
+                //                                             25)),
+                //                                 height: 35,
+                //                                 width: 35,
+                //                                 child: Center(
+                //                                   child: Text(
+                //                                     initials.toString(),
+                //                                     style: const TextStyle(
+                //                                         color: Color.fromARGB(
+                //                                             255, 109, 110, 110),
+                //                                         fontSize: 14,
+                //                                         fontFamily:
+                //                                             kCircularStdNormal),
+                //                                   ),
+                //                                 ),
+                //                               ),
+                //                               const SizedBox(width: 10),
+                //                               Column(
+                //                                 crossAxisAlignment:
+                //                                     CrossAxisAlignment.start,
+                //                                 children: [
+                //                                   Text(
+                //                                     attendee.firstName
+                //                                         .toString(),
+                //                                     style: const TextStyle(
+                //                                         color: kPrimaryColor,
+                //                                         fontSize: 15,
+                //                                         fontFamily:
+                //                                             kCircularStdNormal),
+                //                                   ),
+                //                                   const SizedBox(height: 3),
+                //                                   Text(
+                //                                     attendee.emailAddress
+                //                                         .toString(),
+                //                                     style: const TextStyle(
+                //                                         color: kGreyColor,
+                //                                         fontSize: 12,
+                //                                         fontFamily:
+                //                                             kCircularStdNormal),
+                //                                   ),
+                //                                 ],
+                //                               ),
+                //                             ],
+                //                           ),
+                //                           Padding(
+                //                               padding: const EdgeInsets.only(
+                //                                   right: 3.0),
+                //                               child: IconButton(
+                //                                 onPressed: () {
+                //                                   Get.back();
+                //                                   controller.changeTabIndex(3);
+                //                                 },
+                //                                 icon: const Icon(
+                //                                   Icons.message_outlined,
+                //                                   color: kPrimaryColor,
+                //                                   size: 22,
+                //                                 ),
+                //                               ))
+                //                         ],
+                //                       ),
+                //                     ),
+                //                   ),
+                //                 ),
+                //               );
+                //             },
+                //           )
+                //         : Center(
+                //             child: SizedBox(
+                //               width: Get.width - 80,
+                //               child: const Text(
+                //                 "No Attendees",
+                //                 textAlign: TextAlign.center,
+                //                 style: TextStyle(
+                //                     color: kPrimaryColor,
+                //                     fontSize: 15,
+                //                     fontFamily: kCircularStdMedium),
+                //               ),
+                //             ),
+                //           ),
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 15.0, vertical: 10),

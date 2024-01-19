@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../ui/about/about.dart';
 import '../ui/auth/sign_in.dart';
 import '../ui/details/agenda_details.dart';
 import '../ui/details/conference_details.dart';
@@ -53,6 +54,10 @@ class AppPages {
     GetPage(
       name: _Paths.galleryScreen,
       page: () => const GalleryScreen(),
+    ),
+    GetPage(
+      name: _Paths.aboutPage,
+      page: () => const AboutPage(),
     ),
   ];
 }

@@ -1,13 +1,11 @@
-import 'dart:developer';
-
-import 'package:confrance_expoders/app/ui/widgets/image_viewer.dart';
-import 'package:confrance_expoders/app/ui/widgets/pdf_view.dart';
-import 'package:confrance_expoders/config/constant/font_constant.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:confrance_expoders/app/ui/widgets/pdf_view.dart';
+import 'package:confrance_expoders/app/ui/widgets/image_viewer.dart';
 
-import '../../../config/constant/color_constant.dart';
+import '../../../config/constant/font_constant.dart';
 import '../../controller/attachments_conroller.dart';
+import '../../../config/constant/color_constant.dart';
 
 class GalleryScreen extends StatefulWidget {
   const GalleryScreen({super.key});
@@ -136,22 +134,18 @@ class _GalleryScreenState extends State<GalleryScreen> {
                                                 if (loadingProgress == null) {
                                                   return child;
                                                 }
-                                                return SizedBox(
-                                                  width: 35,
-                                                  height: 35,
-                                                  child: Center(
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                      color: kPrimaryColor,
-                                                      value: loadingProgress
-                                                                  .expectedTotalBytes !=
-                                                              null
-                                                          ? loadingProgress
-                                                                  .cumulativeBytesLoaded /
-                                                              loadingProgress
-                                                                  .expectedTotalBytes!
-                                                          : null,
-                                                    ),
+                                                return Center(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    color: kPrimaryColor,
+                                                    value: loadingProgress
+                                                                .expectedTotalBytes !=
+                                                            null
+                                                        ? loadingProgress
+                                                                .cumulativeBytesLoaded /
+                                                            loadingProgress
+                                                                .expectedTotalBytes!
+                                                        : null,
                                                   ),
                                                 );
                                               },
