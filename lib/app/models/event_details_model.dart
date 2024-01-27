@@ -37,6 +37,7 @@ class GetEventByIdDataModel {
   String? venue;
   String? attendees;
   List<LstAttendees>? lstAttendees;
+  List<LstSpeakers>? lstSpeakers;
 
   GetEventByIdDataModel(
       {this.id,
@@ -47,7 +48,8 @@ class GetEventByIdDataModel {
       this.roomName,
       this.venue,
       this.attendees,
-      this.lstAttendees});
+      this.lstAttendees,
+      this.lstSpeakers});
 
   GetEventByIdDataModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -64,6 +66,12 @@ class GetEventByIdDataModel {
         lstAttendees!.add(LstAttendees.fromJson(v));
       });
     }
+    if (json['lstSpeakers'] != null) {
+      lstSpeakers = <LstSpeakers>[];
+      json['lstSpeakers'].forEach((v) {
+        lstSpeakers!.add(LstSpeakers.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -78,6 +86,9 @@ class GetEventByIdDataModel {
     data['attendees'] = attendees;
     if (lstAttendees != null) {
       data['lstAttendees'] = lstAttendees!.map((v) => v.toJson()).toList();
+    }
+    if (lstSpeakers != null) {
+      data['lstSpeakers'] = lstSpeakers!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -108,6 +119,32 @@ class LstAttendees {
     data['attendeeName'] = attendeeName;
     data['attendeeEmail'] = attendeeEmail;
     data['attendeePhoto'] = attendeePhoto;
+    return data;
+  }
+}
+
+class LstSpeakers {
+  int? speakerId;
+  String? speakerName;
+  String? speakerEmail;
+
+  LstSpeakers({
+    this.speakerId,
+    this.speakerName,
+    this.speakerEmail,
+  });
+
+  LstSpeakers.fromJson(Map<String, dynamic> json) {
+    speakerId = json['speakerId'];
+    speakerName = json['speakerName'];
+    speakerEmail = json['speakerEmail'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['speakerId'] = speakerId;
+    data['speakerName'] = speakerName;
+    data['speakerEmail'] = speakerEmail;
     return data;
   }
 }

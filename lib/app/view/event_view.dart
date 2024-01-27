@@ -15,9 +15,11 @@ import '../controller/tab_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
 import '../services/notification_service.dart';
+import '../ui/details/event_details.dart';
 
 class EventViewPage extends StatefulWidget {
-  const EventViewPage({super.key});
+  final String conferanceName;
+  const EventViewPage({super.key, required this.conferanceName});
 
   @override
   State<EventViewPage> createState() => _EventViewPageState();
@@ -81,7 +83,10 @@ class _EventViewPageState extends State<EventViewPage> {
                   itemBuilder: (context, index) {
                     var discoverData =
                         getAllEventsController.eventList[0].data!;
-
+                    Color textColor =
+                        index % 2 == 0 ? kBackGroundColor : kCardColor;
+                    Color timeBackgroudColor =
+                        index % 2 == 0 ? kCardColor : kBackGroundColor;
                     if (discoverData.isNotEmpty) {
                       var data = discoverData[index];
                       String dateStartString = data.startDate.toString();
@@ -104,6 +109,12 @@ class _EventViewPageState extends State<EventViewPage> {
                               getDetailsEventController
                                   .eventIdString(data.eventId.toString());
                               Get.toNamed(Routes.eventDetailsPage);
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => EventDetailsPage(
+                                      conferanceName: widget.conferanceName),
+                                ),
+                              );
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(
@@ -115,7 +126,7 @@ class _EventViewPageState extends State<EventViewPage> {
                                   width: Get.width,
                                   padding: const EdgeInsets.only(right: 10),
                                   decoration: BoxDecoration(
-                                      color: kCardColor,
+                                      color: timeBackgroudColor,
                                       borderRadius: BorderRadius.circular(15)),
                                   child: Row(
                                     mainAxisAlignment:
@@ -129,13 +140,15 @@ class _EventViewPageState extends State<EventViewPage> {
                                         children: [
                                           Container(
                                             height: 102,
-                                            decoration: const BoxDecoration(
-                                                color: kBackGroundColor,
-                                                borderRadius: BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(14),
-                                                    bottomLeft:
-                                                        Radius.circular(15))),
+                                            decoration: BoxDecoration(
+                                                color: textColor,
+                                                borderRadius:
+                                                    const BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(14),
+                                                        bottomLeft:
+                                                            Radius.circular(
+                                                                15))),
                                             padding: const EdgeInsets.only(
                                                 left: 10, right: 10, top: 15.7),
                                             child: Column(
@@ -169,7 +182,7 @@ class _EventViewPageState extends State<EventViewPage> {
                                             children: [
                                               const SizedBox(height: 15.7),
                                               SizedBox(
-                                                width: 160,
+                                                width: 159,
                                                 child: Text(
                                                   data.eventName.toString(),
                                                   maxLines: 2,
@@ -193,7 +206,7 @@ class _EventViewPageState extends State<EventViewPage> {
                                                   const SizedBox(width: 2),
                                                   Text(
                                                     data.venue == ""
-                                                        ? "Coral Lounge"
+                                                        ? "N/A"
                                                         : data.venue.toString(),
                                                     style: const TextStyle(
                                                         color: kPrimaryColor,

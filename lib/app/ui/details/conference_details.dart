@@ -84,9 +84,32 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
                         stops: [0, 0, 0, 1],
                       ),
                     ),
-                    child: Image.asset(
-                      "assets/images/images.jpg",
+                    child: Image.network(
+                      data.photo.toString(),
                       fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => Image.asset(
+                        "assets/images/conference_default.jpg",
+                        fit: BoxFit.cover,
+                      ),
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        }
+                        return SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: kPrimaryColor,
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                   Positioned(
@@ -97,6 +120,9 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
                         onPressed: () {
                           Navigator.of(context).pop();
                           getDetailsConferanceController.conferanceId("");
+                          var date = DateTime.now();
+                          getAllEventsController
+                              .selectedDateString(date.toString());
                         },
                         icon: const Icon(
                           Icons.arrow_back_ios,
@@ -263,7 +289,8 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
                                       getAllEventsController.fetchAllEvents();
                                     },
                                   ),
-                                  const EventViewPage()
+                                  EventViewPage(
+                                      conferanceName: data.name.toString())
                                 ],
                               )
                             : data.sponsors!.isNotEmpty
@@ -285,7 +312,7 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
                                                 errorBuilder: (context, error,
                                                         stackTrace) =>
                                                     Image.asset(
-                                                  "assets/images/images.jpg",
+                                                  "assets/images/conference_default.jpg",
                                                   fit: BoxFit.fill,
                                                 ),
                                                 width: 40,

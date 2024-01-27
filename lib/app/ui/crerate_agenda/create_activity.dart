@@ -459,9 +459,11 @@ class _CreateActivityState extends State<CreateActivity> {
                               color: kWhiteColor,
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
-                                  color: endDateError == true
-                                      ? kErrorColor
-                                      : kWhiteColor),
+                                  color:
+                                      // endDateError == true
+                                      //     ? kErrorColor
+                                      //     :
+                                      kWhiteColor),
                             ),
                             child: InkWell(
                               onTap: () {
@@ -495,7 +497,7 @@ class _CreateActivityState extends State<CreateActivity> {
                                       selectEnddate = formattedDate;
                                       pickedEndDate = formattedDate;
                                       newEndTime = formattedDate;
-                                      endDateError = false;
+                                      // endDateError = false;
                                     });
                                   },
                                   currentTime: DateTime.now(),
@@ -525,19 +527,19 @@ class _CreateActivityState extends State<CreateActivity> {
                               ),
                             ),
                           ),
-                          endDateError == true
-                              ? const Padding(
-                                  padding: EdgeInsets.only(left: 10, top: 6),
-                                  child: Text(
-                                    "Date is required",
-                                    style: TextStyle(
-                                      color: kErrorColor,
-                                      fontSize: 11,
-                                      fontFamily: kCircularStdBook,
-                                    ),
-                                  ),
-                                )
-                              : Container(),
+                          // endDateError == true
+                          //     ? const Padding(
+                          //         padding: EdgeInsets.only(left: 10, top: 6),
+                          //         child: Text(
+                          //           "Date is required",
+                          //           style: TextStyle(
+                          //             color: kErrorColor,
+                          //             fontSize: 11,
+                          //             fontFamily: kCircularStdBook,
+                          //           ),
+                          //         ),
+                          //       )
+                          //     : Container(),
                         ],
                       ),
                       const SizedBox(
@@ -555,9 +557,11 @@ class _CreateActivityState extends State<CreateActivity> {
                                 color: kWhiteColor,
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
-                                    color: endTimeError == true
-                                        ? kErrorColor
-                                        : kWhiteColor)),
+                                    color:
+                                        // endTimeError == true
+                                        //     ? kErrorColor
+                                        //     :
+                                        kWhiteColor)),
                             child: InkWell(
                               onTap: () {
                                 FocusScope.of(context)
@@ -590,7 +594,7 @@ class _CreateActivityState extends State<CreateActivity> {
                                       selectEndTime = convertedTime;
                                       newStartTime = convertedTime;
                                       pickedEndTime = formattedTime;
-                                      endTimeError = false;
+                                      // endTimeError = false;
                                     });
                                   },
                                   currentTime: DateTime.now(),
@@ -620,27 +624,30 @@ class _CreateActivityState extends State<CreateActivity> {
                               ),
                             ),
                           ),
-                          endTimeError == true
-                              ? const Padding(
-                                  padding: EdgeInsets.only(left: 10, top: 6),
-                                  child: Text(
-                                    "Time is required",
-                                    style: TextStyle(
-                                      color: kErrorColor,
-                                      fontSize: 11,
-                                      fontFamily: kCircularStdBook,
-                                    ),
-                                  ),
-                                )
-                              : Container(),
+                          // endTimeError == true
+                          //     ? const Padding(
+                          //         padding: EdgeInsets.only(left: 10, top: 6),
+                          //         child: Text(
+                          //           "Time is required",
+                          //           style: TextStyle(
+                          //             color: kErrorColor,
+                          //             fontSize: 11,
+                          //             fontFamily: kCircularStdBook,
+                          //           ),
+                          //         ),
+                          //       )
+                          //     : Container(),
                         ],
                       ),
                     ],
                   ),
                 ),
                 buildTextWidget("Location"),
-                buildTextField("Enter", locationcontroller, false,
-                    isFormSubmitted, isTouched),
+                buildTextField(
+                  "Enter",
+                  locationcontroller,
+                  false,
+                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -663,9 +670,7 @@ class _CreateActivityState extends State<CreateActivity> {
                             () async {
                           if (_formKey.currentState!.validate() &&
                               pickedStartTime != "" &&
-                              pickedEndTime != "" &&
-                              pickedStartDate != "" &&
-                              pickedEndDate != "") {
+                              pickedStartDate != "") {
                             FocusScope.of(context).requestFocus(FocusNode());
                             addMyAgendaBottomSheet(context);
                           } else {
@@ -678,15 +683,7 @@ class _CreateActivityState extends State<CreateActivity> {
                                 startTimeError = false;
                               });
                             }
-                            if (pickedEndTime == "") {
-                              setState(() {
-                                endTimeError = true;
-                              });
-                            } else {
-                              setState(() {
-                                endTimeError = false;
-                              });
-                            }
+
                             if (pickedStartDate == "") {
                               setState(() {
                                 startDateError = true;
@@ -694,15 +691,6 @@ class _CreateActivityState extends State<CreateActivity> {
                             } else {
                               setState(() {
                                 startDateError = false;
-                              });
-                            }
-                            if (pickedEndDate == "") {
-                              setState(() {
-                                endDateError = true;
-                              });
-                            } else {
-                              setState(() {
-                                endDateError = false;
                               });
                             }
                             if (titleController.text == "") {
@@ -903,27 +891,30 @@ class _CreateActivityState extends State<CreateActivity> {
     );
   }
 
-  Widget buildTextField(String hintText, TextEditingController controller,
-      bool value, bool isFormSubmitted, bool isTouched) {
+  Widget buildTextField(
+    String hintText,
+    TextEditingController controller,
+    bool value,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextFormField(
-            validator: (value) {
-              if (isTouched || isFormSubmitted) {
-                if (value == null || value.isEmpty) {
-                  return 'Location is required';
-                }
-              }
-              return null;
-            },
+            // validator: (value) {
+            //   if (isTouched || isFormSubmitted) {
+            //     if (value == null || value.isEmpty) {
+            //       return 'Location is required';
+            //     }
+            //   }
+            //   return null;
+            // },
             keyboardType: value == true ? TextInputType.number : null,
             controller: controller,
-            onChanged: (value) => {
-              isTouched = true,
-            },
+            // onChanged: (value) => {
+            //   isTouched = true,
+            // },
             decoration: InputDecoration(
               hintText: hintText,
               counterText: "",

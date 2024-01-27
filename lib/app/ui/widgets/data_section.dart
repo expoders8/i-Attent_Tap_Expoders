@@ -48,8 +48,17 @@ class _DateSectionWidgetState extends State<DateSectionWidget> {
         focuseToday = true;
       });
     }
+  }
 
-    // print("Selected Day: $selectedDay");
+  @override
+  void initState() {
+    var eventSelectedDate = getAllEventsController.selectedDate.value == ""
+        ? DateTime.now()
+        : getAllEventsController.selectedDate.value;
+    setState(() {
+      _selectedDay = DateTime.parse(eventSelectedDate.toString());
+    });
+    super.initState();
   }
 
   @override

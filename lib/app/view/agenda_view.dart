@@ -147,7 +147,7 @@ class _AgendaViewPageState extends State<AgendaViewPage> {
                                             children: [
                                               const SizedBox(height: 15.7),
                                               SizedBox(
-                                                width: 174,
+                                                width: 173,
                                                 child: Text(
                                                   data.title.toString(),
                                                   maxLines: 2,

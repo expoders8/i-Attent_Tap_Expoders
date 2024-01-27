@@ -11,7 +11,6 @@ import '../../controller/agenda_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 import '../../services/agenda_service.dart';
-import '../ragister_Attendees_Detail/Register_Attendees_details.dart';
 
 class AgendaDetailsPage extends StatefulWidget {
   const AgendaDetailsPage({super.key});

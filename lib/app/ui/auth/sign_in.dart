@@ -31,11 +31,18 @@ class _SignInScreenState extends State<SignInScreen> {
   void initState() {
     fCMNotificationServices.requestNotificationPermission();
     fCMNotificationServices.firebaseInit();
-    fCMNotificationServices
-        .getDeviceToken()
-        .then((value) => {setState(() => fcmToken = value)});
+
+    fCMNotificationServices.initLocalNotification();
+    fCMNotificationServices.getDeviceToken().then(
+          (value) => {setState(() => fcmToken = value), print(fcmToken)},
+        );
     super.initState();
   }
+
+  // Future<void> _firebaseMessagingBackgroundHandler(
+  //     RemoteMessage message) async {
+  //   fCMNotificationServices.initLocalNotification(context, message);
+  // }
 
   @override
   Widget build(BuildContext context) {
