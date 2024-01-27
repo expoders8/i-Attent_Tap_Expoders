@@ -36,14 +36,8 @@ class AuthService {
       if (response.statusCode == 200) {
         var decodedUser = jsonDecode(response.body);
         var userObj = decodedUser["data"];
-
-        // bool userExists = await doesUserExist(userObj['id'].toString());
-        // if (userExists) {
-        //   await FirebaseAuthServices().signIn(email, password);
-        // } else {
         await FirebaseAuthServices()
             .signUp(organizationId, email, password, userObj['id'].toString());
-        // }
         if (userObj != null && decodedUser["success"]) {
           getStorage.write('user', jsonEncode(decodedUser["data"]));
           getStorage.write('authToken', decodedUser["data"]['authToken']);

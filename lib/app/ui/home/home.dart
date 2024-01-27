@@ -136,8 +136,7 @@ class _HomePageState extends State<HomePage> {
                     } else {
                       return Column(
                         children: [
-                          SizedBox(
-                            height: Get.height - 160,
+                          Expanded(
                             child: ListView.builder(
                               scrollDirection: Axis.vertical,
                               itemCount:
