@@ -2,14 +2,14 @@ import 'package:get/get.dart';
 
 import '../ui/about/about.dart';
 import '../ui/auth/sign_in.dart';
-import '../ui/details/agenda_details.dart';
-import '../ui/details/conference_details.dart';
-import '../ui/details/event_details.dart';
 import '../ui/home/tab_page.dart';
-import '../ui/crerate_agenda/create_activity.dart';
-import '../ui/notification/notification.dart';
 import '../ui/profile/qr_code.dart';
+import '../ui/details/event_details.dart';
+import '../ui/details/agenda_details.dart';
 import '../ui/widgets/gallery_custom.dart';
+import '../ui/notification/notification.dart';
+import '../ui/details/conference_details.dart';
+import '../ui/crerate_agenda/create_activity.dart';
 
 part 'app_routes.dart';
 

@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-import '../../config/provider/snackbar_provider.dart';
 import '../models/conference_model.dart';
 import '../../config/constant/constant.dart';
 import '../services/conference_service.dart';
 import '../models/conference_details_model.dart';
+import '../../config/provider/snackbar_provider.dart';
 
 class GetAllConferanceController extends GetxController {
   var isLoading = true.obs;

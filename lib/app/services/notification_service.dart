@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../models/notification_model.dart';
 import '../../config/constant/constant.dart';
 import '../../config/provider/loader_provider.dart';
 import '../../config/provider/snackbar_provider.dart';
-import '../models/notification_model.dart';
 
 class NotificationService {
   addReminder(int minutes, int agendaId, String userId) async {

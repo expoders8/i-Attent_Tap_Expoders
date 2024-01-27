@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:confrance_expoders/app/services/firebase_auth_service.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:confrance_expoders/app/services/firebase_auth_service.dart';
 
 import '../ui/home/tab_page.dart';
 import '../../config/constant/constant.dart';

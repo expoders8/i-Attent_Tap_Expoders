@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../models/attechment_model.dart';
 import '../../config/constant/constant.dart';
 import '../../config/provider/loader_provider.dart';
 import '../../config/provider/snackbar_provider.dart';
-import '../models/attechment_model.dart';
 
 class AttechmentsService {
   Future<GetAllAttechmentModel> getAllAttechment(eventId) async {
