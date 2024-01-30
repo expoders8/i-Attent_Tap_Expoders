@@ -60,8 +60,7 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
               DateFormat('MMM d, yyyy hh:mm a').format(utcStartTime);
           String endTime = DateFormat('MMM d, yyyy hh:mm a').format(utcEndTime);
 
-          String venue =
-              data.venue == "" ? "Lavaska Center" : data.venue.toString();
+          String venue = data.venue == "" ? "N/A" : data.venue.toString();
           return Column(
             children: [
               Stack(
