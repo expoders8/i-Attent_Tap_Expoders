@@ -111,11 +111,11 @@ class _DateSectionWidgetState extends State<DateSectionWidget> {
                           focuseToday = false;
                           String today =
                               DateFormat('dd/MM/yyyy').format(todayDate);
-                          widget.callbackDate(today);
+                          widget.callbackDate(_selectedDay.toString());
                           getAllAgendaController
                               .selectedDateString(today.toString());
                           getAllEventsController
-                              .selectedDateString(today.toString());
+                              .selectedDateString(_selectedDay.toString());
                           getAllEventsController.fetchAllEvents();
                           getAllAgendaController.fetchAllAgenda();
                         });
@@ -139,12 +139,13 @@ class _DateSectionWidgetState extends State<DateSectionWidget> {
           defaultTextStyle: const TextStyle(color: kTitleColor),
           defaultDecoration: BoxDecoration(
             color: kWhiteColor,
-            borderRadius: BorderRadius.circular(Platform.isIOS ? 20 : 30),
+            shape: BoxShape.circle,
+            // borderRadius: BorderRadius.circular(Platform.isIOS ? 20 : 30),
           ),
           selectedDecoration: BoxDecoration(
             color: kSelectedIconColor,
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(Platform.isIOS ? 20 : 30),
+            shape: BoxShape.circle,
+            // borderRadius: BorderRadius.circular(Platform.isIOS ? 20 : 30),
           ),
           holidayTextStyle: const TextStyle(color: kTextSecondaryColor),
           selectedTextStyle: const TextStyle(color: kWhiteColor),

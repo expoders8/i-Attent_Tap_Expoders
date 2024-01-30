@@ -108,7 +108,7 @@ class _EventViewPageState extends State<EventViewPage> {
                             onTap: () {
                               getDetailsEventController
                                   .eventIdString(data.eventId.toString());
-                              Get.toNamed(Routes.eventDetailsPage);
+                              // Get.toNamed(Routes.eventDetailsPage);
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => EventDetailsPage(
