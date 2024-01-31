@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import '../ui/about/about.dart';
 import '../ui/auth/sign_in.dart';
 import '../ui/home/tab_page.dart';
-import '../ui/profile/qr_code.dart';
 import '../ui/details/event_details.dart';
 import '../ui/details/agenda_details.dart';
 import '../ui/widgets/gallery_custom.dart';
@@ -26,10 +25,6 @@ class AppPages {
     GetPage(
       name: _Paths.signInScreen,
       page: () => const SignInScreen(),
-    ),
-    GetPage(
-      name: _Paths.qrCodePage,
-      page: () => const QrCodePage(),
     ),
     GetPage(
       name: _Paths.createActivity,

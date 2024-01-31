@@ -31,11 +31,11 @@ class _MessageAppBarState extends State<MessageAppBar> {
             children: <Widget>[
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: Platform.isAndroid ? 110 : 130,
+                height: Platform.isAndroid ? 110 : 110,
                 color: kAppBarColor,
                 // backgroundColor: kAppBarColor,
                 child: Padding(
-                  padding: EdgeInsets.only(top: Platform.isAndroid ? 5.0 : 25),
+                  padding: EdgeInsets.only(top: Platform.isAndroid ? 5.0 : 5.0),
                   child: const Center(
                       child: Text(
                     "Messages",
@@ -50,7 +50,7 @@ class _MessageAppBarState extends State<MessageAppBar> {
             ],
           ),
           Positioned(
-            top: Platform.isAndroid ? 85 : 100,
+            top: Platform.isAndroid ? 85 : 85,
             left: 15,
             right: 15,
             child: Container(

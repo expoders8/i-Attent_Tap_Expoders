@@ -5,7 +5,6 @@ abstract class Routes {
 
   static const tabPage = _Paths.tabPage;
   static const aboutPage = _Paths.aboutPage;
-  static const qrCodePage = _Paths.qrCodePage;
   static const signInScreen = _Paths.signInScreen;
   static const galleryScreen = _Paths.galleryScreen;
   static const createActivity = _Paths.createActivity;
@@ -21,7 +20,6 @@ abstract class Routes {
 abstract class _Paths {
   static const tabPage = '/tabPage';
   static const aboutPage = '/aboutPage';
-  static const qrCodePage = '/qrCodePage';
   static const signInScreen = '/signInScreen';
   static const galleryScreen = '/galleryScreen';
   static const createActivity = '/createActivity';

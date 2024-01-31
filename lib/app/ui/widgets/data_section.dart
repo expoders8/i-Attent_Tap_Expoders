@@ -137,12 +137,12 @@ class _DateSectionWidgetState extends State<DateSectionWidget> {
         calendarStyle: CalendarStyle(
           outsideDaysVisible: false,
           defaultTextStyle: const TextStyle(color: kTitleColor),
-          defaultDecoration: BoxDecoration(
+          defaultDecoration: const BoxDecoration(
             color: kWhiteColor,
             shape: BoxShape.circle,
             // borderRadius: BorderRadius.circular(Platform.isIOS ? 20 : 30),
           ),
-          selectedDecoration: BoxDecoration(
+          selectedDecoration: const BoxDecoration(
             color: kSelectedIconColor,
             shape: BoxShape.circle,
             // borderRadius: BorderRadius.circular(Platform.isIOS ? 20 : 30),
@@ -152,7 +152,8 @@ class _DateSectionWidgetState extends State<DateSectionWidget> {
           weekendTextStyle: const TextStyle(color: kTextSecondaryColor),
           todayDecoration: BoxDecoration(
             color: kIconColor,
-            borderRadius: BorderRadius.circular(Platform.isIOS ? 20 : 30),
+            // borderRadius: BorderRadius.circular(Platform.isIOS ? 20 : 30),
+            shape: BoxShape.circle,
           ),
         ),
         onFormatChanged: (formet) {

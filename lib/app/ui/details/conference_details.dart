@@ -299,52 +299,64 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
                                     itemCount: data.sponsors!.length,
                                     itemBuilder: (context, index) {
                                       var sponsorsdata = data.sponsors![index];
-                                      return Row(
-                                        children: [
-                                          SizedBox(
-                                            height: 50,
-                                            width: 50,
-                                            child: ClipOval(
-                                              child: Image.network(
-                                                sponsorsdata.sponsorLogo
-                                                    .toString(),
-                                                errorBuilder: (context, error,
-                                                        stackTrace) =>
-                                                    Image.asset(
-                                                  "assets/images/conference_default.jpg",
-                                                  fit: BoxFit.fill,
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 6.0),
+                                        child: Row(
+                                          children: [
+                                            SizedBox(
+                                              height: 50,
+                                              width: 50,
+                                              child: ClipOval(
+                                                child: Image.network(
+                                                  sponsorsdata.sponsorLogo
+                                                      .toString(),
+                                                  errorBuilder: (context, error,
+                                                          stackTrace) =>
+                                                      Image.asset(
+                                                    "assets/images/conference_default.jpg",
+                                                    fit: BoxFit.fill,
+                                                  ),
+                                                  width: 40,
+                                                  height: 40,
+                                                  fit: BoxFit.cover,
                                                 ),
-                                                width: 40,
-                                                height: 40,
-                                                fit: BoxFit.cover,
                                               ),
                                             ),
-                                          ),
-                                          const SizedBox(width: 10),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                sponsorsdata.sponsorName
-                                                    .toString(),
-                                                style: const TextStyle(
-                                                    fontSize: 17,
-                                                    fontFamily:
-                                                        kCircularStdNormal),
-                                              ),
-                                              Text(
-                                                sponsorsdata.sponsorDescription
-                                                    .toString(),
-                                                style: const TextStyle(
-                                                    color: kTextSecondaryColor,
-                                                    fontSize: 14.5,
-                                                    fontFamily:
-                                                        kCircularStdNormal),
-                                              ),
-                                            ],
-                                          )
-                                        ],
+                                            const SizedBox(width: 10),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  sponsorsdata.sponsorName
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                      fontSize: 17,
+                                                      fontFamily:
+                                                          kCircularStdNormal),
+                                                ),
+                                                SizedBox(
+                                                  width: Get.width - 100,
+                                                  child: Text(
+                                                    sponsorsdata
+                                                        .sponsorDescription
+                                                        .toString(),
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                        color:
+                                                            kTextSecondaryColor,
+                                                        fontSize: 14.5,
+                                                        fontFamily:
+                                                            kCircularStdNormal),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
                                       );
                                     },
                                   )

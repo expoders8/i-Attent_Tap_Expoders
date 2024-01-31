@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../auth/sing_in_footer.dart';
+import '../code_configuration/code_configuration.dart';
 import '../widgets/custom_textfield.dart';
 import '../../controller/sign_in_screen.x.dart';
 import '../../../config/constant/color_constant.dart';
@@ -101,56 +102,65 @@ class _SignInScreenState extends State<SignInScreen> {
                               const SizedBox(
                                 height: 40.0,
                               ),
-                              CustomTextFormField(
-                                hintText: 'Enter Your Organization ID',
-                                maxLines: 1,
-                                ctrl: organizationController,
-                                name: "organizationid",
-                                prefixIcon: const Icon(
-                                  Icons.group,
-                                  color: kPrimaryColor,
-                                  size: 22,
+                              SizedBox(
+                                width: size.width > 500 ? 600 : size.width,
+                                child: CustomTextFormField(
+                                  hintText: 'Enter Your Organization ID',
+                                  maxLines: 1,
+                                  ctrl: organizationController,
+                                  name: "organizationid",
+                                  prefixIcon: const Icon(
+                                    Icons.group,
+                                    color: kPrimaryColor,
+                                    size: 22,
+                                  ),
+                                  formSubmitted: isFormSubmitted,
+                                  validationMsg: 'Organization ID is Required',
                                 ),
-                                formSubmitted: isFormSubmitted,
-                                validationMsg: 'Organization ID is Required',
                               ),
                               const SizedBox(
                                 height: 20.0,
                               ),
-                              CustomTextFormField(
-                                hintText: 'Enter Your Username',
-                                maxLines: 1,
-                                ctrl: userNameController,
-                                name: "username",
-                                prefixIcon: const Icon(
-                                  Icons.person,
-                                  color: kPrimaryColor,
-                                  size: 22,
+                              SizedBox(
+                                width: size.width > 500 ? 600 : size.width,
+                                child: CustomTextFormField(
+                                  hintText: 'Enter Your Username',
+                                  maxLines: 1,
+                                  ctrl: userNameController,
+                                  name: "username",
+                                  prefixIcon: const Icon(
+                                    Icons.person,
+                                    color: kPrimaryColor,
+                                    size: 22,
+                                  ),
+                                  formSubmitted: isFormSubmitted,
+                                  validationMsg: 'Username is Required',
                                 ),
-                                formSubmitted: isFormSubmitted,
-                                validationMsg: 'Username is Required',
                               ),
                               const SizedBox(
                                 height: 20.0,
                               ),
-                              CustomTextFormField(
-                                hintText: 'Enter Your Password',
-                                maxLines: 1,
-                                ctrl: passwordController,
-                                name: "password",
-                                prefixIcon: const Icon(
-                                  Icons.key,
-                                  color: kPrimaryColor,
-                                  size: 22,
+                              SizedBox(
+                                width: size.width > 500 ? 600 : size.width,
+                                child: CustomTextFormField(
+                                  hintText: 'Enter Your Password',
+                                  maxLines: 1,
+                                  ctrl: passwordController,
+                                  name: "password",
+                                  prefixIcon: const Icon(
+                                    Icons.key,
+                                    color: kPrimaryColor,
+                                    size: 22,
+                                  ),
+                                  formSubmitted: isFormSubmitted,
+                                  validationMsg: 'Password is Required',
                                 ),
-                                formSubmitted: isFormSubmitted,
-                                validationMsg: 'Password is Required',
                               ),
                               const SizedBox(
                                 height: 25.0,
                               ),
                               SizedBox(
-                                width: size.width - 55,
+                                width: size.width > 500 ? 600 : size.width - 55,
                                 height: 50,
                                 child: CupertinoButton(
                                   borderRadius: BorderRadius.circular(25),
@@ -171,7 +181,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                onPressed: () => {},
+                                onPressed: () =>
+                                    Get.dialog(WebUrlConfigDialog()),
                                 child: const Text(
                                   'Configure App',
                                   style: TextStyle(color: kPrimaryColor),

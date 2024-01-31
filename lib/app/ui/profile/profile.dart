@@ -47,6 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kAppBarColor,
@@ -187,7 +188,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       QrImageView(
                         data: userBadgeID.toString(),
                         version: QrVersions.auto,
-                        size: 240.0,
+                        size: size.width > 500 ? 280 : 240.0,
                       ),
                       Text(
                         userBadgeID.toString(),

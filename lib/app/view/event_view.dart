@@ -1,21 +1,19 @@
 import 'dart:convert';
-
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
 
-import '../../config/constant/constant.dart';
-import '../../config/provider/loader_provider.dart';
-import '../../config/provider/snackbar_provider.dart';
-import '../controller/agenda_controller.dart';
-import '../controller/event_contoller.dart';
-import '../routes/app_pages.dart';
 import '../services/agenda_service.dart';
+import '../ui/details/event_details.dart';
 import '../controller/tab_controller.dart';
+import '../controller/event_contoller.dart';
+import '../../config/constant/constant.dart';
+import '../controller/agenda_controller.dart';
+import '../services/notification_service.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
-import '../services/notification_service.dart';
-import '../ui/details/event_details.dart';
+import '../../config/provider/loader_provider.dart';
+import '../../config/provider/snackbar_provider.dart';
 
 class EventViewPage extends StatefulWidget {
   final String conferanceName;
@@ -139,7 +137,7 @@ class _EventViewPageState extends State<EventViewPage> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Container(
-                                            height: 102,
+                                            height: 110,
                                             decoration: BoxDecoration(
                                                 color: textColor,
                                                 borderRadius:
@@ -195,7 +193,7 @@ class _EventViewPageState extends State<EventViewPage> {
                                                       fontSize: 15),
                                                 ),
                                               ),
-                                              const SizedBox(height: 22),
+                                              const SizedBox(height: 18),
                                               Row(
                                                 children: [
                                                   const Icon(
@@ -210,12 +208,37 @@ class _EventViewPageState extends State<EventViewPage> {
                                                         : data.venue.toString(),
                                                     style: const TextStyle(
                                                         color: kPrimaryColor,
-                                                        fontSize: 13,
+                                                        fontSize: 12,
                                                         fontFamily:
                                                             kCircularStdNormal),
                                                   ),
                                                 ],
                                               ),
+                                              const SizedBox(height: 8),
+                                              Row(
+                                                children: [
+                                                  const Icon(
+                                                    Icons.meeting_room_outlined,
+                                                    color: kPrimaryColor,
+                                                    size: 18,
+                                                  ),
+                                                  const SizedBox(width: 2),
+                                                  Text(
+                                                    data.roomName == "" ||
+                                                            data.roomName ==
+                                                                null
+                                                        ? "N/A"
+                                                        : data.roomName
+                                                            .toString(),
+                                                    style: const TextStyle(
+                                                        color: kPrimaryColor,
+                                                        fontSize: 12,
+                                                        fontFamily:
+                                                            kCircularStdNormal),
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 10),
                                             ],
                                           ),
                                         ],

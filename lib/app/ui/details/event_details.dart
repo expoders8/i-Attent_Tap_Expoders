@@ -95,8 +95,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
           String startTime =
               DateFormat('MMM d, yyyy hh:mm a').format(utcStartTime);
           String endTime = DateFormat('MMM d, yyyy hh:mm a').format(utcEndTime);
-          String venue =
-              data.venue == "" ? "Lavaska Center" : data.venue.toString();
+          String venue = data.venue == "" ? "N/A" : data.venue.toString();
           String description =
               data.description == "" || data.description == null
                   ? "N/A"

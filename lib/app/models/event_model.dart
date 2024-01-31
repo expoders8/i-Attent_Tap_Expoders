@@ -37,6 +37,7 @@ class GetAllEventsDataModel {
   String? description;
   String? endDate;
   String? venue;
+  String? roomName;
   String? attendees;
   List<LstAttendees>? lstAttendees;
 
@@ -47,6 +48,7 @@ class GetAllEventsDataModel {
       this.startDate,
       this.endDate,
       this.venue,
+      this.roomName,
       this.attendees,
       this.lstAttendees});
 
@@ -57,6 +59,7 @@ class GetAllEventsDataModel {
     startDate = json['startDate'];
     endDate = json['endDate'];
     venue = json['venue'];
+    roomName = json['roomName'];
     attendees = json['attendees'];
     if (json['lstAttendees'] != null) {
       lstAttendees = <LstAttendees>[];
@@ -74,6 +77,7 @@ class GetAllEventsDataModel {
     data['startDate'] = startDate;
     data['endDate'] = endDate;
     data['venue'] = venue;
+    data['roomName'] = roomName;
     data['attendees'] = attendees;
     if (lstAttendees != null) {
       data['lstAttendees'] = lstAttendees!.map((v) => v.toJson()).toList();
