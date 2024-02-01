@@ -75,8 +75,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   Expanded(
                     flex: 6,
                     child: Container(
-                      padding:
-                          const EdgeInsets.fromLTRB(25.0, 50.0, 25.0, 20.0),
+                      padding: const EdgeInsets.fromLTRB(25.0, 50.0, 25.0, 0.0),
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(

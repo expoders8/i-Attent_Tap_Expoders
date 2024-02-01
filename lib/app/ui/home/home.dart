@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
+import '../../../config/constant/constant.dart';
 import '../../routes/app_pages.dart';
 import '../../controller/tab_controller.dart';
 import '../../controller/event_contoller.dart';
@@ -26,12 +29,27 @@ class _HomePageState extends State<HomePage> {
       Get.put(GetAllEventsController());
   final tabcontroller = Get.put(TabCountController());
   TextEditingController searchController = TextEditingController();
+  String alphBateName = "";
   @override
   void initState() {
     var date = DateTime.now();
     getAllAgendaController.selectedDateString(date.toString());
     getAllAgendaController.fetchAllAgenda();
+    getUser();
     super.initState();
+  }
+
+  Future getUser() async {
+    var data = getStorage.read('user');
+    var getUserData = jsonDecode(data);
+    if (getUserData != null) {
+      setState(() {
+        String firstNameLetter = getUserData['firstName'].substring(0, 1);
+        String lastNameLetter = getUserData['lastName'].substring(0, 1);
+        var alphBateLater = "$firstNameLetter$lastNameLetter";
+        alphBateName = alphBateLater;
+      });
+    }
   }
 
   @override
@@ -46,42 +64,24 @@ class _HomePageState extends State<HomePage> {
               title: const Text("Conferences",
                   style: TextStyle(color: kBackGroundColor)),
               centerTitle: true,
-              leading: Theme(
-                data: ThemeData(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                ),
-                child: Container(
-                  decoration:
-                      const BoxDecoration(shape: BoxShape.circle, boxShadow: [
-                    BoxShadow(
-                      color: Color.fromARGB(15, 0, 0, 0),
-                      blurRadius: 10.0,
-                    ),
-                  ]),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 3.0),
-                    child: IconButton(
-                      icon: ClipOval(
-                        child: Material(
-                            child: Image.asset(
-                          "assets/images/blank_profile.png",
-                          width: 33,
-                          height: 33,
-                          errorBuilder: (context, error, stackTrace) =>
-                              Image.asset(
-                            "assets/images/blank_profile.png",
-                            fit: BoxFit.fill,
-                          ),
-                          fit: BoxFit.cover,
-                        )),
-                      ),
-                      onPressed: () {
-                        tabcontroller.changeTabIndex(4);
-                      },
-                    ),
-                  ),
-                ),
+              leading: IconButton(
+                icon: Container(
+                    height: 35,
+                    width: 35,
+                    decoration: BoxDecoration(
+                        color: kBackGroundColor,
+                        borderRadius: BorderRadius.circular(30)),
+                    child: Center(
+                        child: Text(
+                      alphBateName.toString(),
+                      style: const TextStyle(
+                          color: kSelectedIconColor,
+                          fontSize: 15,
+                          letterSpacing: 1),
+                    ))),
+                onPressed: () {
+                  tabcontroller.changeTabIndex(4);
+                },
               ),
               actions: <Widget>[
                 Theme(

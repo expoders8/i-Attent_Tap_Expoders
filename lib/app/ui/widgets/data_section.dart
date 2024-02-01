@@ -134,22 +134,22 @@ class _DateSectionWidgetState extends State<DateSectionWidget> {
             ],
           ), // Custom right icon
         ),
-        calendarStyle: CalendarStyle(
+        calendarStyle: const CalendarStyle(
           outsideDaysVisible: false,
-          defaultTextStyle: const TextStyle(color: kTitleColor),
-          defaultDecoration: const BoxDecoration(
+          defaultTextStyle: TextStyle(color: kTitleColor),
+          defaultDecoration: BoxDecoration(
             color: kWhiteColor,
             shape: BoxShape.circle,
             // borderRadius: BorderRadius.circular(Platform.isIOS ? 20 : 30),
           ),
-          selectedDecoration: const BoxDecoration(
+          selectedDecoration: BoxDecoration(
             color: kSelectedIconColor,
             shape: BoxShape.circle,
             // borderRadius: BorderRadius.circular(Platform.isIOS ? 20 : 30),
           ),
-          holidayTextStyle: const TextStyle(color: kTextSecondaryColor),
-          selectedTextStyle: const TextStyle(color: kWhiteColor),
-          weekendTextStyle: const TextStyle(color: kTextSecondaryColor),
+          holidayTextStyle: TextStyle(color: kTextSecondaryColor),
+          selectedTextStyle: TextStyle(color: kWhiteColor),
+          weekendTextStyle: TextStyle(color: kTextSecondaryColor),
           todayDecoration: BoxDecoration(
             color: kIconColor,
             // borderRadius: BorderRadius.circular(Platform.isIOS ? 20 : 30),

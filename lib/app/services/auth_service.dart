@@ -35,26 +35,28 @@ class AuthService {
               headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200) {
         var decodedUser = jsonDecode(response.body);
-        var userObj = decodedUser["data"];
-        await FirebaseAuthServices()
-            .signUp(organizationId, email, password, userObj['id'].toString());
-        if (userObj != null && decodedUser["success"]) {
-          getStorage.write('user', jsonEncode(decodedUser["data"]));
-          getStorage.write('authToken', decodedUser["data"]['authToken']);
-          getStorage.write('onBoard', 1);
-          LoaderX.hide();
+        if (decodedUser['success']) {
+          var userObj = decodedUser["data"];
+          await FirebaseAuthServices().signUp(
+              organizationId, email, password, userObj['id'].toString());
+          if (userObj != null && decodedUser["success"]) {
+            getStorage.write('user', jsonEncode(decodedUser["data"]));
+            getStorage.write('authToken', decodedUser["data"]['authToken']);
+            getStorage.write('onBoard', 1);
+            LoaderX.hide();
 
-          Get.offAll(() => const TabPage());
+            Get.offAll(() => const TabPage());
+          }
+        } else {
+          LoaderX.hide();
+          SnackbarUtils.showErrorSnackbar(
+              "Failed to login", decodedUser['message']);
+          return Future.error("Server Error");
         }
-      } else {
-        LoaderX.hide();
-        SnackbarUtils.showErrorSnackbar("Server Error",
-            "Error while user login, Please try after some time.");
-        return Future.error("Server Error");
       }
     } catch (e) {
       LoaderX.hide();
-      SnackbarUtils.showErrorSnackbar("Failed to login", e.toString());
+      SnackbarUtils.showErrorSnackbar("Server Error", e.toString());
       throw e.toString();
     }
   }

@@ -25,6 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String userEmail = "";
   String userImage = "";
   String userBadgeID = "";
+  String alphBateName = "";
   @override
   void initState() {
     getUser();
@@ -41,6 +42,10 @@ class _ProfilePageState extends State<ProfilePage> {
         userEmail = getUserData['emailAddress'] ?? "";
         userImage = getUserData['profilePhoto'] ?? "";
         userBadgeID = getUserData['badgeID'] ?? "";
+        String firstNameLetter = getUserData['firstName'].substring(0, 1);
+        String lastNameLetter = getUserData['lastName'].substring(0, 1);
+        var alphBateLater = "$firstNameLetter$lastNameLetter";
+        alphBateName = alphBateLater;
       });
     }
   }
@@ -71,34 +76,29 @@ class _ProfilePageState extends State<ProfilePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
+              padding: const EdgeInsets.only(right: 12, left: 12, top: 16),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   DottedBorder(
                     strokeWidth: 0.75,
                     borderType: BorderType.Circle,
                     radius: const Radius.circular(30),
-                    padding: const EdgeInsets.all(3),
-                    child: SizedBox(
-                      height: 85,
-                      width: 85,
-                      child: ClipOval(
-                          child: Material(
-                        color: kTransparentColor,
-                        child: Image.asset(
-                          "assets/images/blank_profile.png",
-                          scale: 1,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) =>
-                              Image.asset(
-                            "assets/images/blank_profile.png",
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      )),
-                    ),
+                    padding: EdgeInsets.zero,
+                    child: Container(
+                        height: 65,
+                        width: 65,
+                        decoration: BoxDecoration(
+                            color: kAppBarColor,
+                            borderRadius: BorderRadius.circular(30)),
+                        child: Center(
+                            child: Text(
+                          alphBateName.toString(),
+                          style: const TextStyle(
+                              color: kWhiteColor,
+                              fontSize: 25,
+                              letterSpacing: 1),
+                        ))),
                   ),
                   const SizedBox(width: 10),
                   Column(
@@ -108,9 +108,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         padding: const EdgeInsets.only(left: 7),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 0),
                             SizedBox(
                               width: Get.width / 2,
                               child: Text(
@@ -123,7 +123,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     fontFamily: kCircularStdMedium),
                               ),
                             ),
-                            const SizedBox(height: 5),
+                            // const SizedBox(height: 5),
                             SizedBox(
                               width: Get.width / 2.10,
                               child: Text(
@@ -146,7 +146,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     borderRadius: BorderRadius.circular(8.0),
                                   ),
                                   padding:
-                                      const EdgeInsets.fromLTRB(0, 5, 0, 5)),
+                                      const EdgeInsets.fromLTRB(0, 0, 0, 5)),
                               label: const Text(
                                 "Logoff",
                                 style: TextStyle(
@@ -171,35 +171,37 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             const SizedBox(height: 5),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
-                  child: Text(
-                    "QR Code",
-                    style: TextStyle(fontSize: 16, color: kBlack54Color),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: Platform.isIOS ? 95 : 57.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      QrImageView(
-                        data: userBadgeID.toString(),
-                        version: QrVersions.auto,
-                        size: size.width > 500 ? 280 : 240.0,
+                const Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      child: Text(
+                        "QR Code",
+                        style: TextStyle(fontSize: 16, color: kBlack54Color),
                       ),
-                      Text(
-                        userBadgeID.toString(),
-                        style: const TextStyle(
-                            color: kPrimaryColor,
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    QrImageView(
+                      data: userBadgeID.toString(),
+                      version: QrVersions.auto,
+                      size: size.width > 500 ? 280 : 240.0,
+                    ),
+                    Text(
+                      userBadgeID.toString(),
+                      style: const TextStyle(
+                          color: kPrimaryColor,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+
                 const SizedBox(height: 5),
                 const Padding(
                   padding: EdgeInsets.all(8.0),
@@ -218,12 +220,16 @@ class _ProfilePageState extends State<ProfilePage> {
                   thickness: 0.8,
                   color: kDividerColor,
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
-                  child: Text(
-                    "Settings",
-                    style: TextStyle(fontSize: 16, color: kBlack54Color),
-                  ),
+                const Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      child: Text(
+                        "Settings",
+                        style: TextStyle(fontSize: 16, color: kBlack54Color),
+                      ),
+                    ),
+                  ],
                 ),
                 CupertinoButton(
                   child: Padding(

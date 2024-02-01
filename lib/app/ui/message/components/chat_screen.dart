@@ -321,63 +321,45 @@ class _ChatScreenState extends State<ChatScreen> {
                       contentPadding: const EdgeInsets.all(5),
                       prefixIcon: IconButton(
                         icon: const Image(
-                          image: AssetImage("assets/icons/attach_file.png"),
-                          width: 19,
+                          image: AssetImage("assets/icons/emoji.png"),
+                          width: 22,
                         ),
                         onPressed: () {
-                          showModalBottomSheet(
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (builder) => bottomSheet(),
-                          );
+                          focusNode.unfocus();
+                          focusNode.canRequestFocus = false;
+                          setState(() {
+                            show = !show;
+                          });
                         },
                       ),
-                      suffixIcon: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: const Image(
-                              image: AssetImage("assets/icons/emoji.png"),
-                              width: 22,
-                            ),
-                            onPressed: () {
-                              focusNode.unfocus();
-                              focusNode.canRequestFocus = false;
-                              setState(() {
-                                show = !show;
-                              });
-                            },
-                          ),
-                          IconButton(
-                            icon: sendButton
-                                ? const Icon(
-                                    Icons.send,
-                                    color: kPrimaryColor,
-                                  )
-                                : SizedBox(
-                                    width: 30,
-                                    height: 30,
-                                    child: AvatarGlow(
-                                        animate: islisteing,
-                                        repeat: true,
-                                        endRadius: 50,
-                                        glowColor: kTextSecondaryColor,
-                                        duration:
-                                            const Duration(milliseconds: 1000),
-                                        child: Image.asset(
-                                          "assets/icons/microphone.png",
-                                          scale: 2.3,
-                                        )),
-                                  ),
-                            onPressed: () async {
-                              if (sendButton) {
-                                sendMessageOnClick();
-                              } else {
-                                listen();
-                              }
-                            },
-                          ),
-                        ],
+                      suffixIcon: IconButton(
+                        icon: sendButton
+                            ? const Icon(
+                                Icons.send,
+                                color: kPrimaryColor,
+                              )
+                            : SizedBox(
+                                width: 30,
+                                height: 30,
+                                child: AvatarGlow(
+                                    animate: islisteing,
+                                    repeat: true,
+                                    endRadius: 50,
+                                    glowColor: kTextSecondaryColor,
+                                    duration:
+                                        const Duration(milliseconds: 1000),
+                                    child: Image.asset(
+                                      "assets/icons/microphone.png",
+                                      scale: 2.3,
+                                    )),
+                              ),
+                        onPressed: () async {
+                          if (sendButton) {
+                            sendMessageOnClick();
+                          } else {
+                            listen();
+                          }
+                        },
                       ),
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none,

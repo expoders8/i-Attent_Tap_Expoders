@@ -86,9 +86,13 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
                     child: Image.network(
                       data.photo.toString(),
                       fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
                       errorBuilder: (context, error, stackTrace) => Image.asset(
                         "assets/images/conference_default.jpg",
                         fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: double.infinity,
                       ),
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent? loadingProgress) {
