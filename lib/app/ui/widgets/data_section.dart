@@ -1,13 +1,11 @@
-import 'dart:io';
-
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../../../config/constant/color_constant.dart';
-import '../../controller/agenda_controller.dart';
 import '../../controller/event_contoller.dart';
+import '../../controller/agenda_controller.dart';
+import '../../../config/constant/color_constant.dart';
 
 typedef StringCallback = void Function(String val);
 

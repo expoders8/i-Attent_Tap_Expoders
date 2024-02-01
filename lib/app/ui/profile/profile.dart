@@ -42,10 +42,20 @@ class _ProfilePageState extends State<ProfilePage> {
         userEmail = getUserData['emailAddress'] ?? "";
         userImage = getUserData['profilePhoto'] ?? "";
         userBadgeID = getUserData['badgeID'] ?? "";
-        String firstNameLetter = getUserData['firstName'].substring(0, 1);
-        String lastNameLetter = getUserData['lastName'].substring(0, 1);
-        var alphBateLater = "$firstNameLetter$lastNameLetter";
-        alphBateName = alphBateLater;
+        if (getUserData['lastName'] == null) {
+          List<String> nameParts = getUserData['firstName'].split(" ");
+          String firstName = nameParts[0];
+          String lastName = nameParts[1];
+          String firstNameLetter = firstName.substring(0, 1);
+          String lastNameLetter = lastName.substring(0, 1);
+          var alphBateLater = "$firstNameLetter$lastNameLetter";
+          alphBateName = alphBateLater;
+        } else {
+          String firstNameLetter = getUserData['firstName'].substring(0, 1);
+          String lastNameLetter = getUserData['lastName'].substring(0, 1);
+          var alphBateLater = "$firstNameLetter$lastNameLetter";
+          alphBateName = alphBateLater;
+        }
       });
     }
   }

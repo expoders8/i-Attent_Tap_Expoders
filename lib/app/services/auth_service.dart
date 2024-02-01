@@ -37,8 +37,10 @@ class AuthService {
         var decodedUser = jsonDecode(response.body);
         if (decodedUser['success']) {
           var userObj = decodedUser["data"];
-          await FirebaseAuthServices().signUp(
-              organizationId, email, password, userObj['id'].toString());
+          var fullName =
+              "${decodedUser["data"]['firstName']} ${decodedUser["data"]['lastName']}";
+          await FirebaseAuthServices()
+              .signUp(fullName, email, password, userObj['id'].toString());
           if (userObj != null && decodedUser["success"]) {
             getStorage.write('user', jsonEncode(decodedUser["data"]));
             getStorage.write('authToken', decodedUser["data"]['authToken']);
