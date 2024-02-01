@@ -77,8 +77,7 @@ class DBServices {
   }
 
   Future<bool> deleteMessages(String reciverUID) async {
-    final refMessages =
-        FirebaseFirestore.instance.collection('chats/$reciverUID/messages');
+    final refMessages = FirebaseFirestore.instance.collection('messages');
     try {
       var snapshots = await refMessages.get();
       for (var doc in snapshots.docs) {

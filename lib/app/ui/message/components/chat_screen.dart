@@ -460,19 +460,6 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: Column(
                   children: [
                     const SizedBox(height: 10),
-                    // ListTile(
-                    //   title: const Center(
-                    //     child: Text(
-                    //       "Block",
-                    //       style: TextStyle(
-                    //         fontFamily: kWorkSans,
-                    //         fontSize: 15,
-                    //         color: kPrimaryColor,
-                    //       ),
-                    //     ),
-                    //   ),
-                    //   onTap: () {},
-                    // ),
                     ListTile(
                       title: const Center(
                         child: Text(
