@@ -96,7 +96,7 @@ class _MessageAppBarState extends State<MessageAppBar> {
                     ),
                     Padding(
                       padding:
-                          EdgeInsets.only(top: Platform.isAndroid ? 5.0 : 5.0),
+                          EdgeInsets.only(top: Platform.isAndroid ? 0.0 : 5.0),
                       child: const Center(
                           child: Text(
                         "Messages",

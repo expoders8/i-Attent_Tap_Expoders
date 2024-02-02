@@ -4,8 +4,6 @@ import 'package:confrance_expoders/config/constant/color_constant.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import '../../../config/constant/font_constant.dart';
-
 class SignInFooter extends StatelessWidget {
   const SignInFooter({super.key});
 

@@ -58,123 +58,116 @@ class _NotificationPageState extends State<NotificationPage> {
                   ),
                 );
               } else {
-                return Column(
-                  children: [
-                    SizedBox(
-                      height: Get.height - 160,
-                      child: ListView.builder(
-                        padding: const EdgeInsets.only(top: 10),
-                        scrollDirection: Axis.vertical,
-                        itemCount: getAllNotificationController
-                            .notificationList[0].data!.length,
-                        itemBuilder: (context, index) {
-                          var discoverData = getAllNotificationController
-                              .notificationList[0].data!;
+                return Expanded(
+                  child: ListView.builder(
+                    padding: const EdgeInsets.only(top: 10),
+                    scrollDirection: Axis.vertical,
+                    itemCount: getAllNotificationController
+                        .notificationList[0].data!.length,
+                    itemBuilder: (context, index) {
+                      var discoverData = getAllNotificationController
+                          .notificationList[0].data!;
 
-                          if (discoverData.isNotEmpty) {
-                            var data = discoverData[index];
-                            DateTime createdDateTime =
-                                DateTime.parse(data.createdOn.toString());
+                      if (discoverData.isNotEmpty) {
+                        var data = discoverData[index];
+                        DateTime createdDateTime =
+                            DateTime.parse(data.createdOn.toString()).toUtc();
 
-                            Duration difference =
-                                DateTime.now().difference(createdDateTime);
-                            int differenceDays = difference.inDays;
-                            int differenceHours = difference.inHours % 24;
-                            int differenceMinutes = difference.inMinutes % 60;
-                            String timeAgo = differenceDays >= 1
-                                ? "${differenceDays.toString()} d ago"
-                                : differenceHours >= 1
-                                    ? "${differenceHours.toString()} h ago"
-                                    : "${differenceMinutes.toString()} m ago";
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10.0, vertical: 8),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                        Duration difference =
+                            DateTime.now().toUtc().difference(createdDateTime);
+                        int differenceDays = difference.inDays;
+                        int differenceHours = difference.inHours % 24;
+                        int differenceMinutes = difference.inMinutes % 60;
+                        String timeAgo = differenceDays >= 1
+                            ? "${differenceDays.toString()} d ago"
+                            : differenceHours >= 1
+                                ? "${differenceHours.toString()} h ago"
+                                : "${differenceMinutes.toString()} m ago";
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 8),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Row(
+                                  CircleAvatar(
+                                    backgroundColor: kBackGroundColor,
+                                    child: ClipOval(
+                                      child: Material(
+                                          child: Image.asset(
+                                        "assets/images/blank_profile.png",
+                                        width: 32,
+                                        height: 32,
+                                        errorBuilder:
+                                            (context, error, stackTrace) =>
+                                                Image.asset(
+                                          "assets/images/blank_profile.png",
+                                          fit: BoxFit.fill,
+                                        ),
+                                        fit: BoxFit.cover,
+                                      )),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      CircleAvatar(
-                                        backgroundColor: kBackGroundColor,
-                                        child: ClipOval(
-                                          child: Material(
-                                              child: Image.asset(
-                                            "assets/images/blank_profile.png",
-                                            width: 32,
-                                            height: 32,
-                                            errorBuilder:
-                                                (context, error, stackTrace) =>
-                                                    Image.asset(
-                                              "assets/images/blank_profile.png",
-                                              fit: BoxFit.fill,
-                                            ),
-                                            fit: BoxFit.cover,
-                                          )),
+                                      const SizedBox(height: 2),
+                                      Text(
+                                        data.title.toString(),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.left,
+                                        style: const TextStyle(
+                                          fontSize: 14.0,
+                                          fontFamily: kCircularStdMedium,
+                                          color: kPrimaryColor,
                                         ),
                                       ),
-                                      const SizedBox(width: 10),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const SizedBox(height: 2),
-                                          Text(
-                                            data.title.toString(),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.left,
-                                            style: const TextStyle(
-                                              fontSize: 14.0,
-                                              fontFamily: kCircularStdMedium,
-                                              color: kPrimaryColor,
-                                            ),
-                                          ),
-                                          Text(
-                                            data.text.toString(),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.left,
-                                            style: const TextStyle(
-                                              fontSize: 12.0,
-                                              fontFamily: kCircularStdNormal,
-                                              color: kPrimaryColor,
-                                            ),
-                                          ),
-                                        ],
+                                      Text(
+                                        data.text.toString(),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.left,
+                                        style: const TextStyle(
+                                          fontSize: 12.0,
+                                          fontFamily: kCircularStdNormal,
+                                          color: kPrimaryColor,
+                                        ),
                                       ),
                                     ],
                                   ),
-                                  Text(
-                                    timeAgo,
-                                    style: const TextStyle(
-                                      fontSize: 12.0,
-                                      fontFamily: kCircularStdNormal,
-                                      color: kPrimaryColor,
-                                    ),
-                                  ),
                                 ],
                               ),
-                            );
-                          } else {
-                            return const Center(
-                              child: Text(
-                                "No Notification",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 15,
-                                    fontFamily: kCircularStdMedium),
+                              Text(
+                                timeAgo,
+                                style: const TextStyle(
+                                  fontSize: 12.0,
+                                  fontFamily: kCircularStdNormal,
+                                  color: kPrimaryColor,
+                                ),
                               ),
-                            );
-                          }
-                        },
-                      ),
-                    ),
-                  ],
+                            ],
+                          ),
+                        );
+                      } else {
+                        return const Center(
+                          child: Text(
+                            "No Notification",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: 15,
+                                fontFamily: kCircularStdMedium),
+                          ),
+                        );
+                      }
+                    },
+                  ),
                 );
               }
             } else {
