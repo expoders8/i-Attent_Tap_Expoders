@@ -66,21 +66,54 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kAppBarColor,
-        leadingWidth: 60,
         automaticallyImplyLeading: false,
-        title: const Text(
-          "My Profile",
-          style: TextStyle(color: kBackGroundColor),
-        ),
+        title:
+            const Text("My Profile", style: TextStyle(color: kBackGroundColor)),
         centerTitle: true,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1.0),
-          child: Container(
-            color: kDividerColor,
-            height: 1.0,
+        actions: <Widget>[
+          Theme(
+            data: ThemeData(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+            ),
+            child: GestureDetector(
+              onTap: () {
+                Get.toNamed(Routes.notificationPage);
+              },
+              child: Container(
+                  decoration:
+                      const BoxDecoration(shape: BoxShape.circle, boxShadow: [
+                    BoxShadow(
+                      color: Color.fromARGB(15, 0, 0, 0),
+                      blurRadius: 10.0,
+                    ),
+                  ]),
+                  margin: const EdgeInsets.only(right: 14),
+                  child: Image.asset(
+                    "assets/icons/notification.png",
+                    scale: 2.2,
+                  )),
+            ),
           ),
-        ),
+        ],
       ),
+      // appBar: AppBar(
+      //   backgroundColor: kAppBarColor,
+      //   leadingWidth: 60,
+      //   automaticallyImplyLeading: false,
+      //   title: const Text(
+      //     "My Profile",
+      //     style: TextStyle(color: kBackGroundColor),
+      //   ),
+      //   centerTitle: true,
+      //   bottom: PreferredSize(
+      //     preferredSize: const Size.fromHeight(1.0),
+      //     child: Container(
+      //       color: kDividerColor,
+      //       height: 1.0,
+      //     ),
+      //   ),
+      // ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -213,19 +246,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
 
                 const SizedBox(height: 5),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(10, 5, 2, 0),
-                    child: Text(
-                        "- Check in to yout event if yout event is using i-Attent-TAP's check-in sevice"),
-                  ),
-                  // Padding(
-                  //   padding: EdgeInsets.fromLTRB(10, 7, 2, 10),
-                  //   child: Text(
-                  //       "- Give exhibitors and vendors your contact info(if your event has exhibitors)"),
-                  // )
-                ),
+
                 const Divider(
                   thickness: 0.8,
                   color: kDividerColor,

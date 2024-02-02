@@ -13,7 +13,7 @@ class ConferenceService {
     try {
       var response = await http.get(
         Uri.parse(
-            '$baseUrl/api/Conference/GetAll/${getUserData['id'].toString()}'),
+            '$baseUrl/api/Conference/GetAll/${getUserData['clientID'].toString()}'),
       );
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);

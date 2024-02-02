@@ -21,7 +21,6 @@ class SignInFooter extends StatelessWidget {
               TextSpan(
                 style: const TextStyle(
                   color: kSelectedIconColor,
-                  decoration: TextDecoration.underline,
                 ),
                 text: "TNETIC.inc",
                 recognizer: TapGestureRecognizer()..onTap = () async {},
@@ -34,71 +33,71 @@ class SignInFooter extends StatelessWidget {
           "Copyright ©. All rights reserved.",
           style: TextStyle(color: kPrimaryColor),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                "By registering, you agree to the ",
-                style: TextStyle(
-                    fontSize: 8.8,
-                    color: kPrimaryColor,
-                    fontFamily: kCircularStdBook),
-              ),
-              GestureDetector(
-                onTap: () async {
-                  // var url = "https://opengiving.app/privacy";
-                  // if (await canLaunchUrl(Uri.parse(url))) {
-                  //   await launchUrl(Uri.parse(url));
-                  // } else {
-                  //   throw "Could not launch $url";
-                  // }
-                },
-                child: const Text(
-                  "privacy policy",
-                  style: TextStyle(
-                      fontSize: 8.8,
-                      color: kButtonColor,
-                      fontFamily: kCircularStdBook,
-                      decoration: TextDecoration.underline),
-                ),
-              ),
-              const Text(
-                " and ",
-                style: TextStyle(
-                    fontSize: 8.8,
-                    color: kPrimaryColor,
-                    fontFamily: kCircularStdBook),
-              ),
-              GestureDetector(
-                onTap: () async {
-                  // var url = "https://opengiving.app/terms";
-                  // if (await canLaunchUrl(Uri.parse(url))) {
-                  //   await launchUrl(Uri.parse(url));
-                  // } else {
-                  //   throw "Could not launch $url";
-                  // }
-                },
-                child: const Text(
-                  "terms",
-                  style: TextStyle(
-                      fontSize: 8.8,
-                      color: kButtonColor,
-                      fontFamily: kCircularStdBook,
-                      decoration: TextDecoration.underline),
-                ),
-              ),
-              const Text(
-                " of service.",
-                style: TextStyle(
-                    fontSize: 8.8,
-                    color: kPrimaryColor,
-                    fontFamily: kCircularStdBook),
-              ),
-            ],
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.only(top: 10),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: [
+        //       const Text(
+        //         "By registering, you agree to the ",
+        //         style: TextStyle(
+        //             fontSize: 8.8,
+        //             color: kPrimaryColor,
+        //             fontFamily: kCircularStdBook),
+        //       ),
+        //       GestureDetector(
+        //         onTap: () async {
+        //           // var url = "https://opengiving.app/privacy";
+        //           // if (await canLaunchUrl(Uri.parse(url))) {
+        //           //   await launchUrl(Uri.parse(url));
+        //           // } else {
+        //           //   throw "Could not launch $url";
+        //           // }
+        //         },
+        //         child: const Text(
+        //           "privacy policy",
+        //           style: TextStyle(
+        //               fontSize: 8.8,
+        //               color: kButtonColor,
+        //               fontFamily: kCircularStdBook,
+        //               decoration: TextDecoration.underline),
+        //         ),
+        //       ),
+        //       const Text(
+        //         " and ",
+        //         style: TextStyle(
+        //             fontSize: 8.8,
+        //             color: kPrimaryColor,
+        //             fontFamily: kCircularStdBook),
+        //       ),
+        //       GestureDetector(
+        //         onTap: () async {
+        //           // var url = "https://opengiving.app/terms";
+        //           // if (await canLaunchUrl(Uri.parse(url))) {
+        //           //   await launchUrl(Uri.parse(url));
+        //           // } else {
+        //           //   throw "Could not launch $url";
+        //           // }
+        //         },
+        //         child: const Text(
+        //           "terms",
+        //           style: TextStyle(
+        //               fontSize: 8.8,
+        //               color: kButtonColor,
+        //               fontFamily: kCircularStdBook,
+        //               decoration: TextDecoration.underline),
+        //         ),
+        //       ),
+        //       const Text(
+        //         " of service.",
+        //         style: TextStyle(
+        //             fontSize: 8.8,
+        //             color: kPrimaryColor,
+        //             fontFamily: kCircularStdBook),
+        //       ),
+        //     ],
+        //   ),
+        // ),
       ],
     );
   }

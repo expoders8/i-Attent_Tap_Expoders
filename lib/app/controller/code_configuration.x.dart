@@ -34,8 +34,8 @@ class CodeConfigurationX extends GetxController {
       servicesUrlController.clear();
       SnackbarUtils.showSnackbar(
           baseUrl != null
-              ? "i-Attend Capture Web Server URL configured!"
-              : "i-Attend Capture Web Server URL cleared!",
+              ? "i-Attend TAP Web Server URL configured!"
+              : "i-Attend TAP Web Server URL cleared!",
           "");
     } catch (e) {
       LoaderX.hide();
