@@ -50,7 +50,7 @@
 	<key>NSCalendarsUsageDescription</key>
 	<string>We use this to schedule notifications at specific times.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Used to display PDFs</string>
+	<string>This app needs camera access to scan QR codes</string>
 	<key>NSDocumentsFolderUsageDescription</key>
 	<string>We need permission to access the Documents folder</string>
 	<key>NSMicrophoneUsageDescription</key>
@@ -59,6 +59,8 @@
 	<string>We use this to show you notifications.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>We need permission to save files to your photo library</string>
+	<key>io.flutter.embedded_views_preview</key>
+    <true/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Used to display PDFs</string>
 	<key>NSSpeechRecognitionUsageDescription</key>

@@ -196,11 +196,11 @@ class _EventViewPageState extends State<EventViewPage> {
                                               const SizedBox(height: 18),
                                               Row(
                                                 children: [
-                                                  const Icon(
-                                                    Icons.location_on_outlined,
-                                                    color: kPrimaryColor,
-                                                    size: 18,
-                                                  ),
+                                                  // const Icon(
+                                                  //   Icons.location_on_outlined,
+                                                  //   color: kPrimaryColor,
+                                                  //   size: 18,
+                                                  // ),
                                                   const SizedBox(width: 2),
                                                   Text(
                                                     data.venue == ""

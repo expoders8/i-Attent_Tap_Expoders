@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
-import '../../../config/constant/constant.dart';
 import '../../routes/app_pages.dart';
 import '../../controller/tab_controller.dart';
 import '../../controller/event_contoller.dart';
@@ -12,6 +9,7 @@ import '../../controller/agenda_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../controller/conferance_controller.dart';
 import '../../../config/constant/color_constant.dart';
+import '../widgets/qr_scanner_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -35,31 +33,7 @@ class _HomePageState extends State<HomePage> {
     var date = DateTime.now();
     getAllAgendaController.selectedDateString(date.toString());
     getAllAgendaController.fetchAllAgenda();
-    getUser();
     super.initState();
-  }
-
-  Future getUser() async {
-    var data = getStorage.read('user');
-    var getUserData = jsonDecode(data);
-    if (getUserData != null) {
-      setState(() {
-        if (getUserData['lastName'] == null) {
-          List<String> nameParts = getUserData['firstName'].split(" ");
-          String firstName = nameParts[0];
-          String lastName = nameParts[1];
-          String firstNameLetter = firstName.substring(0, 1);
-          String lastNameLetter = lastName.substring(0, 1);
-          var alphBateLater = "$firstNameLetter$lastNameLetter";
-          alphBateName = alphBateLater;
-        } else {
-          String firstNameLetter = getUserData['firstName'].substring(0, 1);
-          String lastNameLetter = getUserData['lastName'].substring(0, 1);
-          var alphBateLater = "$firstNameLetter$lastNameLetter";
-          alphBateName = alphBateLater;
-        }
-      });
-    }
   }
 
   @override
@@ -81,16 +55,17 @@ class _HomePageState extends State<HomePage> {
                     decoration: BoxDecoration(
                         color: kBackGroundColor,
                         borderRadius: BorderRadius.circular(30)),
-                    child: Center(
-                        child: Text(
-                      alphBateName.toString(),
-                      style: const TextStyle(
-                          color: kSelectedIconColor,
-                          fontSize: 15,
-                          letterSpacing: 1),
-                    ))),
+                    child: const Icon(
+                      Icons.qr_code_scanner,
+                      color: kSelectedIconColor,
+                      size: 21,
+                    )),
                 onPressed: () {
-                  tabcontroller.changeTabIndex(4);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const QrCodeScanner(),
+                    ),
+                  );
                 },
               ),
               actions: <Widget>[

@@ -8,6 +8,7 @@ import '../../../../config/constant/font_constant.dart';
 import '../../../../config/constant/color_constant.dart';
 import '../../../controller/tab_controller.dart';
 import '../../../routes/app_pages.dart';
+import '../../widgets/qr_scanner_widget.dart';
 
 typedef StringCallback = void Function(String val);
 
@@ -81,16 +82,17 @@ class _MessageAppBarState extends State<MessageAppBar> {
                             decoration: BoxDecoration(
                                 color: kBackGroundColor,
                                 borderRadius: BorderRadius.circular(30)),
-                            child: Center(
-                                child: Text(
-                              alphBateName.toString(),
-                              style: const TextStyle(
-                                  color: kSelectedIconColor,
-                                  fontSize: 15,
-                                  letterSpacing: 1),
-                            ))),
+                            child: const Icon(
+                              Icons.qr_code_scanner,
+                              color: kSelectedIconColor,
+                              size: 21,
+                            )),
                         onPressed: () {
-                          tabcontroller.changeTabIndex(4);
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => const QrCodeScanner(),
+                            ),
+                          );
                         },
                       ),
                     ),

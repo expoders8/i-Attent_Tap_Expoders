@@ -318,7 +318,7 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
                                                   errorBuilder: (context, error,
                                                           stackTrace) =>
                                                       Image.asset(
-                                                    "assets/images/conference_default.jpg",
+                                                    "assets/images/default_logo_sponser.png",
                                                     fit: BoxFit.fill,
                                                   ),
                                                   width: 40,

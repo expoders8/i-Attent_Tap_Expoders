@@ -11,6 +11,7 @@ import '../../../config/constant/constant.dart';
 import '../../services/firebase_auth_service.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../widgets/qr_scanner_widget.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -69,6 +70,26 @@ class _ProfilePageState extends State<ProfilePage> {
         title:
             const Text("My Profile", style: TextStyle(color: kBackGroundColor)),
         centerTitle: true,
+        leading: IconButton(
+          icon: Container(
+              height: 35,
+              width: 35,
+              decoration: BoxDecoration(
+                  color: kBackGroundColor,
+                  borderRadius: BorderRadius.circular(30)),
+              child: const Icon(
+                Icons.qr_code_scanner,
+                color: kSelectedIconColor,
+                size: 21,
+              )),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => const QrCodeScanner(),
+              ),
+            );
+          },
+        ),
         actions: <Widget>[
           Theme(
             data: ThemeData(

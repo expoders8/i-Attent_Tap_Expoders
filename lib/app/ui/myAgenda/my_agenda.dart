@@ -11,6 +11,7 @@ import '../../view/agenda_view.dart';
 import '../widgets/data_section.dart';
 import '../../controller/agenda_controller.dart';
 import '../../../config/constant/color_constant.dart';
+import '../widgets/qr_scanner_widget.dart';
 
 class MyAgendaPage extends StatefulWidget {
   const MyAgendaPage({super.key});
@@ -20,41 +21,9 @@ class MyAgendaPage extends StatefulWidget {
 }
 
 class _MyAgendaPageState extends State<MyAgendaPage> {
-  String formattedDate = DateFormat('MM/dd/yyyy').format(DateTime.now());
-  int tabSelection = 0;
   String selectedDate = "";
   final GetAllAgendaController getAllAgendaController =
       Get.put(GetAllAgendaController());
-  final tabcontroller = Get.put(TabCountController());
-  String alphBateName = "";
-  @override
-  void initState() {
-    getUser();
-    super.initState();
-  }
-
-  Future getUser() async {
-    var data = getStorage.read('user');
-    var getUserData = jsonDecode(data);
-    if (getUserData != null) {
-      setState(() {
-        if (getUserData['lastName'] == null) {
-          List<String> nameParts = getUserData['firstName'].split(" ");
-          String firstName = nameParts[0];
-          String lastName = nameParts[1];
-          String firstNameLetter = firstName.substring(0, 1);
-          String lastNameLetter = lastName.substring(0, 1);
-          var alphBateLater = "$firstNameLetter$lastNameLetter";
-          alphBateName = alphBateLater;
-        } else {
-          String firstNameLetter = getUserData['firstName'].substring(0, 1);
-          String lastNameLetter = getUserData['lastName'].substring(0, 1);
-          var alphBateLater = "$firstNameLetter$lastNameLetter";
-          alphBateName = alphBateLater;
-        }
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,14 +41,17 @@ class _MyAgendaPageState extends State<MyAgendaPage> {
               decoration: BoxDecoration(
                   color: kBackGroundColor,
                   borderRadius: BorderRadius.circular(30)),
-              child: Center(
-                  child: Text(
-                alphBateName.toString(),
-                style: const TextStyle(
-                    color: kSelectedIconColor, fontSize: 15, letterSpacing: 1),
-              ))),
+              child: const Icon(
+                Icons.qr_code_scanner,
+                color: kSelectedIconColor,
+                size: 21,
+              )),
           onPressed: () {
-            tabcontroller.changeTabIndex(4);
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => const QrCodeScanner(),
+              ),
+            );
           },
         ),
         actions: <Widget>[

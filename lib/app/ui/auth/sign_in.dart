@@ -35,9 +35,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
     fCMNotificationServices.initLocalNotification();
     fCMNotificationServices.getDeviceToken().then(
-          (value) => {
-            setState(() => fcmToken = value),
-          },
+          (value) => {setState(() => fcmToken = value), print(fcmToken)},
         );
     super.initState();
   }
