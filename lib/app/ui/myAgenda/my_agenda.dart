@@ -1,17 +1,12 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
-import '../../../config/constant/constant.dart';
-import '../../controller/tab_controller.dart';
 import '../../routes/app_pages.dart';
 import '../../view/agenda_view.dart';
 import '../widgets/data_section.dart';
 import '../../controller/agenda_controller.dart';
 import '../../../config/constant/color_constant.dart';
-import '../widgets/qr_scanner_widget.dart';
+import '../widgets/selfCheckIdHome.dart';
 
 class MyAgendaPage extends StatefulWidget {
   const MyAgendaPage({super.key});
@@ -49,7 +44,7 @@ class _MyAgendaPageState extends State<MyAgendaPage> {
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (_) => const QrCodeScanner(),
+                builder: (_) => const SelfCheckInHome(),
               ),
             );
           },

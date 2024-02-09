@@ -11,7 +11,7 @@ import '../../../config/constant/constant.dart';
 import '../../services/firebase_auth_service.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
-import '../widgets/qr_scanner_widget.dart';
+import '../widgets/selfCheckIdHome.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -85,7 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (_) => const QrCodeScanner(),
+                builder: (_) => const SelfCheckInHome(),
               ),
             );
           },

@@ -8,7 +8,7 @@ import '../../../../config/constant/font_constant.dart';
 import '../../../../config/constant/color_constant.dart';
 import '../../../controller/tab_controller.dart';
 import '../../../routes/app_pages.dart';
-import '../../widgets/qr_scanner_widget.dart';
+import '../../widgets/selfCheckIdHome.dart';
 
 typedef StringCallback = void Function(String val);
 
@@ -90,7 +90,7 @@ class _MessageAppBarState extends State<MessageAppBar> {
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (_) => const QrCodeScanner(),
+                              builder: (_) => const SelfCheckInHome(),
                             ),
                           );
                         },

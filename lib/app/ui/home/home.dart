@@ -9,7 +9,8 @@ import '../../controller/agenda_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../controller/conferance_controller.dart';
 import '../../../config/constant/color_constant.dart';
-import '../widgets/qr_scanner_widget.dart';
+import '../widgets/CheckIn.dart';
+import '../widgets/selfCheckIdHome.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -63,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (_) => const QrCodeScanner(),
+                      builder: (_) => const SelfCheckInHome(),
                     ),
                   );
                 },

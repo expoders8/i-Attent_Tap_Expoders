@@ -1,5 +1,6 @@
 import 'package:confrance_expoders/config/constant/color_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
@@ -13,6 +14,8 @@ class QrCodeScanner extends StatefulWidget {
 class QrCodeScannerState extends State<QrCodeScanner> {
   final qrKey = GlobalKey(debugLabel: 'QR');
   bool isLineVisible = true;
+  String orgId = "";
+  String pin = "";
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +60,18 @@ class QrCodeScannerState extends State<QrCodeScanner> {
   void onQRViewCreated(QRViewController controller) {
     controller.scannedDataStream.listen(
       (scanData) {
+        // print(scanData.code);
+        // setState(() {
+        //   var dataArr = scanData.code!.split('||');
+        //   print(dataArr);
+        //   orgId = dataArr[0];
+        //   print(dataArr[0]);
+        //   pin = dataArr[1];
+        //   // FocusScope.of(context).requestFocus(_focusNodeEmail);
+        //   Get.back();
+        // });
+
+        print(scanData.code);
         controller.dispose();
         Navigator.pop(context, scanData.code);
       },
