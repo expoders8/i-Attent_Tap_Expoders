@@ -9,8 +9,6 @@ import '../../controller/agenda_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../controller/conferance_controller.dart';
 import '../../../config/constant/color_constant.dart';
-import '../widgets/CheckIn.dart';
-import '../widgets/selfCheckIdHome.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -49,51 +47,46 @@ class _HomePageState extends State<HomePage> {
               title: const Text("Conferences",
                   style: TextStyle(color: kBackGroundColor)),
               centerTitle: true,
-              leading: IconButton(
-                icon: Container(
-                    height: 35,
-                    width: 35,
-                    decoration: BoxDecoration(
-                        color: kBackGroundColor,
-                        borderRadius: BorderRadius.circular(30)),
-                    child: const Icon(
-                      Icons.qr_code_scanner,
-                      color: kSelectedIconColor,
-                      size: 21,
-                    )),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => const SelfCheckInHome(),
+              leading: Padding(
+                padding: const EdgeInsets.only(left: 6.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Get.toNamed(Routes.notificationPage);
+                  },
+                  child: Container(
+                    decoration:
+                        const BoxDecoration(shape: BoxShape.circle, boxShadow: [
+                      BoxShadow(
+                        color: Color.fromARGB(15, 0, 0, 0),
+                        blurRadius: 10.0,
+                      ),
+                    ]),
+                    margin: const EdgeInsets.only(right: 14),
+                    child: Image.asset(
+                      "assets/icons/notification.png",
+                      scale: 2.1,
                     ),
-                  );
-                },
+                  ),
+                ),
               ),
               actions: <Widget>[
-                Theme(
-                  data: ThemeData(
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      Get.toNamed(Routes.notificationPage);
-                    },
-                    child: Container(
-                        decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color.fromARGB(15, 0, 0, 0),
-                                blurRadius: 10.0,
-                              ),
-                            ]),
-                        margin: const EdgeInsets.only(right: 14),
+                IconButton(
+                  icon: ClipOval(
+                    child: Material(
                         child: Image.asset(
-                          "assets/icons/notification.png",
-                          scale: 2.2,
-                        )),
+                      "assets/images/blank_profile.png",
+                      width: 30,
+                      height: 30,
+                      errorBuilder: (context, error, stackTrace) => Image.asset(
+                        "assets/images/blank_profile.png",
+                        fit: BoxFit.fill,
+                      ),
+                      fit: BoxFit.cover,
+                    )),
                   ),
+                  onPressed: () {
+                    Get.toNamed(Routes.profilePage);
+                  },
                 ),
               ],
             ),
@@ -163,7 +156,12 @@ class _HomePageState extends State<HomePage> {
                                       getAllEventsController.selectedDateString(
                                           data.startDate.toString());
                                       getAllEventsController.fetchAllEvents();
-                                      Get.toNamed(Routes.conferenceDetailsPage);
+                                      Get.toNamed(
+                                        Routes.conferenceDetailsPage,
+                                        arguments: {
+                                          'isConferenceActive': false
+                                        },
+                                      );
                                     },
                                     child: Column(
                                       children: [
@@ -317,8 +315,8 @@ class _HomePageState extends State<HomePage> {
                                                               padding:
                                                                   const EdgeInsets
                                                                       .only(
-                                                                      right:
-                                                                          10.0),
+                                                                      left:
+                                                                          20.0),
                                                               child: Row(
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
@@ -338,6 +336,59 @@ class _HomePageState extends State<HomePage> {
                                                                       width:
                                                                           10),
                                                                 ],
+                                                              ),
+                                                            ),
+                                                            GestureDetector(
+                                                              onTap: () {
+                                                                getDetailsConferanceController
+                                                                    .conferanceIdString(data
+                                                                        .id
+                                                                        .toString());
+                                                                getAllEventsController
+                                                                    .selectedIdString(data
+                                                                        .id
+                                                                        .toString());
+                                                                getAllEventsController
+                                                                    .selectedDateString(data
+                                                                        .startDate
+                                                                        .toString());
+                                                                getAllEventsController
+                                                                    .fetchAllEvents();
+                                                                Get.toNamed(
+                                                                  Routes
+                                                                      .conferenceDetailsPage,
+                                                                  arguments: {
+                                                                    'isConferenceActive':
+                                                                        true
+                                                                  },
+                                                                );
+                                                              },
+                                                              child:
+                                                                  const Padding(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        right:
+                                                                            10.0),
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Text(
+                                                                      "Sponsors",
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              kPrimaryColor,
+                                                                          fontSize:
+                                                                              13,
+                                                                          fontFamily:
+                                                                              kCircularStdBook),
+                                                                    ),
+                                                                    SizedBox(
+                                                                        width:
+                                                                            10),
+                                                                  ],
+                                                                ),
                                                               ),
                                                             ),
                                                           ],

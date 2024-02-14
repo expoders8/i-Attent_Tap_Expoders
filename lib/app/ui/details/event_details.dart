@@ -144,73 +144,84 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(
-                                width: 100,
-                                child: Column(
-                                  children: [
-                                    const Icon(Icons.location_on_outlined,
-                                        size: 30, color: Color(0xFF184990)),
-                                    const SizedBox(height: 10),
-                                    Text(
-                                      venue,
-                                      style: const TextStyle(
-                                        color: kSecondaryPrimaryColor,
-                                        fontSize: 12,
-                                        fontFamily: kCircularStdMedium,
+                              data.venue == ""
+                                  ? Container()
+                                  : SizedBox(
+                                      width: 100,
+                                      child: Column(
+                                        children: [
+                                          const Icon(Icons.location_on_outlined,
+                                              size: 30,
+                                              color: Color(0xFF184990)),
+                                          const SizedBox(height: 10),
+                                          Text(
+                                            venue,
+                                            style: const TextStyle(
+                                              color: kSecondaryPrimaryColor,
+                                              fontSize: 12,
+                                              fontFamily: kCircularStdMedium,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                width: 100,
-                                child: Column(
-                                  children: [
-                                    const Icon(
-                                      Icons.meeting_room_outlined,
-                                      size: 30,
-                                      color: Color(0xFF184990),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Text(
-                                      textAlign: TextAlign.center,
-                                      data.roomName.toString(),
-                                      style: const TextStyle(
-                                        color: kSecondaryPrimaryColor,
-                                        fontSize: 12,
-                                        fontFamily: kCircularStdMedium,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  getAllAttechmentController
-                                      .eventIdString(data.id.toString());
-                                  Get.toNamed(Routes.galleryScreen);
-                                },
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    right: data.venue == "" ? 20.0 : 0),
                                 child: SizedBox(
                                   width: 100,
                                   child: Column(
                                     children: [
-                                      Image.asset(
-                                        "assets/icons/upload.png",
-                                        scale: 1.2,
-                                        color: const Color(0xFF184990),
+                                      const Icon(
+                                        Icons.meeting_room_outlined,
+                                        size: 30,
+                                        color: Color(0xFF184990),
                                       ),
-                                      const SizedBox(height: 13),
-                                      const Text(
-                                        "Attachments",
+                                      const SizedBox(height: 10),
+                                      Text(
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        data.roomName.toString(),
+                                        style: const TextStyle(
                                           color: kSecondaryPrimaryColor,
                                           fontSize: 12,
                                           fontFamily: kCircularStdMedium,
                                         ),
                                       ),
-                                      const SizedBox(height: 8),
                                     ],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    right: data.venue == "" ? 20.0 : 0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    getAllAttechmentController
+                                        .eventIdString(data.id.toString());
+                                    Get.toNamed(Routes.galleryScreen);
+                                  },
+                                  child: SizedBox(
+                                    width: 100,
+                                    child: Column(
+                                      children: [
+                                        Image.asset(
+                                          "assets/icons/upload.png",
+                                          scale: 1.2,
+                                          color: const Color(0xFF184990),
+                                        ),
+                                        const SizedBox(height: 13),
+                                        const Text(
+                                          "Handouts",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: kSecondaryPrimaryColor,
+                                            fontSize: 12,
+                                            fontFamily: kCircularStdMedium,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -220,23 +231,6 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                       ),
                     ),
                   ),
-                ),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(17, 7, 0, 7),
-                  child: const Text(
-                    "Event Description",
-                    style: TextStyle(
-                      color: kTitleColor,
-                      fontSize: 17,
-                      fontFamily: kCircularStdBold,
-                    ),
-                  ),
-                ),
-                builddetailsWidget(
-                    Icons.description_outlined, description, "Description"),
-                const Divider(
-                  thickness: 0.8,
-                  color: kDividerColor,
                 ),
                 Container(
                   padding: const EdgeInsets.fromLTRB(17, 7, 0, 7),
@@ -349,8 +343,10 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                         ),
                       )
                     : SizedBox(
-                        height: Get.height / 2.7,
-                        child: const Center(
+                        height:
+                            data.lstSpeakers!.isEmpty ? 60 : Get.height / 2.7,
+                        child: const Padding(
+                          padding: EdgeInsets.only(left: 19.0, top: 10),
                           child: Text(
                             "N/A",
                             textAlign: TextAlign.center,
@@ -361,6 +357,27 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                           ),
                         ),
                       ),
+
+                const Divider(
+                  thickness: 0.8,
+                  color: kDividerColor,
+                ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(17, 7, 0, 7),
+                  child: const Text(
+                    "Event Description",
+                    style: TextStyle(
+                      color: kTitleColor,
+                      fontSize: 17,
+                      fontFamily: kCircularStdBold,
+                    ),
+                  ),
+                ),
+                builddetailsWidget(
+                    Icons.description_outlined, description, "Description"),
+                SizedBox(
+                  height: data.lstSpeakers!.isEmpty ? 210 : 0,
+                ),
                 // SizedBox(height: Get.height / 3.7),
                 // Container(
                 //   padding: const EdgeInsets.fromLTRB(17, 5, 0, 8),
@@ -520,32 +537,59 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 15.0, vertical: 10),
                   child: SizedBox(
-                    width: Get.width,
-                    height: 40,
-                    child: CupertinoButton(
-                        padding: EdgeInsets.zero,
-                        color: kButtonColor,
-                        child: const Text(
-                          "Add to My Agenda", // Remove from My Agenda
-                          style: TextStyle(
-                              letterSpacing: 0.8,
-                              color: kWhiteColor,
-                              fontFamily: kCircularStdNormal,
-                              fontSize: 15),
-                        ),
-                        onPressed: () {
-                          addAgenda(
-                              data.eventName,
-                              data.description == ""
-                                  ? "test"
-                                  : data.description.toString(),
-                              data.venue != "" ? data.venue.toString() : "test",
-                              data.startDate,
-                              data.endDate,
-                              data.id.toString());
-                          // addMyAgendaDialog(context);
-                        }),
-                  ),
+                      width: Get.width,
+                      height: 40,
+                      child: data.isAgendaExist!
+                          ? CupertinoButton(
+                              padding: EdgeInsets.zero,
+                              color: kRedColor,
+                              child: const Text(
+                                "Remove From My Agenda",
+                                style: TextStyle(
+                                    letterSpacing: 0.8,
+                                    color: kWhiteColor,
+                                    fontFamily: kCircularStdNormal,
+                                    fontSize: 15),
+                              ),
+                              onPressed: () {
+                                LoaderX.show(context, 60.0, 60.0);
+                                agendaService
+                                    .deleteAgenda(data.id.toString())
+                                    .then((value) => {
+                                          if (value['success'])
+                                            {
+                                              Get.back(),
+                                              LoaderX.hide(),
+                                              getAllAgendaController
+                                                  .fetchAllAgenda()
+                                            }
+                                        });
+                              })
+                          : CupertinoButton(
+                              padding: EdgeInsets.zero,
+                              color: kButtonColor,
+                              child: const Text(
+                                "Add to My Agenda", // Remove from My Agenda
+                                style: TextStyle(
+                                    letterSpacing: 0.8,
+                                    color: kWhiteColor,
+                                    fontFamily: kCircularStdNormal,
+                                    fontSize: 15),
+                              ),
+                              onPressed: () {
+                                addAgenda(
+                                    data.eventName,
+                                    data.description == ""
+                                        ? "test"
+                                        : data.description.toString(),
+                                    data.venue != ""
+                                        ? data.venue.toString()
+                                        : "test",
+                                    data.startDate,
+                                    data.endDate,
+                                    data.id.toString());
+                                // addMyAgendaDialog(context);
+                              })),
                 )
               ],
             ),
@@ -623,9 +667,9 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                       thickness: 0.8,
                       color: kDividerColor,
                     ),
-                    buildRemindersTime("Remind me 10 min before"),
-                    buildRemindersTime("Remind me 20 min before"),
-                    buildRemindersTime("Remind me 30 min before"),
+                    buildRemindersTime("Remind me in 10 minutes"),
+                    buildRemindersTime("Remind me in 20 minutes"),
+                    buildRemindersTime("Remind me in 30 minutes"),
                     buildRemindersTime("No reminder"),
                   ],
                 )),

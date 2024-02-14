@@ -1,14 +1,13 @@
-import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
+import '../../../routes/app_pages.dart';
+import '../../../controller/tab_controller.dart';
 import '../../../../config/constant/constant.dart';
 import '../../../../config/constant/font_constant.dart';
 import '../../../../config/constant/color_constant.dart';
-import '../../../controller/tab_controller.dart';
-import '../../../routes/app_pages.dart';
-import '../../widgets/selfCheckIdHome.dart';
 
 typedef StringCallback = void Function(String val);
 
@@ -74,26 +73,26 @@ class _MessageAppBarState extends State<MessageAppBar> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 2.0, left: 2.5),
-                      child: IconButton(
-                        icon: Container(
-                            height: 35,
-                            width: 35,
-                            decoration: BoxDecoration(
-                                color: kBackGroundColor,
-                                borderRadius: BorderRadius.circular(30)),
-                            child: const Icon(
-                              Icons.qr_code_scanner,
-                              color: kSelectedIconColor,
-                              size: 21,
-                            )),
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => const SelfCheckInHome(),
-                            ),
-                          );
+                      padding: const EdgeInsets.only(top: 1.5, left: 9),
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.toNamed(Routes.notificationPage);
                         },
+                        child: Container(
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color.fromARGB(15, 0, 0, 0),
+                                  blurRadius: 10.0,
+                                ),
+                              ]),
+                          margin: const EdgeInsets.only(right: 14),
+                          child: Image.asset(
+                            "assets/icons/notification.png",
+                            scale: 2.1,
+                          ),
+                        ),
                       ),
                     ),
                     Padding(
@@ -109,24 +108,24 @@ class _MessageAppBarState extends State<MessageAppBar> {
                         ),
                       )),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Get.toNamed(Routes.notificationPage);
+                    IconButton(
+                      icon: ClipOval(
+                        child: Material(
+                            child: Image.asset(
+                          "assets/images/blank_profile.png",
+                          width: 30,
+                          height: 30,
+                          errorBuilder: (context, error, stackTrace) =>
+                              Image.asset(
+                            "assets/images/blank_profile.png",
+                            fit: BoxFit.fill,
+                          ),
+                          fit: BoxFit.cover,
+                        )),
+                      ),
+                      onPressed: () {
+                        Get.toNamed(Routes.profilePage);
                       },
-                      child: Container(
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Color.fromARGB(15, 0, 0, 0),
-                                  blurRadius: 10.0,
-                                ),
-                              ]),
-                          margin: const EdgeInsets.only(right: 14),
-                          child: Image.asset(
-                            "assets/icons/notification.png",
-                            scale: 2.2,
-                          )),
                     ),
                   ],
                 ),
@@ -161,7 +160,7 @@ class _MessageAppBarState extends State<MessageAppBar> {
                   controller: searchController,
                   decoration: InputDecoration(
                     errorMaxLines: 1,
-                    hintText: "Search",
+                    hintText: "Search Lastname",
                     prefixIcon: Image.asset(
                       'assets/icons/discover_icon.png',
                       scale: 2.5,

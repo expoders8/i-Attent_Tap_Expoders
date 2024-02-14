@@ -202,19 +202,25 @@ class _EventViewPageState extends State<EventViewPage> {
                                                   //   size: 18,
                                                   // ),
                                                   const SizedBox(width: 2),
-                                                  Text(
-                                                    data.venue == ""
-                                                        ? "N/A"
-                                                        : data.venue.toString(),
-                                                    style: const TextStyle(
-                                                        color: kPrimaryColor,
-                                                        fontSize: 12,
-                                                        fontFamily:
-                                                            kCircularStdNormal),
-                                                  ),
+                                                  data.venue == ""
+                                                      ? Container()
+                                                      : Text(
+                                                          data.venue == ""
+                                                              ? "N/A"
+                                                              : data.venue
+                                                                  .toString(),
+                                                          style: const TextStyle(
+                                                              color:
+                                                                  kPrimaryColor,
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  kCircularStdNormal),
+                                                        ),
                                                 ],
                                               ),
-                                              const SizedBox(height: 8),
+                                              SizedBox(
+                                                  height:
+                                                      data.venue == "" ? 0 : 8),
                                               Row(
                                                 children: [
                                                   const Icon(
@@ -501,11 +507,11 @@ class _EventViewPageState extends State<EventViewPage> {
                       thickness: 0.8,
                       color: kDividerColor,
                     ),
-                    buildRemindersTime("Remind me 10 min before", title,
+                    buildRemindersTime("Remind me in 10 minutes", title,
                         description, location, startDate, endDate, eventId),
-                    buildRemindersTime("Remind me 20 min before", title,
+                    buildRemindersTime("Remind me in 20 minutes", title,
                         description, location, startDate, endDate, eventId),
-                    buildRemindersTime("Remind me 30 min before", title,
+                    buildRemindersTime("Remind me in 30 minutes", title,
                         description, location, startDate, endDate, eventId),
                     buildRemindersTime("No reminder", title, description,
                         location, startDate, endDate, eventId),
@@ -525,11 +531,11 @@ class _EventViewPageState extends State<EventViewPage> {
         LoaderX.show(context, 60.0, 60.0);
         notificationService
             .addReminder(
-                time == "Remind me 10 min before"
+                time == "Remind me in 10 minutes"
                     ? 10
-                    : time == "Remind me 20 min before"
+                    : time == "Remind me in 20 minutes"
                         ? 20
-                        : time == "Remind me 30 min before"
+                        : time == "Remind me in 30 minutes"
                             ? 20
                             : 0,
                 0,

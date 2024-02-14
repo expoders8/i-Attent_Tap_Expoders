@@ -37,8 +37,8 @@ class _CreateActivityState extends State<CreateActivity> {
       pickedEndDate = "",
       pickedEndTime = "",
       newStartTime = "",
-      selectStartdate = "YYYY/MM/DD",
-      selectEnddate = "YYYY/MM/DD",
+      selectStartdate = "MM/DD/YYYY",
+      selectEnddate = "MM/DD/YYYY",
       newEndTime = "";
   var selectStartTime = "Time";
   var selectEndTime = "Time";
@@ -293,8 +293,10 @@ class _CreateActivityState extends State<CreateActivity> {
                                   onConfirm: (date) {
                                     String formattedDate =
                                         DateFormat('yyyy-MM-dd').format(date);
+                                    String selectedFormattedDate =
+                                        DateFormat('MM-dd-yyyy').format(date);
                                     setState(() {
-                                      selectStartdate = formattedDate;
+                                      selectStartdate = selectedFormattedDate;
                                       pickedStartDate = formattedDate;
                                       newStartTime = formattedDate;
                                       startDateError = false;
@@ -310,7 +312,7 @@ class _CreateActivityState extends State<CreateActivity> {
                                 children: [
                                   Text(
                                     selectStartdate == ""
-                                        ? "YYYY/MM/DD"
+                                        ? "MM/DD/YYYY"
                                         : selectStartdate,
                                     style: const TextStyle(
                                       fontFamily: kCircularStdBook,
@@ -493,8 +495,10 @@ class _CreateActivityState extends State<CreateActivity> {
                                   onConfirm: (date) {
                                     String formattedDate =
                                         DateFormat('yyyy-MM-dd').format(date);
+                                    String selectedFormattedDate =
+                                        DateFormat('MM-dd-yyyy').format(date);
                                     setState(() {
-                                      selectEnddate = formattedDate;
+                                      selectEnddate = selectedFormattedDate;
                                       pickedEndDate = formattedDate;
                                       newEndTime = formattedDate;
                                       // endDateError = false;
@@ -510,7 +514,7 @@ class _CreateActivityState extends State<CreateActivity> {
                                 children: [
                                   Text(
                                     selectEnddate == ""
-                                        ? "YYYY/MM/DD"
+                                        ? "MM/DD/YYYY"
                                         : selectEnddate,
                                     style: const TextStyle(
                                       fontFamily: kCircularStdBook,
@@ -644,7 +648,7 @@ class _CreateActivityState extends State<CreateActivity> {
                 ),
                 buildTextWidget("Location"),
                 buildTextField(
-                  "Enter",
+                  "Type your location",
                   locationcontroller,
                   false,
                 ),
@@ -794,9 +798,9 @@ class _CreateActivityState extends State<CreateActivity> {
                       thickness: 0.8,
                       color: kDividerColor,
                     ),
-                    buildRemindersTime("Remind me 10 min before"),
-                    buildRemindersTime("Remind me 20 min before"),
-                    buildRemindersTime("Remind me 30 min before"),
+                    buildRemindersTime("Remind me in 10 minutes"),
+                    buildRemindersTime("Remind me in 20 minutes"),
+                    buildRemindersTime("Remind me in 30 minutes"),
                     buildRemindersTime("No reminder"),
                   ],
                 )),
@@ -813,9 +817,9 @@ class _CreateActivityState extends State<CreateActivity> {
         LoaderX.show(context, 60.0, 60.0);
         notificationService
             .addReminder(
-                time == "Remind me 10 min before"
+                time == "Remind me in 10 minutes"
                     ? 10
-                    : time == "Remind me 20 min before"
+                    : time == "Remind me in 20 minutes"
                         ? 20
                         : time == "Remind me 30 min before"
                             ? 20

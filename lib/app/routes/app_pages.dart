@@ -1,3 +1,4 @@
+import 'package:confrance_expoders/app/ui/profile/profile.dart';
 import 'package:get/get.dart';
 
 import '../ui/about/about.dart';
@@ -29,6 +30,10 @@ class AppPages {
     GetPage(
       name: _Paths.createActivity,
       page: () => const CreateActivity(),
+    ),
+    GetPage(
+      name: _Paths.profilePage,
+      page: () => const ProfilePage(),
     ),
     GetPage(
       name: _Paths.eventDetailsPage,

@@ -28,6 +28,13 @@ class _ConferenceDetailPageState extends State<ConferenceDetailsPage> {
   @override
   void initState() {
     getDetailsConferanceController.fetchStoryDetail();
+    final arguments = Get.arguments;
+    final bool isConferenceActive = arguments['isConferenceActive'];
+    if (isConferenceActive) {
+      setState(() {
+        selectedsession = "Sponsors";
+      });
+    }
     super.initState();
   }
 

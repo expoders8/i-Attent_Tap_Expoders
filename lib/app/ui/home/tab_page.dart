@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 import '../home/home.dart';
-import '../profile/profile.dart';
 import '../myAgenda/my_agenda.dart';
 import '../message/message_page.dart';
+import '../widgets/selfCheckIdHome.dart';
 import '../../controller/tab_controller.dart';
 import '../crerate_agenda/create_activity.dart';
 import '../../../config/constant/font_constant.dart';
@@ -60,7 +60,7 @@ class _TabPageState extends State<TabPage> {
                 MyAgendaPage(),
                 CreateActivity(),
                 MessagePage(),
-                ProfilePage(),
+                SelfCheckInHome(),
               ],
             ),
           ),
@@ -155,18 +155,22 @@ class _TabPageState extends State<TabPage> {
                 ),
                 label: 'Message',
               ),
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0, top: 3),
-                  child: Image.asset(
-                    "assets/icons/profile_icon.png",
-                    color: landingPageController.tabIndex.value == 4
-                        ? kSelectedIconColor
-                        : kIconColor,
-                    scale: 1.5,
+                  padding: EdgeInsets.only(bottom: 7.0, top: 3),
+                  child: Icon(
+                    Icons.qr_code_scanner,
+                    size: 20,
                   ),
+                  // Image.asset(
+                  //   "assets/icons/profile_icon.png",
+                  //   color: landingPageController.tabIndex.value == 4
+                  //       ? kSelectedIconColor
+                  //       : kIconColor,
+                  //   scale: 1.5,
+                  // ),
                 ),
-                label: 'Profile',
+                label: 'Check-in',
                 backgroundColor: kBackGroundColor,
               ),
             ],

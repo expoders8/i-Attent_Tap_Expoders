@@ -6,6 +6,7 @@ abstract class Routes {
   static const tabPage = _Paths.tabPage;
   static const aboutPage = _Paths.aboutPage;
   static const signInScreen = _Paths.signInScreen;
+  static const profilePage = _Paths.profilePage;
   static const galleryScreen = _Paths.galleryScreen;
   static const createActivity = _Paths.createActivity;
   static const eventDetailsPage = _Paths.eventDetailsPage;
@@ -21,6 +22,7 @@ abstract class _Paths {
   static const tabPage = '/tabPage';
   static const aboutPage = '/aboutPage';
   static const signInScreen = '/signInScreen';
+  static const profilePage = '/profilePage';
   static const galleryScreen = '/galleryScreen';
   static const createActivity = '/createActivity';
   static const eventDetailsPage = '/eventDetailsPage';

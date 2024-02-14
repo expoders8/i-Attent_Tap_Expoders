@@ -32,7 +32,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
         backgroundColor: kAppBarColor,
         centerTitle: true,
         title: const Text(
-          "Attachments",
+          "Handouts",
           style: TextStyle(color: kBackGroundColor),
         ),
         leading: IconButton(

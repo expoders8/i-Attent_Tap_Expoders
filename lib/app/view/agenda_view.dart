@@ -43,7 +43,7 @@ class _AgendaViewPageState extends State<AgendaViewPage> {
                   child: SizedBox(
                     width: Get.width - 80,
                     child: const Text(
-                      "Agenda not Found",
+                      "No Agenda",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: kPrimaryColor,
@@ -268,7 +268,7 @@ class _AgendaViewPageState extends State<AgendaViewPage> {
                     } else {
                       return const Center(
                         child: Text(
-                          "Agenda not Found",
+                          "No Agenda",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: kPrimaryColor,
@@ -283,7 +283,7 @@ class _AgendaViewPageState extends State<AgendaViewPage> {
             } else {
               return const Center(
                 child: Text(
-                  "Agenda not Found",
+                  "No Agenda",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: kPrimaryColor,

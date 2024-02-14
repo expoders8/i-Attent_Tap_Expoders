@@ -58,11 +58,12 @@ class GetDetailsEventController extends GetxController {
   }
 
   fetchEventDetail() async {
+    var token = getStorage.read('authToken');
     try {
       isLoading(true);
       var response = await http.get(
-        Uri.parse("$baseUrl/api/Event/GetById/${eventId.toString()}"),
-      );
+          Uri.parse("$baseUrl/api/Event/GetById/${eventId.toString()}"),
+          headers: {"Authorization": "Bearer $token"});
       if (response.statusCode == 200) {
         detailEventModel =
             GetEventByIdModel.fromJson(jsonDecode(response.body));

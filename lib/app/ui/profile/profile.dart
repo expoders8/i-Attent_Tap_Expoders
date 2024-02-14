@@ -11,7 +11,6 @@ import '../../../config/constant/constant.dart';
 import '../../services/firebase_auth_service.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
-import '../widgets/selfCheckIdHome.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -71,69 +70,15 @@ class _ProfilePageState extends State<ProfilePage> {
             const Text("My Profile", style: TextStyle(color: kBackGroundColor)),
         centerTitle: true,
         leading: IconButton(
-          icon: Container(
-              height: 35,
-              width: 35,
-              decoration: BoxDecoration(
-                  color: kBackGroundColor,
-                  borderRadius: BorderRadius.circular(30)),
-              child: const Icon(
-                Icons.qr_code_scanner,
-                color: kSelectedIconColor,
-                size: 21,
-              )),
+          icon: const Icon(
+            Icons.arrow_back,
+            color: kWhiteColor,
+          ),
           onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => const SelfCheckInHome(),
-              ),
-            );
+            Get.back();
           },
         ),
-        actions: <Widget>[
-          Theme(
-            data: ThemeData(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-            ),
-            child: GestureDetector(
-              onTap: () {
-                Get.toNamed(Routes.notificationPage);
-              },
-              child: Container(
-                  decoration:
-                      const BoxDecoration(shape: BoxShape.circle, boxShadow: [
-                    BoxShadow(
-                      color: Color.fromARGB(15, 0, 0, 0),
-                      blurRadius: 10.0,
-                    ),
-                  ]),
-                  margin: const EdgeInsets.only(right: 14),
-                  child: Image.asset(
-                    "assets/icons/notification.png",
-                    scale: 2.2,
-                  )),
-            ),
-          ),
-        ],
       ),
-      // appBar: AppBar(
-      //   backgroundColor: kAppBarColor,
-      //   leadingWidth: 60,
-      //   automaticallyImplyLeading: false,
-      //   title: const Text(
-      //     "My Profile",
-      //     style: TextStyle(color: kBackGroundColor),
-      //   ),
-      //   centerTitle: true,
-      //   bottom: PreferredSize(
-      //     preferredSize: const Size.fromHeight(1.0),
-      //     child: Container(
-      //       color: kDividerColor,
-      //       height: 1.0,
-      //     ),
-      //   ),
-      // ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

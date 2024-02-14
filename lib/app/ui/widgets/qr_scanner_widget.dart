@@ -1,8 +1,8 @@
-import 'package:confrance_expoders/config/constant/color_constant.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+
+import '../../../config/constant/color_constant.dart';
 
 class QrCodeScanner extends StatefulWidget {
   const QrCodeScanner({super.key});

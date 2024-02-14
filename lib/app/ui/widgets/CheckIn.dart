@@ -1,15 +1,18 @@
 // import 'package:barcode_scan/barcode_scan.dart';
-import 'package:confrance_expoders/config/constant/color_constant.dart';
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-import '../../../config/provider/snackbar_provider.dart';
-import '../../../config/utils/DialogUtils.dart';
-import '../../models/CheckInReqRes.dart';
 import '../../models/HttpResponse.dart';
+import '../../models/CheckInReqRes.dart';
+import '../../../config/constant/constant.dart';
+import '../../../config/utils/DialogUtils.dart';
+import '../../../config/constant/color_constant.dart';
 import '../../services/self_check_in_trycheckid.dart';
+import '../../../config/provider/snackbar_provider.dart';
 
 class CheckIn extends StatefulWidget {
   const CheckIn({super.key});
@@ -20,7 +23,6 @@ class CheckIn extends StatefulWidget {
 
 class _CheckInState extends State<CheckIn> with SingleTickerProviderStateMixin {
   bool _isLoading = false;
-
   final _formKey = GlobalKey<FormState>();
 
   late CheckInReqRes req = CheckInReqRes();
@@ -29,23 +31,29 @@ class _CheckInState extends State<CheckIn> with SingleTickerProviderStateMixin {
   final _focusNodeOrgId = FocusNode();
 
   final _focusNodeEmail = FocusNode();
-
   final _focusNodePin = FocusNode();
-
   final _emailIdController = TextEditingController();
-
   final _orgIdController = TextEditingController();
-
   final _eventPinController = TextEditingController();
 
   @override
   void initState() {
+    getUser();
     super.initState();
+  }
 
-    // _req.orgId = ref.read(prefsProvider).getOrgId();
-    // _orgIdController.text = _req.orgId ?? '';
-    // _req.email = ref.read(prefsProvider).getLastEmail();
-    // _emailIdController.text = _req.email ?? '';
+  Future getUser() async {
+    var data = getStorage.read('user');
+    var getUserData = jsonDecode(data);
+    if (getUserData != null) {
+      setState(() {
+        _orgIdController.text = getUserData['orgID'] ?? "";
+        _emailIdController.text = getUserData['emailAddress'] ?? "";
+      });
+    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FocusScope.of(context).requestFocus(_focusNodePin);
+    });
   }
 
   @override

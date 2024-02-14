@@ -36,8 +36,10 @@ class GetEventByIdDataModel {
   String? roomName;
   String? venue;
   String? attendees;
+  String? speakers;
   List<LstAttendees>? lstAttendees;
   List<LstSpeakers>? lstSpeakers;
+  bool? isAgendaExist;
 
   GetEventByIdDataModel(
       {this.id,
@@ -48,8 +50,10 @@ class GetEventByIdDataModel {
       this.roomName,
       this.venue,
       this.attendees,
+      this.speakers,
       this.lstAttendees,
-      this.lstSpeakers});
+      this.lstSpeakers,
+      this.isAgendaExist});
 
   GetEventByIdDataModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -60,6 +64,7 @@ class GetEventByIdDataModel {
     roomName = json['roomName'];
     venue = json['venue'];
     attendees = json['attendees'];
+    speakers = json['speakers'];
     if (json['lstAttendees'] != null) {
       lstAttendees = <LstAttendees>[];
       json['lstAttendees'].forEach((v) {
@@ -72,6 +77,7 @@ class GetEventByIdDataModel {
         lstSpeakers!.add(LstSpeakers.fromJson(v));
       });
     }
+    isAgendaExist = json['isAgendaExist'];
   }
 
   Map<String, dynamic> toJson() {
@@ -84,12 +90,15 @@ class GetEventByIdDataModel {
     data['roomName'] = roomName;
     data['venue'] = venue;
     data['attendees'] = attendees;
+    data['speakers'] = speakers;
+    data['isAgendaExist'] = isAgendaExist;
     if (lstAttendees != null) {
       data['lstAttendees'] = lstAttendees!.map((v) => v.toJson()).toList();
     }
     if (lstSpeakers != null) {
       data['lstSpeakers'] = lstSpeakers!.map((v) => v.toJson()).toList();
     }
+    data['isAgendaExist'] = isAgendaExist;
     return data;
   }
 }

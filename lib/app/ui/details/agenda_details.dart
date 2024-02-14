@@ -177,7 +177,7 @@ class _AgendaDetailsPageState extends State<AgendaDetailsPage> {
                                       ),
                                       const SizedBox(height: 13),
                                       const Text(
-                                        "Attachments",
+                                        "Handouts",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           color: kSecondaryPrimaryColor,

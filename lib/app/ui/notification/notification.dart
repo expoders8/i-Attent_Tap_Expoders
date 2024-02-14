@@ -31,7 +31,7 @@ class _NotificationPageState extends State<NotificationPage> {
           },
         ),
         title: const Text(
-          "Notification",
+          "Announcement",
           style: TextStyle(color: kBackGroundColor),
         ),
         centerTitle: true,
@@ -48,7 +48,7 @@ class _NotificationPageState extends State<NotificationPage> {
                   child: SizedBox(
                     width: Get.width - 80,
                     child: const Text(
-                      "No Notification",
+                      "No Announcement",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: kPrimaryColor,
@@ -58,10 +58,11 @@ class _NotificationPageState extends State<NotificationPage> {
                   ),
                 );
               } else {
-                return Expanded(
+                return SizedBox(
+                  height: Get.height,
+                  width: Get.width,
                   child: ListView.builder(
-                    padding: const EdgeInsets.only(top: 10),
-                    scrollDirection: Axis.vertical,
+                    // padding: const EdgeInsets.only(top: 10),
                     itemCount: getAllNotificationController
                         .notificationList[0].data!.length,
                     itemBuilder: (context, index) {
@@ -157,7 +158,7 @@ class _NotificationPageState extends State<NotificationPage> {
                       } else {
                         return const Center(
                           child: Text(
-                            "No Notification",
+                            "No Announcement",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: kPrimaryColor,
@@ -173,7 +174,7 @@ class _NotificationPageState extends State<NotificationPage> {
             } else {
               return const Center(
                 child: Text(
-                  "No Notification",
+                  "No Announcement",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: kPrimaryColor,

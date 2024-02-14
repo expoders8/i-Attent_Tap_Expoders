@@ -1,10 +1,12 @@
 // ignore: file_names
-import 'package:confrance_expoders/app/ui/widgets/qr_scanner_widget.dart';
-import 'package:confrance_expoders/config/constant/color_constant.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+
 import 'CheckIn.dart';
-import 'DotsIndicator.dart';
+import 'qr_scanner_widget.dart';
+import '../../routes/app_pages.dart';
+import '../../../config/constant/font_constant.dart';
+import '../../../config/constant/color_constant.dart';
 
 class SelfCheckInHome extends StatefulWidget {
   const SelfCheckInHome({super.key});
@@ -16,142 +18,224 @@ class SelfCheckInHome extends StatefulWidget {
 }
 
 class _HomeState extends State<SelfCheckInHome> {
-  late final _data = [1, 2, 3, 4];
-
-  late final _pageController = PageController();
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackGroundColor,
       appBar: AppBar(
         backgroundColor: kAppBarColor,
-        title: const Text(
-          'i-Attend Self Check-in',
-          style: TextStyle(color: kWhiteColor),
-        ),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: kWhiteColor,
-          ),
-          onPressed: () {
-            Get.back();
-          },
-        ),
-      ),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Expanded(
-              child: Stack(
-                children: <Widget>[
-                  PageView.builder(
-                    controller: _pageController,
-                    itemCount: _data.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return SliderPage(index + 1);
-                    },
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      height: 34.0,
-                      color: Colors.grey[800]?.withOpacity(0.25),
-                      padding: const EdgeInsets.all(8.0),
-                      child: DotsIndicator(
-                        controller: _pageController,
-                        itemCount: _data.length,
-                        color: Colors.white,
-                        onPageSelected: (int page) {
-                          _pageController.animateToPage(
-                            page,
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.ease,
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ],
+        automaticallyImplyLeading: false,
+        title: const Text("i-Attend Self Check-in",
+            style: TextStyle(color: kBackGroundColor)),
+        centerTitle: true,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 6.0),
+          child: GestureDetector(
+            onTap: () {
+              Get.toNamed(Routes.notificationPage);
+            },
+            child: Container(
+              decoration:
+                  const BoxDecoration(shape: BoxShape.circle, boxShadow: [
+                BoxShadow(
+                  color: Color.fromARGB(15, 0, 0, 0),
+                  blurRadius: 10.0,
+                ),
+              ]),
+              margin: const EdgeInsets.only(right: 14),
+              child: Image.asset(
+                "assets/icons/notification.png",
+                scale: 2.1,
               ),
             ),
-            Row(
-              children: [
-                Expanded(
-                  flex: 6,
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 18,
-                        horizontal: 4,
-                      ),
-                      backgroundColor: const Color(0xFF92140c),
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(0),
-                      ),
+          ),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: ClipOval(
+              child: Material(
+                  child: Image.asset(
+                "assets/images/blank_profile.png",
+                width: 30,
+                height: 30,
+                errorBuilder: (context, error, stackTrace) => Image.asset(
+                  "assets/images/blank_profile.png",
+                  fit: BoxFit.fill,
+                ),
+                fit: BoxFit.cover,
+              )),
+            ),
+            onPressed: () {
+              Get.toNamed(Routes.profilePage);
+            },
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 3),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: kAppBarColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
-                    child: Text(
-                      'Scan QR CODE',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(color: Colors.white),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => const QrCodeScanner(),
-                        ),
-                      );
-                    },
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const QrCodeScanner(),
+                      ),
+                    );
+                  },
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.qr_code_scanner_outlined,
+                        color: kWhiteColor,
+                        size: 21,
+                      ),
+                      SizedBox(width: 20),
+                      Text(
+                        "Scan QR CODE",
+                        style: TextStyle(
+                            color: kWhiteColor,
+                            fontFamily: kCircularStdNormal,
+                            fontSize: 17),
+                      ),
+                      SizedBox(width: 30),
+                    ],
                   ),
                 ),
-                Expanded(
-                  flex: 4,
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 18,
-                        horizontal: 4,
-                      ),
-                      backgroundColor: Colors.black,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(0),
-                      ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: kButtonColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
-                    child: Text(
-                      'Enter PIN',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(color: Colors.white),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => const CheckIn(),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const CheckIn(),
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 38.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/icons/pencil.png",
+                          color: kWhiteColor,
+                          height: 26,
+                          width: 26,
                         ),
-                      );
-                    },
+                        const SizedBox(width: 18),
+                        const Text(
+                          "Enter PIN",
+                          style: TextStyle(
+                              color: kWhiteColor,
+                              fontFamily: kCircularStdNormal,
+                              fontSize: 17),
+                        ),
+                        const SizedBox(width: 30),
+                      ],
+                    ),
                   ),
                 ),
-              ],
+              ),
             ),
           ],
         ),
       ),
+      // SafeArea(
+      //   child: Column(
+      //     crossAxisAlignment: CrossAxisAlignment.stretch,
+      //     children: [
+      //       Row(
+      //         children: [
+      //           Expanded(
+      //             flex: 6,
+      //             child: TextButton(
+      //               style: TextButton.styleFrom(
+      //                 padding: const EdgeInsets.symmetric(
+      //                   vertical: 18,
+      //                   horizontal: 4,
+      //                 ),
+      //                 backgroundColor: const Color(0xFF92140c),
+      //                 foregroundColor: Colors.white,
+      //                 shape: RoundedRectangleBorder(
+      //                   borderRadius: BorderRadius.circular(0),
+      //                 ),
+      //               ),
+      //               child: Text(
+      //                 'Scan QR CODE',
+      //                 textAlign: TextAlign.center,
+      //                 style: Theme.of(context)
+      //                     .textTheme
+      //                     .titleLarge
+      //                     ?.copyWith(color: Colors.white),
+      //               ),
+      //               onPressed: () {
+      //                 Navigator.of(context).push(
+      //                   MaterialPageRoute(
+      //                     builder: (_) => const QrCodeScanner(),
+      //                   ),
+      //                 );
+      //               },
+      //             ),
+      //           ),
+      //           Expanded(
+      //             flex: 4,
+      //             child: TextButton(
+      //               style: TextButton.styleFrom(
+      //                 padding: const EdgeInsets.symmetric(
+      //                   vertical: 18,
+      //                   horizontal: 4,
+      //                 ),
+      //                 backgroundColor: Colors.black,
+      //                 foregroundColor: Colors.white,
+      //                 shape: RoundedRectangleBorder(
+      //                   borderRadius: BorderRadius.circular(0),
+      //                 ),
+      //               ),
+      //               child: Text(
+      //                 'Enter PIN',
+      //                 textAlign: TextAlign.center,
+      //                 style: Theme.of(context)
+      //                     .textTheme
+      //                     .titleLarge
+      //                     ?.copyWith(color: Colors.white),
+      //               ),
+      //               onPressed: () {
+      //                 Navigator.of(context).push(
+      //                   MaterialPageRoute(
+      //                     builder: (_) => const CheckIn(),
+      //                   ),
+      //                 );
+      //               },
+      //             ),
+      //           ),
+      //         ],
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }
