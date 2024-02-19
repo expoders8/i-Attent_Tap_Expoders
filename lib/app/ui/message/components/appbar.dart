@@ -57,6 +57,7 @@ class _MessageAppBarState extends State<MessageAppBar> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -133,7 +134,11 @@ class _MessageAppBarState extends State<MessageAppBar> {
             ],
           ),
           Positioned(
-            top: Platform.isAndroid ? 85 : 85,
+            top: Platform.isAndroid
+                ? 85
+                : size.width > 500
+                    ? 95
+                    : 85,
             left: 15,
             right: 15,
             child: Container(

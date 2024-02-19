@@ -37,6 +37,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return GetBuilder<GetAllConferanceController>(
         init: GetAllConferanceController(),
         builder: (controller) {
@@ -113,317 +114,328 @@ class _HomePageState extends State<HomePage> {
                         ),
                       );
                     } else {
-                      return Column(
-                        children: [
-                          Expanded(
-                            child: ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              itemCount:
-                                  controller.conferanceList[0].data!.length,
-                              itemBuilder: (context, index) {
-                                var discoverData =
-                                    controller.conferanceList[0].data!;
+                      return SizedBox(
+                        width: Get.width,
+                        height: size.width > 500
+                            ? Get.height - 190
+                            : Get.height - 225,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              width: size.width > 500 ? 600 : Get.width,
+                              height: size.width > 500
+                                  ? Get.height - 190
+                                  : Get.height - 225,
+                              child: Center(
+                                child: ListView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  itemCount:
+                                      controller.conferanceList[0].data!.length,
+                                  itemBuilder: (context, index) {
+                                    var discoverData =
+                                        controller.conferanceList[0].data!;
 
-                                if (discoverData.isNotEmpty) {
-                                  var data = discoverData[index];
-                                  String dateStartString =
-                                      data.startDate.toString();
-                                  String dateEndString =
-                                      data.endDate.toString();
+                                    if (discoverData.isNotEmpty) {
+                                      var data = discoverData[index];
+                                      String dateStartString =
+                                          data.startDate.toString();
+                                      String dateEndString =
+                                          data.endDate.toString();
 
-                                  DateTime myDateStartTime =
-                                      DateTime.parse(dateStartString);
-                                  DateTime myDateEndTime =
-                                      DateTime.parse(dateEndString);
+                                      DateTime myDateStartTime =
+                                          DateTime.parse(dateStartString);
+                                      DateTime myDateEndTime =
+                                          DateTime.parse(dateEndString);
 
-                                  DateTime utcStartTime =
-                                      myDateStartTime.toUtc();
-                                  DateTime utcEndTime = myDateEndTime.toUtc();
+                                      DateTime utcStartTime =
+                                          myDateStartTime.toUtc();
+                                      DateTime utcEndTime =
+                                          myDateEndTime.toUtc();
 
-                                  String startTime =
-                                      DateFormat('MMM d, yyyy hh:mm a')
-                                          .format(utcStartTime);
-                                  String endTime =
-                                      DateFormat('MMM d, yyyy hh:mm a')
-                                          .format(utcEndTime);
-                                  return GestureDetector(
-                                    onTap: () {
-                                      getDetailsConferanceController
-                                          .conferanceIdString(
-                                              data.id.toString());
-                                      getAllEventsController
-                                          .selectedIdString(data.id.toString());
-                                      getAllEventsController.selectedDateString(
-                                          data.startDate.toString());
-                                      getAllEventsController.fetchAllEvents();
-                                      Get.toNamed(
-                                        Routes.conferenceDetailsPage,
-                                        arguments: {
-                                          'isConferenceActive': false
-                                        },
-                                      );
-                                    },
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 15, vertical: 7),
-                                          child: Card(
-                                            elevation: 6,
-                                            shadowColor: const Color.fromARGB(
-                                                50, 0, 0, 0),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  color: kCardColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          14.0)),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  SizedBox(
-                                                    width: Get.width,
-                                                    height: 180,
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          const BorderRadius
-                                                              .only(
-                                                        topLeft:
-                                                            Radius.circular(
-                                                                10.0),
-                                                        topRight:
-                                                            Radius.circular(
-                                                                10.0),
-                                                      ),
-                                                      child: Image.network(
-                                                        data.photo.toString(),
-                                                        fit: BoxFit.cover,
-                                                        errorBuilder: (context,
-                                                                error,
-                                                                stackTrace) =>
-                                                            Image.asset(
-                                                          "assets/images/conference_default.jpg",
-                                                          fit: BoxFit.fill,
-                                                        ),
-                                                        loadingBuilder:
-                                                            (BuildContext
-                                                                    context,
-                                                                Widget child,
-                                                                ImageChunkEvent?
-                                                                    loadingProgress) {
-                                                          if (loadingProgress ==
-                                                              null) {
-                                                            return child;
-                                                          }
-                                                          return SizedBox(
-                                                            width: 50,
-                                                            height: 50,
-                                                            child: Center(
-                                                              child:
-                                                                  CircularProgressIndicator(
-                                                                color:
-                                                                    kPrimaryColor,
-                                                                value: loadingProgress
-                                                                            .expectedTotalBytes !=
-                                                                        null
-                                                                    ? loadingProgress
-                                                                            .cumulativeBytesLoaded /
-                                                                        loadingProgress
-                                                                            .expectedTotalBytes!
-                                                                    : null,
-                                                              ),
-                                                            ),
-                                                          );
-                                                        },
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            10),
+                                      String startTime =
+                                          DateFormat('MMM d, yyyy hh:mm a')
+                                              .format(utcStartTime);
+                                      String endTime =
+                                          DateFormat('MMM d, yyyy hh:mm a')
+                                              .format(utcEndTime);
+                                      return Center(
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            getDetailsConferanceController
+                                                .conferanceIdString(
+                                                    data.id.toString());
+                                            getAllEventsController
+                                                .selectedIdString(
+                                                    data.id.toString());
+                                            getAllEventsController
+                                                .selectedDateString(
+                                                    data.startDate.toString());
+                                            getAllEventsController
+                                                .fetchAllEvents();
+                                            Get.toNamed(
+                                              Routes.conferenceDetailsPage,
+                                              arguments: {
+                                                'isConferenceActive': false
+                                              },
+                                            );
+                                          },
+                                          child: Column(
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 15,
+                                                        vertical: 7),
+                                                child: Card(
+                                                  elevation: 6,
+                                                  shadowColor:
+                                                      const Color.fromARGB(
+                                                          50, 0, 0, 0),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                        color: kCardColor,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                    14.0)),
                                                     child: Column(
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
-                                                        Text(
-                                                          data.name.toString(),
-                                                          maxLines: 2,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          textAlign:
-                                                              TextAlign.left,
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 17.0,
-                                                            fontFamily:
-                                                                kCircularStdMedium,
-                                                            color:
-                                                                kPrimaryColor,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          "$startTime - $endTime",
-                                                          style: const TextStyle(
-                                                              color:
-                                                                  kTextSecondaryColor,
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontFamily:
-                                                                  kWorkSans),
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 10),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            data.venue == ""
-                                                                ? Container()
-                                                                : Row(
-                                                                    children: [
-                                                                      const Icon(
-                                                                        Icons
-                                                                            .location_on_outlined,
-                                                                        color:
-                                                                            kPrimaryColor,
-                                                                        size:
-                                                                            18,
-                                                                      ),
-                                                                      Text(
-                                                                        data.venue
-                                                                            .toString(),
-                                                                        style: const TextStyle(
-                                                                            color:
-                                                                                kPrimaryColor,
-                                                                            fontSize:
-                                                                                14,
-                                                                            fontFamily:
-                                                                                kCircularStdNormal),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .only(
-                                                                      left:
-                                                                          20.0),
-                                                              child: Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  Text(
-                                                                    "+${data.eventCount} Sessions",
-                                                                    style: const TextStyle(
-                                                                        color:
-                                                                            kPrimaryColor,
-                                                                        fontSize:
-                                                                            13,
-                                                                        fontFamily:
-                                                                            kCircularStdBook),
-                                                                  ),
-                                                                  const SizedBox(
-                                                                      width:
-                                                                          10),
-                                                                ],
-                                                              ),
+                                                        SizedBox(
+                                                          width: Get.width,
+                                                          height: 180,
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                const BorderRadius
+                                                                    .only(
+                                                              topLeft: Radius
+                                                                  .circular(
+                                                                      10.0),
+                                                              topRight: Radius
+                                                                  .circular(
+                                                                      10.0),
                                                             ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                getDetailsConferanceController
-                                                                    .conferanceIdString(data
-                                                                        .id
-                                                                        .toString());
-                                                                getAllEventsController
-                                                                    .selectedIdString(data
-                                                                        .id
-                                                                        .toString());
-                                                                getAllEventsController
-                                                                    .selectedDateString(data
-                                                                        .startDate
-                                                                        .toString());
-                                                                getAllEventsController
-                                                                    .fetchAllEvents();
-                                                                Get.toNamed(
-                                                                  Routes
-                                                                      .conferenceDetailsPage,
-                                                                  arguments: {
-                                                                    'isConferenceActive':
-                                                                        true
-                                                                  },
+                                                            child:
+                                                                Image.network(
+                                                              data.photo
+                                                                  .toString(),
+                                                              fit: BoxFit.cover,
+                                                              errorBuilder: (context,
+                                                                      error,
+                                                                      stackTrace) =>
+                                                                  Image.asset(
+                                                                "assets/images/conference_default.jpg",
+                                                                fit:
+                                                                    BoxFit.fill,
+                                                              ),
+                                                              loadingBuilder:
+                                                                  (BuildContext
+                                                                          context,
+                                                                      Widget
+                                                                          child,
+                                                                      ImageChunkEvent?
+                                                                          loadingProgress) {
+                                                                if (loadingProgress ==
+                                                                    null) {
+                                                                  return child;
+                                                                }
+                                                                return SizedBox(
+                                                                  width: 50,
+                                                                  height: 50,
+                                                                  child: Center(
+                                                                    child:
+                                                                        CircularProgressIndicator(
+                                                                      color:
+                                                                          kPrimaryColor,
+                                                                      value: loadingProgress.expectedTotalBytes !=
+                                                                              null
+                                                                          ? loadingProgress.cumulativeBytesLoaded /
+                                                                              loadingProgress.expectedTotalBytes!
+                                                                          : null,
+                                                                    ),
+                                                                  ),
                                                                 );
                                                               },
-                                                              child:
-                                                                  const Padding(
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        right:
-                                                                            10.0),
-                                                                child: Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
-                                                                  children: [
-                                                                    Text(
-                                                                      "Sponsors",
-                                                                      style: TextStyle(
-                                                                          color:
-                                                                              kPrimaryColor,
-                                                                          fontSize:
-                                                                              13,
-                                                                          fontFamily:
-                                                                              kCircularStdBook),
-                                                                    ),
-                                                                    SizedBox(
-                                                                        width:
-                                                                            10),
-                                                                  ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(10),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                data.name
+                                                                    .toString(),
+                                                                maxLines: 2,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .left,
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontSize:
+                                                                      17.0,
+                                                                  fontFamily:
+                                                                      kCircularStdMedium,
+                                                                  color:
+                                                                      kPrimaryColor,
                                                                 ),
                                                               ),
-                                                            ),
-                                                          ],
+                                                              Text(
+                                                                "$startTime - $endTime",
+                                                                style: const TextStyle(
+                                                                    color:
+                                                                        kTextSecondaryColor,
+                                                                    fontSize:
+                                                                        12,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontFamily:
+                                                                        kWorkSans),
+                                                              ),
+                                                              const SizedBox(
+                                                                  height: 10),
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  data.venue ==
+                                                                          ""
+                                                                      ? Container()
+                                                                      : Row(
+                                                                          children: [
+                                                                            const Icon(
+                                                                              Icons.location_on_outlined,
+                                                                              color: kPrimaryColor,
+                                                                              size: 18,
+                                                                            ),
+                                                                            Text(
+                                                                              data.venue.toString(),
+                                                                              style: const TextStyle(color: kPrimaryColor, fontSize: 14, fontFamily: kCircularStdNormal),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                  Padding(
+                                                                    padding: const EdgeInsets
+                                                                        .only(
+                                                                        left:
+                                                                            20.0),
+                                                                    child: Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                        Text(
+                                                                          "+${data.eventCount} Sessions",
+                                                                          style: const TextStyle(
+                                                                              color: kPrimaryColor,
+                                                                              fontSize: 13,
+                                                                              fontFamily: kCircularStdBook),
+                                                                        ),
+                                                                        const SizedBox(
+                                                                            width:
+                                                                                10),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                  GestureDetector(
+                                                                    onTap: () {
+                                                                      getDetailsConferanceController
+                                                                          .conferanceIdString(data
+                                                                              .id
+                                                                              .toString());
+                                                                      getAllEventsController
+                                                                          .selectedIdString(data
+                                                                              .id
+                                                                              .toString());
+                                                                      getAllEventsController.selectedDateString(data
+                                                                          .startDate
+                                                                          .toString());
+                                                                      getAllEventsController
+                                                                          .fetchAllEvents();
+                                                                      Get.toNamed(
+                                                                        Routes
+                                                                            .conferenceDetailsPage,
+                                                                        arguments: {
+                                                                          'isConferenceActive':
+                                                                              true
+                                                                        },
+                                                                      );
+                                                                    },
+                                                                    child:
+                                                                        const Padding(
+                                                                      padding: EdgeInsets.only(
+                                                                          right:
+                                                                              10.0),
+                                                                      child:
+                                                                          Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.center,
+                                                                        children: [
+                                                                          Text(
+                                                                            "Sponsors",
+                                                                            style: TextStyle(
+                                                                                color: kPrimaryColor,
+                                                                                fontSize: 13,
+                                                                                fontFamily: kCircularStdBook),
+                                                                          ),
+                                                                          SizedBox(
+                                                                              width: 10),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
+                                                        const SizedBox(
+                                                            height: 3)
                                                       ],
                                                     ),
                                                   ),
-                                                  const SizedBox(height: 3)
-                                                ],
+                                                ),
                                               ),
-                                            ),
+                                              const SizedBox(
+                                                height: 10,
+                                              )
+                                            ],
                                           ),
                                         ),
-                                        const SizedBox(
-                                          height: 10,
-                                        )
-                                      ],
-                                    ),
-                                  );
-                                } else {
-                                  return const Center(
-                                    child: Text(
-                                      "No Conference",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: kPrimaryColor,
-                                          fontSize: 15,
-                                          fontFamily: kCircularStdMedium),
-                                    ),
-                                  );
-                                }
-                              },
+                                      );
+                                    } else {
+                                      return const Center(
+                                        child: Text(
+                                          "No Conference",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: kPrimaryColor,
+                                              fontSize: 15,
+                                              fontFamily: kCircularStdMedium),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       );
                     }
                   } else {

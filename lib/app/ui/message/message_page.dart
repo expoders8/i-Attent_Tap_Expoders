@@ -16,9 +16,14 @@ class _MessagePageState extends State<MessagePage> {
   String searchQuery = "";
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(Platform.isAndroid ? 110 : 95),
+        preferredSize: Size.fromHeight(Platform.isAndroid
+            ? 110
+            : size.width > 500
+                ? 120
+                : 95),
         child: MessageAppBar(
           callbackSearchQuery: (val) {
             setState(() => searchQuery = val);

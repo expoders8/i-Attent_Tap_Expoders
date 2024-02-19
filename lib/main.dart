@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:status_bar_control/status_bar_control.dart';
 
 import 'app/routes/app_pages.dart';
 import 'config/constant/constant.dart';
@@ -15,6 +16,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await GetStorage.init();
+  statusBarhidden();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   if (getStorage.read('firstTimeLaunch') == null) {
     getStorage.erase();
@@ -33,6 +35,14 @@ void main() async {
       },
     ),
   );
+}
+
+statusBarhidden() async {
+  bool statusBarHidden = false;
+  StatusBarAnimation statusBarAnimation = StatusBarAnimation.NONE;
+  await StatusBarControl.setColor(Colors.transparent, animated: true);
+  return StatusBarControl.setHidden(statusBarHidden,
+      animation: statusBarAnimation);
 }
 
 @pragma('vm:entry-point')

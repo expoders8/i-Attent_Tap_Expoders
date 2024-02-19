@@ -804,6 +804,7 @@ PODS:
   - gRPC-Core/Interface (1.49.1)
   - GTMSessionFetcher/Core (3.2.0)
   - leveldb-library (1.22.2)
+  - MTBBarcodeScanner (5.0.11)
   - nanopb (2.30909.1):
     - nanopb/decode (= 2.30909.1)
     - nanopb/encode (= 2.30909.1)
@@ -813,6 +814,9 @@ PODS:
     - Flutter
     - FlutterMacOS
   - PromisesObjC (2.3.1)
+  - qr_code_scanner (0.2.0):
+    - Flutter
+    - MTBBarcodeScanner
   - RecaptchaInterop (100.0.0)
   - shared_preferences_foundation (0.0.1):
     - Flutter
@@ -820,9 +824,9 @@ PODS:
   - speech_to_text (0.0.1):
     - Flutter
     - Try
-  - Try (2.1.1)
-  - url_launcher_ios (0.0.1):
+  - status_bar_control (3.2.1):
     - Flutter
+  - Try (2.1.1)
 
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
@@ -835,9 +839,10 @@ DEPENDENCIES:
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - flutter_pdfview (from `.symlinks/plugins/flutter_pdfview/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - qr_code_scanner (from `.symlinks/plugins/qr_code_scanner/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - speech_to_text (from `.symlinks/plugins/speech_to_text/ios`)
-  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
+  - status_bar_control (from `.symlinks/plugins/status_bar_control/ios`)
 
 SPEC REPOS:
   trunk:
@@ -860,6 +865,7 @@ SPEC REPOS:
     - gRPC-Core
     - GTMSessionFetcher
     - leveldb-library
+    - MTBBarcodeScanner
     - nanopb
     - PromisesObjC
     - RecaptchaInterop
@@ -886,12 +892,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_pdfview/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  qr_code_scanner:
+    :path: ".symlinks/plugins/qr_code_scanner/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
   speech_to_text:
     :path: ".symlinks/plugins/speech_to_text/ios"
-  url_launcher_ios:
-    :path: ".symlinks/plugins/url_launcher_ios/ios"
+  status_bar_control:
+    :path: ".symlinks/plugins/status_bar_control/ios"
 
 SPEC CHECKSUMS:
   abseil: 926fb7a82dc6d2b8e1f2ed7f3a718bce691d1e46
@@ -922,14 +930,16 @@ SPEC CHECKSUMS:
   gRPC-Core: a21a60aefc08c68c247b439a9ef97174b0c54f96
   GTMSessionFetcher: 41b9ef0b4c08a6db4b7eb51a21ae5183ec99a2c8
   leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
+  MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
+  qr_code_scanner: bb67d64904c3b9658ada8c402e8b4d406d5d796e
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
   speech_to_text: b43a7d99aef037bd758ed8e45d79bbac035d2dfe
+  status_bar_control: 7c84146799e6a076315cc1550f78ef53aae3e446
   Try: 5ef669ae832617b3cee58cb2c6f99fb767a4ff96
-  url_launcher_ios: bbd758c6e7f9fd7b5b1d4cde34d2b95fcce5e812
 
 PODFILE CHECKSUM: 6d989b2a230232bcc0a5158aa4c0c4ecbc6046b6
 

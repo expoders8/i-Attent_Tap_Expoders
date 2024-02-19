@@ -73,6 +73,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   Expanded(
                     flex: 6,
                     child: Container(
+                      width: Get.width,
                       padding: const EdgeInsets.fromLTRB(25.0, 50.0, 25.0, 0.0),
                       decoration: const BoxDecoration(
                         color: Colors.white,
